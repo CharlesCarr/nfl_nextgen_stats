@@ -4,24 +4,33 @@ const DashTop = () => {
   const data = [1, 2, 3];
 
   return (
-    <div className="h-1/2 w-full flex justify-between items-center border-white border p-4">
-      <div className="flex flex-col justify-between items-center border border-black h-full w-3/4 mr-4">
-        <div className="flex justify-between items-center border border-white h-1/2 w-full p-4">
-          <div className="border border-black w-1/2 h-full">
-            PLAYER SPOTLIGHT
+    <div className="h-1/2 w-full flex justify-between items-center">
+      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4">
+        <div className="flex justify-between items-center h-1/2 w-full">
+          <div className="w-1/2 h-full">
+            <p>QB SPOTLIGHT</p>
+            <p>Josh Allen - #17</p>
+            <p>Buffalo Bills</p>
           </div>
-          <div className="border border-black w-1/3 h-full flex flex-col justify-center items-center p-2">
-            <div className="border border-white w-full h-1/3 mb-2">SEARCH</div>
-            <div className="border border-white w-full h-1/2">TABS</div>
+          <div className="w-1/3 h-full flex flex-col justify-center items-center">
+            <div className="w-full h-1/2 flex justify-end items-center pr-4">
+              <input placeholder="(Icon) Search" className="w-44 rounded text-sm mr-4" />
+              <p>Icon</p>
+            </div>
+            <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
+              <p className="bg-black text-white rounded-xl py-1 px-4">Week</p>
+              <p>Season</p>
+              <p>All</p>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-3 border border-white h-2/4 w-full p-4">
+        <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
           {data.map((d: number) => {
-            return <div className="border border-black">{d}</div>;
+            return <div className="border border-black rounded-2xl">{d}</div>;
           })}
         </div>
       </div>
-      <div className="flex justify-center items-center border border-black h-full w-1/4">
+      <div className="flex justify-center items-center border border-black h-full w-1/4 rounded-2xl">
         <p>Image</p>
       </div>
     </div>
