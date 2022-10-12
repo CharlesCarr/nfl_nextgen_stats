@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
-import Dash from "../components/Dash";
+import DashTop from "../components/DashTop";
+import DashBottom from "../components/DashBottom";
 
 const Home: NextPage = () => {
   return (
@@ -12,7 +13,12 @@ const Home: NextPage = () => {
       </Head>
 
       <NavBar />
-      <Dash />
+
+      <div className="w-full h-full bg-slate-600 p-8">
+        <DashTop />
+        <DashBottom />
+      </div>
+
     </div>
   );
 };
