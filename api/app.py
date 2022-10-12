@@ -1,7 +1,10 @@
-import pandas as pd
 import nfl_data_py as nfl
 
-pd.set_option('display.max_columns', None)
+# print(nfl)
 
-df = nfl.import_ngs_data(stat_type='passing')
-print(df)
+# create a variable to store output from a nfl method (testing data)
+testData = nfl.import_ngs_data(stat_type='passing')
+# testData = nfl.see_pbp_cols()
+
+# print the variable to see that it is working
+print(testData)
