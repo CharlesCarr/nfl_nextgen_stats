@@ -17,7 +17,7 @@ const DashBottom = () => {
             <p>Filter Icon</p>
           </div>
         </div>
-        <div className="w-full h-4/5 border border-white flex justify-center items-center">
+        <div className="w-full h-4/5 border border-black flex justify-center items-center">
           CHART
         </div>
       </div>

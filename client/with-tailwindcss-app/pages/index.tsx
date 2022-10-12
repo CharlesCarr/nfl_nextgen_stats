@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 
       <NavBar />
 
-      <div className="w-full h-full bg-slate-600 p-12">
+      <div className="w-full h-full bg-gray-50 p-12">
         <DashTop />
         <DashBottom />
       </div>
