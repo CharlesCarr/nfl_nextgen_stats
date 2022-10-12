@@ -6,10 +6,10 @@ const DashBottom = () => {
   return (
     <div className="w-full h-1/2 flex justify-between items-center">
       {/* Bottom Left */}
-      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4">
+      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
         <div className="w-full h-1/5 flex justify-between items-center">
           <div className="w-1/2 h-full flex justify-start items-center">
-            <p className="text-xl">Passing Yards</p>
+            <p className="text-2xl font-semibold tracking-wider">Passing Yards</p>
           </div>
           <div className="w-1/3 h-full flex justify-between items-center text-xs">
             <p>Icon</p>

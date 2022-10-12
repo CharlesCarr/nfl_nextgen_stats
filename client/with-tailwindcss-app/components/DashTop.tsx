@@ -6,16 +6,16 @@ const DashTop = () => {
 
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
-      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4">
+      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
         <div className="flex justify-between items-center h-1/2 w-full">
-          <div className="w-1/2 h-full">
-            <p>QB SPOTLIGHT</p>
-            <p>Josh Allen - #17</p>
-            <p>Buffalo Bills</p>
+          <div className="w-1/2 h-full flex flex-col justify-start items-start">
+            <p className="text-3xl font-bold tracking-widest mb-2">QB SPOTLIGHT</p>
+            <p className="font-semibold tracking-wide mb-1">Josh Allen - #17</p>
+            <p className="font-light text-sm">Buffalo Bills</p>
           </div>
           <div className="w-1/3 h-full flex flex-col justify-center items-center">
             <div className="w-full h-1/2 flex justify-end items-center pr-4">
-              <input placeholder="(Icon) Search" className="w-44 rounded text-sm mr-4 shadow py-px" />
+              <input placeholder="(Icon) Search" className="w-32 rounded text-sm mr-4 shadow py-px pl-2" />
               <p>Icon</p>
             </div>
             <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
