@@ -1,4 +1,5 @@
 import React from "react";
+import StatsCard from "./StatsCard";
 
 const DashTop = () => {
   const data = [1, 2, 3];
@@ -14,7 +15,7 @@ const DashTop = () => {
           </div>
           <div className="w-1/3 h-full flex flex-col justify-center items-center">
             <div className="w-full h-1/2 flex justify-end items-center pr-4">
-              <input placeholder="(Icon) Search" className="w-44 rounded text-sm mr-4" />
+              <input placeholder="(Icon) Search" className="w-44 rounded text-sm mr-4 shadow py-px" />
               <p>Icon</p>
             </div>
             <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
@@ -26,7 +27,7 @@ const DashTop = () => {
         </div>
         <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
           {data.map((d: number) => {
-            return <div className="border border-black rounded-2xl">{d}</div>;
+            return <StatsCard d={d} />;
           })}
         </div>
       </div>
