@@ -22,7 +22,7 @@ function App() {
 
       <div className="w-full h-full bg-white p-12">
         <DashTop allPassingData={allPassingData} />
-        <DashBottom />
+        <DashBottom allPassingData={allPassingData} />
       </div>
     </div>
   );
