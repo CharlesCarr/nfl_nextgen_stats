@@ -44,6 +44,7 @@ const DashTop = ({ allPassingData }: any) => {
       } else {
         // all in career - think easiest is to grab all week 0's
         // add passing yards and tds and take the avg of passer rating
+        setPlayerData(getAllData(playerName));
       }
 
       setIsLoading(false);
@@ -89,7 +90,7 @@ const DashTop = ({ allPassingData }: any) => {
   };
 
   const getSeasonData = (playerName: string, season: number) => {
-    let weekData = allPassingData.filter((d: any) => {
+    let seasonData = allPassingData.filter((d: any) => {
       if (
         d["player_display_name"] === playerName &&
         d.week === 0 &&
@@ -98,7 +99,31 @@ const DashTop = ({ allPassingData }: any) => {
         return d;
       }
     });
-    return weekData[0];
+    return seasonData[0];
+  };
+
+  const getAllData = (playerName: string) => {
+    let allData = allPassingData.filter((d: any) => {
+      if (d["player_display_name"] === playerName && d.week === 0) {
+        return d;
+      }
+    });
+    let totalPassY = 0;
+    let totalPassTD = 0;
+    let totalPassRSum = 0;
+
+    for (let i = 0; i < allData.length; i++) {
+      let data = allData[i];
+      totalPassY += data['pass_yards'];
+      totalPassTD += data['pass_touchdowns'];
+      totalPassRSum += data['passer_rating'];
+    }
+    // console.log(allData);
+    return {
+      'pass_yards': totalPassY,
+      'pass_touchdowns': totalPassTD,
+      'passer_rating': totalPassRSum / allData.length,
+    }
   };
 
   return (
