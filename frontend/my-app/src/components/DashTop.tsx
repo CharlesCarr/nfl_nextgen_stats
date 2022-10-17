@@ -4,6 +4,7 @@ import StatsCard from "./StatsCard";
 
 const DashTop = ({ allPassingData }: any) => {
   // state for input field (player name)
+  const [inputValue, setInputValue] = useState<string>('');
   const [playerName, setPlayerName] = useState<string>("Josh Allen");
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
@@ -142,10 +143,13 @@ const DashTop = ({ allPassingData }: any) => {
           <div className="w-1/3 h-full flex flex-col justify-center items-center">
             <div className="w-full h-1/2 flex justify-end items-center pr-4">
               <input
+                type="text"
                 placeholder="(Icon) Search"
                 className="w-32 rounded text-sm mr-4 shadow py-px pl-2"
+                value={inputValue}
+                onChange={event => setInputValue(event.target.value)}
               />
-              <p>Icon</p>
+              <button onClick={() => setPlayerName(inputValue)} className="border rounded-full shadow p-2 text-xs">Icon</button>
             </div>
             <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
               <button
