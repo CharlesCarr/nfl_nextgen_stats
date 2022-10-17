@@ -1,7 +1,5 @@
-import Image from "next/image";
-import React from "react";
 import StatsCard from "./StatsCard";
-import NFLNextGen from "../images/nextgen1.jpeg";
+// import NFLNextGen from "../images/nextgen1.jpeg";
 
 const DashTop = () => {
   const data = [1, 2, 3];
@@ -34,7 +32,7 @@ const DashTop = () => {
         </div>
         <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
           {data.map((d: number) => {
-            return <StatsCard d={d} />;
+            return <StatsCard key={d} d={d} />;
           })}
         </div>
       </div>
