@@ -6,8 +6,9 @@ const DashTop = ({ allPassingData }: any) => {
   // state for input field (player name)
   const [playerName, setPlayerName] = useState<string>("Josh Allen");
   const [week, setWeek] = useState<number>(6);
-  const [playerWeekData, setPlayerWeekData] = useState<any>(null);
-  console.log(playerWeekData);
+  const [season, setSeason] = useState<number>(2022);
+  const [playerData, setPlayerData] = useState<any>(null);
+  console.log(playerData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<any>([
     {
@@ -29,68 +30,76 @@ const DashTop = ({ allPassingData }: any) => {
       statChange: "Loading",
     },
   ]);
-  const [periodFilter, setPeriodFilter] = useState<string>('week');
-
+  const [periodFilter, setPeriodFilter] = useState<string>("week");
   // console.log(allPassingData);
 
   useEffect(() => {
-    const getLatestWeekData = (playerName: string, week: number) => {
-      let playerData = allPassingData.filter((d: any) => {
-        if (
-          d["player_display_name"] === playerName &&
-          d.week === week &&
-          d.season === 2022
-        ) {
-          return d;
-        }
-      });
-      return playerData[0];
-    };
-
     if (allPassingData) {
-      setPlayerWeekData(getLatestWeekData(playerName, week));
+      if (periodFilter === "week") {
+        // already have so how to get
+        setPlayerData(getWeekData(playerName, week));
+      } else if (periodFilter === "season") {
+        // grab week 0 for the selected year/season
+        setPlayerData(getSeasonData(playerName, season));
+      } else {
+        // all in career - think easiest is to grab all week 0's
+        // add passing yards and tds and take the avg of passer rating
+      }
 
       setIsLoading(false);
     }
-  }, [allPassingData, playerName, week]);
+  }, [allPassingData, playerName, week, periodFilter]);
 
   useEffect(() => {
-    if (playerWeekData) {
+    if (playerData) {
       setStatCardData([
         {
           statName: "Passing Yards",
-          statNum: playerWeekData["pass_yards"],
+          statNum: playerData["pass_yards"],
           statIcon: "icon",
           statChange: "change",
         },
         {
           statName: "Passing TDs",
-          statNum: playerWeekData["pass_touchdowns"],
+          statNum: playerData["pass_touchdowns"],
           statIcon: "icon",
           statChange: "change",
         },
         {
           statName: "Passer Rating",
-          statNum: playerWeekData["passer_rating"].toFixed(2),
+          statNum: playerData["passer_rating"].toFixed(2),
           statIcon: "icon",
           statChange: "change",
         },
       ]);
     }
-  }, [playerWeekData]);
+  }, [playerData]);
 
-  useEffect(() => {
+  const getWeekData = (playerName: string, week: number) => {
+    let weekData = allPassingData.filter((d: any) => {
+      if (
+        d["player_display_name"] === playerName &&
+        d.week === week &&
+        d.season === 2022
+      ) {
+        return d;
+      }
+    });
+    return weekData[0];
+  };
 
-    if (periodFilter === "week") {
-      // already have so how to get
-    } else if (periodFilter === "season") {
-      // grab week 0 for the selected year/season
-    } else {
-      // all in career - think easiest is to grab all week 0's
-      // add passing yards and tds and take the avg of passer rating
-    }
-
-  }, [periodFilter])
+  const getSeasonData = (playerName: string, season: number) => {
+    let weekData = allPassingData.filter((d: any) => {
+      if (
+        d["player_display_name"] === playerName &&
+        d.week === 0 &&
+        d.season === season
+      ) {
+        return d;
+      }
+    });
+    return weekData[0];
+  };
 
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
@@ -114,9 +123,30 @@ const DashTop = ({ allPassingData }: any) => {
               <p>Icon</p>
             </div>
             <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
-              <button className="bg-black text-white rounded-xl py-1 px-4" onClick={() => setPeriodFilter('week')}>Week</button>
-              <button onClick={() => setPeriodFilter('season')}>Season</button>
-              <button onClick={() => setPeriodFilter('all')}>All</button>
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter === "week" ? "bg-black text-white " : ""
+                }`}
+                onClick={() => setPeriodFilter("week")}
+              >
+                Week
+              </button>
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter === "season" ? "bg-black text-white " : ""
+                }`}
+                onClick={() => setPeriodFilter("season")}
+              >
+                Season
+              </button>
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter === "all" ? "bg-black text-white " : ""
+                }`}
+                onClick={() => setPeriodFilter("all")}
+              >
+                All
+              </button>
             </div>
           </div>
         </div>
