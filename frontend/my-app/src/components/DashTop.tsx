@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
 // import NFLNextGen from "../images/nextgen1.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { getWeekView, getSeasonView, getAllView } from "../redux/slices/periodFilterViewSlice";
+import {
+  getWeekView,
+  getSeasonView,
+  getAllView,
+} from "../redux/slices/periodFilterViewSlice";
 import { setPlayerView } from "../redux/slices/playerViewSlice";
 import { RootState } from "../redux/store";
 
 const DashTop = ({ allPassingData }: any) => {
   // Redux State:
-  const periodFilter = useSelector((state: RootState) => state.periodFilterView);
+  const periodFilter = useSelector(
+    (state: RootState) => state.periodFilterView
+  );
   const playerName = useSelector((state: RootState) => state.playerView.player);
   const dispatch = useDispatch();
 
@@ -18,6 +24,7 @@ const DashTop = ({ allPassingData }: any) => {
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
   const [playerData, setPlayerData] = useState<any>(null);
+  console.log(playerData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<any>([
     {
@@ -135,75 +142,78 @@ const DashTop = ({ allPassingData }: any) => {
 
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
-      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
-        <div className="flex justify-between items-center h-1/2 w-full">
-          <div className="w-1/2 h-full flex flex-col justify-start items-start">
-            <p className="text-3xl font-bold tracking-widest mb-2">
-              QB SPOTLIGHT
-            </p>
-            {/* <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${playerWeekData["player_jersey_number"] || 17}`}</p> */}
-            <p className="font-semibold tracking-wide mb-1">{`${playerName} - #17`}</p>
-            {/* <p className="font-light text-sm">{playerWeekData["team_abbr"] || 'BUF'}</p> */}
-            <p className="font-light text-sm">BUF</p>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
+          <div className="flex justify-between items-center h-1/2 w-full">
+            <div className="w-1/2 h-full flex flex-col justify-start items-start">
+              <p className="text-3xl font-bold tracking-widest mb-2">
+                QB SPOTLIGHT
+              </p>
+              <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${playerData["player_jersey_number"]}`}</p>
+              <p className="font-light text-sm">{playerData["team_abbr"]}</p>
+            </div>
+            <div className="w-1/3 h-full flex flex-col justify-center items-center">
+              <div className="w-full h-1/2 flex justify-end items-center pr-4">
+                <input
+                  type="text"
+                  placeholder="(Icon) Search"
+                  className="w-32 rounded text-sm mr-4 shadow py-px pl-2"
+                  value={inputValue}
+                  onChange={(event) => setInputValue(event.target.value)}
+                />
+                <button
+                  onClick={() => dispatch(setPlayerView(inputValue))}
+                  className="border rounded-full shadow p-2 text-xs"
+                >
+                  Icon
+                </button>
+              </div>
+              <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
+                <button
+                  className={`rounded-xl py-1 px-4 ${
+                    periodFilter.view === "week" ? "bg-black text-white " : ""
+                  }`}
+                  onClick={() => dispatch(getWeekView())}
+                >
+                  Week
+                </button>
+                <button
+                  className={`rounded-xl py-1 px-4 ${
+                    periodFilter.view === "season" ? "bg-black text-white " : ""
+                  }`}
+                  onClick={() => dispatch(getSeasonView())}
+                >
+                  Season
+                </button>
+                <button
+                  className={`rounded-xl py-1 px-4 ${
+                    periodFilter.view === "all" ? "bg-black text-white " : ""
+                  }`}
+                  onClick={() => dispatch(getAllView())}
+                >
+                  All
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="w-1/3 h-full flex flex-col justify-center items-center">
-            <div className="w-full h-1/2 flex justify-end items-center pr-4">
-              <input
-                type="text"
-                placeholder="(Icon) Search"
-                className="w-32 rounded text-sm mr-4 shadow py-px pl-2"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-              />
-              <button
-                onClick={() => dispatch(setPlayerView(inputValue))}
-                className="border rounded-full shadow p-2 text-xs"
-              >
-                Icon
-              </button>
-            </div>
-            <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "week" ? "bg-black text-white " : ""
-                }`}
-                onClick={() => dispatch(getWeekView())}
-              >
-                Week
-              </button>
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "season" ? "bg-black text-white " : ""
-                }`}
-                onClick={() => dispatch(getSeasonView())}
-              >
-                Season
-              </button>
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "all" ? "bg-black text-white " : ""
-                }`}
-                onClick={() => dispatch(getAllView())}
-              >
-                All
-              </button>
-            </div>
+          <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
+            {statCardData.map((d: any, index: any) => {
+              return (
+                <StatsCard
+                  key={index}
+                  statName={d.statName}
+                  statNum={d.statNum}
+                  statIcon={d.statIcon}
+                  statChange={d.statChange}
+                />
+              );
+            })}
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
-          {statCardData.map((d: any, index: any) => {
-            return (
-              <StatsCard
-                key={index}
-                statName={d.statName}
-                statNum={d.statNum}
-                statIcon={d.statIcon}
-                statChange={d.statChange}
-              />
-            );
-          })}
-        </div>
-      </div>
+      )}
+
       <div className="flex justify-center items-center border border-black h-full w-1/4 rounded-2xl">
         Image
       </div>
