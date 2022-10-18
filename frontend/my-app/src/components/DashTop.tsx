@@ -9,7 +9,7 @@ const DashTop = ({ allPassingData }: any) => {
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
   const [playerData, setPlayerData] = useState<any>(null);
-  console.log(playerData);
+  // console.log(playerData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<any>([
     {

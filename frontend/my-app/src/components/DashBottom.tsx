@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Chart from "./Chart";
 import Leaders from "./Leaders";
 
 const DashBottom = ({ allPassingData }: any) => {
@@ -44,7 +45,7 @@ const DashBottom = ({ allPassingData }: any) => {
           </div>
         </div>
         <div className="w-full h-4/5 border border-black flex justify-center items-center">
-          CHART
+          <Chart />
         </div>
       </div>
 
