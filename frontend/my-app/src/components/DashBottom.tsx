@@ -44,7 +44,8 @@ const DashBottom = ({ allPassingData }: any) => {
             <p>Filter Icon</p>
           </div>
         </div>
-        <div className="w-full h-4/5 border border-black flex justify-center items-center">
+        <div className="w-full h-4/5 flex justify-center items-center">
+          {/* border border-black */}
           <Chart />
         </div>
       </div>

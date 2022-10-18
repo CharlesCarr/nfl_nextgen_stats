@@ -1,67 +1,128 @@
-import * as d3 from "d3";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const Chart = () => {
-  // const [data, setData] = useState([
-  //   { year: "2017", passYards: 52 },
-  //   { year: "2018", passYards: 60 },
-  //   { year: "2019", passYards: 120 },
-  //   { year: "2020", passYards: 97 },
-  //   { year: "2021", passYards: 115 },
-  // ]);
-  const [data] = useState([25, 50, 35, 15, 94, 10])
-  const svgRef = useRef();
+  // { fullResults, convertDateFormat, tickers, timePeriod }
+  // actual data for the chart in the format that need for recharts lib
+  const [data, setData] = useState([]);
+  // data coming from backend that I will need to create elsewhere
+  const [backendData, setBackendData] = useState([
+    {
+      passYardArr: [
+        { week: 1, passYards: 250 },
+        { week: 2, passYards: 200 },
+        { week: 3, passYards: 300 },
+      ],
+      playerName: "Josh Allen",
+    },
+  ]);
+  const [players, setPlayers] = useState(["Josh Allen"]);
 
   useEffect(() => {
+    let arr = backendData[0].passYardArr;
+    var playerName = backendData[0].playerName;
 
-    const w = 925;
-    const h = 300;
-    // set up svg
-    const svg = d3
-      .select(svgRef.current)
-      .attr("width", w)
-      .attr("height", h)
-      .style("background", "#d3d3d3")
-      .style("overflow", "visible");
+    setData(() => {
+      const objArr = arr.map((day) => {
+        let obj = {
+          week: day.week,
+          [playerName]: day.passYards,
+        };
+        return obj;
+      });
 
-    // set the x and y scaling
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, data.length - 1])
-      .range([0, w]);
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, h])
-      .range([h, 0]);
-    const generateScaledLine = d3
-      .line()
-      .x((d, i) => xScale(i))
-      .y(yScale)
-      .curve(d3.curveCardinal);
+      return objArr;
 
-    // setting the axes
-    const xAxis = d3.axisBottom(xScale)
-      .ticks(data.length)
-      // .ticksFormat(i => i + 1);
-    const yAxis = d3.axisLeft(yScale)
-      .ticks(5);
-    svg.append('g')
-      .call(xAxis)
-      .attr('transform', `translate(0, ${h})`);
-    svg.append('g')
-      .call(yAxis);
+      // if (timePeriod === "1 YR") {
+      //   return objArr;
+      // }
+    });
+  }, [backendData]); // timePeriod
 
-    // setting up the data for the svg
-    svg
-      .selectAll(".line")
-      .data([data])
-      .join("path")
-      .attr("d", (d) => generateScaledLine(d))
-      .attr("fill", "none")
-      .attr("stroke", "black")
-  }, [data]);
+  // logic for finding smallest / largest closes to use for domain for recharts y axis
+  const findMinMax = (i) => {
+    if (data.length !== 0) {
+      const numData = data.map((result) => {
+        return Number(result[players[i]]);
+      });
 
-  return <svg ref={svgRef}></svg>;
+      const minVal = numData.reduce((prev, curr) =>
+        prev < curr ? prev : curr
+      );
+      const maxVal = numData.reduce((prev, curr) =>
+        prev > curr ? prev : curr
+      );
+
+      let minMaxObj = {
+        min: minVal,
+        max: maxVal,
+      };
+
+      return minMaxObj;
+    } else {
+      let minMaxObj = {
+        min: 0,
+        max: 1000,
+      };
+      return minMaxObj;
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center pt-2 h-full w-full md:mt-2 text-xs">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#7c72ff" stopOpacity={0.4} />
+              <stop offset="75%" stopColor="#7c72ff" stopOpacity={0.05} />
+            </linearGradient>
+            <linearGradient id="colorTwo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#2d324d" stopOpacity={0.4} />
+              <stop offset="75%" stopColor="#2d324d" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid opacity={0.25} vertical={false} />
+          <XAxis
+            stroke="black"
+            dataKey="week"
+            // interval={xInterval}
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(week) => `Week: ${week}`}
+          />
+          <YAxis
+            stroke="black"
+            axisLine={false}
+            tickLine={false}
+            tickCount={5}
+            tickFormatter={(yards) => `${yards} yds`}
+            yAxisId="left-axis"
+            domain={[findMinMax(0)["min"] * 0.9, findMinMax(0)["max"] * 1.05]}
+          />
+          <Tooltip />
+          <Legend />
+          <Area
+            type="monotone"
+            dataKey={players[0]}
+            stroke="#7c72ff"
+            fill="url(#color)"
+            key={players[0]}
+            yAxisId="left-axis"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
 };
 
 export default Chart;
