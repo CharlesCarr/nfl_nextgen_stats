@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex h-screen w-full font-montserrat">
+    <div className="flex h-screen w-full font-montserrat text-[#1f1f1f]">
       <NavBar />
 
       <div className="w-full h-full bg-white p-12">

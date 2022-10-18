@@ -51,7 +51,7 @@ const DashBottom = ({ allPassingData }: any) => {
   };
 
   return (
-    <div className="w-full h-1/2 flex justify-between items-center">
+    <div className="w-full h-1/2 flex justify-between items-center mt-2">
       {/* Bottom Left */}
       <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
         <div className="w-full h-1/5 flex justify-between items-center">
@@ -75,7 +75,7 @@ const DashBottom = ({ allPassingData }: any) => {
       {/* Bottom Right */}
       <div className="flex flex-col justify-between items-center h-full w-1/4">
         <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium">
-          <p>Top (QB)s for (Passing Yards)</p>
+          <p className="font-semibold">Top QBs for Passing Yards</p>
           <p className="font-extralight text-xs">(This Season)</p>
         </div>
 

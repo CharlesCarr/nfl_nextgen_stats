@@ -59,22 +59,24 @@ const Chart = ({ chartData }) => {
   // };
 
   return (
-    <div className="flex justify-center items-center pt-2 h-full w-full md:mt-2 text-xs">
+    <div className="flex justify-center items-center pt-2 h-full w-full md:mt-2 text-xs font-semibold tracking-wide">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data}>
           <defs>
             <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#7c72ff" stopOpacity={0.4} />
-              <stop offset="75%" stopColor="#7c72ff" stopOpacity={0.05} />
+              <stop offset="0%" stopColor="#4b9d62" stopOpacity={0.4} />
+              {/* #7c72ff --> #72FF7C */}
+              <stop offset="75%" stopColor="#4b9d62" stopOpacity={0.05} />
             </linearGradient>
             <linearGradient id="colorTwo" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2d324d" stopOpacity={0.4} />
-              <stop offset="75%" stopColor="#2d324d" stopOpacity={0.05} />
+              <stop offset="0%" stopColor="#549256" stopOpacity={0.4} /> 
+              {/* #2d324d --> #324D2D */}
+              <stop offset="75%" stopColor="#549256" stopOpacity={0.05} />
             </linearGradient>
           </defs>
           <CartesianGrid opacity={0.25} vertical={false} />
           <XAxis
-            stroke="black"
+            stroke="#1f1f1f"
             dataKey="week"
             // interval={xInterval}
             axisLine={false}
@@ -82,7 +84,7 @@ const Chart = ({ chartData }) => {
             tickFormatter={(week) => `Week: ${week}`}
           />
           <YAxis
-            stroke="black"
+            stroke="#1f1f1f"
             axisLine={false}
             tickLine={false}
             tickCount={5}
@@ -95,7 +97,7 @@ const Chart = ({ chartData }) => {
           <Area
             type="monotone"
             dataKey={playerName}
-            stroke="#7c72ff"
+            stroke="#0b6241"
             fill="url(#color)"
             key={playerName}
             yAxisId="left-axis"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
 // import NFLNextGen from "../images/nextgen1.jpeg";
+import Football from "../images/football-unsplash.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getWeekView,
@@ -72,19 +73,19 @@ const DashTop = ({ allPassingData }: any) => {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
           statIcon: "icon",
-          statChange: "change",
+          statChange: "yards",
         },
         {
           statName: "Passing TDs",
           statNum: playerData["pass_touchdowns"],
           statIcon: "icon",
-          statChange: "change",
+          statChange: "TDs",
         },
         {
           statName: "Passer Rating",
           statNum: playerData["passer_rating"].toFixed(2),
           statIcon: "icon",
-          statChange: "change",
+          statChange: "RTG",
         },
       ]);
     }
@@ -148,7 +149,7 @@ const DashTop = ({ allPassingData }: any) => {
         <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
           <div className="flex justify-between items-center h-1/2 w-full">
             <div className="w-1/2 h-full flex flex-col justify-start items-start">
-              <p className="text-3xl font-bold tracking-widest mb-2">
+              <p className="text-4xl font-bold tracking-widest mb-2">
                 QB SPOTLIGHT
               </p>
               <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${playerData["player_jersey_number"]}`}</p>
@@ -159,7 +160,7 @@ const DashTop = ({ allPassingData }: any) => {
                 <input
                   type="text"
                   placeholder="(Icon) Search"
-                  className="w-32 rounded text-sm mr-4 shadow py-px pl-2"
+                  className="w-32 rounded text-sm mr-4 shadow py-px pl-2 pt-1 font-light"
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
                 />
@@ -214,8 +215,8 @@ const DashTop = ({ allPassingData }: any) => {
         </div>
       )}
 
-      <div className="flex justify-center items-center border border-black h-full w-1/4 rounded-2xl">
-        Image
+      <div className="flex justify-center items-center h-full w-1/4">
+        <img src={Football} alt="football" className="object-cover h-full w-full rounded-2xl"/>
       </div>
     </div>
   );
