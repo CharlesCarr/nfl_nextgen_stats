@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
 // import NFLNextGen from "../images/nextgen1.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { getWeekView, getSeasonView, getAllView } from "../redux/slices/periodFilterViewSlice";
+import { RootState } from "../redux/store";
 
 const DashTop = ({ allPassingData }: any) => {
+  // Redux State
+  const periodFilter = useSelector((state: RootState) => state.periodFilterView);
+  const dispatch = useDispatch();
+  // console.log('Redux', periodFilter);
+
+
   // state for input field (player name)
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [playerName, setPlayerName] = useState<string>("Josh Allen");
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
@@ -31,15 +40,15 @@ const DashTop = ({ allPassingData }: any) => {
       statChange: "Loading",
     },
   ]);
-  const [periodFilter, setPeriodFilter] = useState<string>("week");
+  // const [periodFilter, setPeriodFilter] = useState<string>("week");
   // console.log(allPassingData);
 
   useEffect(() => {
     if (allPassingData) {
-      if (periodFilter === "week") {
+      if (periodFilter.view === "week") {
         // already have so how to get
         setPlayerData(getWeekData(playerName, week));
-      } else if (periodFilter === "season") {
+      } else if (periodFilter.view === "season") {
         // grab week 0 for the selected year/season
         setPlayerData(getSeasonData(playerName, season));
       } else {
@@ -115,16 +124,16 @@ const DashTop = ({ allPassingData }: any) => {
 
     for (let i = 0; i < allData.length; i++) {
       let data = allData[i];
-      totalPassY += data['pass_yards'];
-      totalPassTD += data['pass_touchdowns'];
-      totalPassRSum += data['passer_rating'];
+      totalPassY += data["pass_yards"];
+      totalPassTD += data["pass_touchdowns"];
+      totalPassRSum += data["passer_rating"];
     }
     // console.log(allData);
     return {
-      'pass_yards': totalPassY,
-      'pass_touchdowns': totalPassTD,
-      'passer_rating': totalPassRSum / allData.length,
-    }
+      pass_yards: totalPassY,
+      pass_touchdowns: totalPassTD,
+      passer_rating: totalPassRSum / allData.length,
+    };
   };
 
   return (
@@ -147,32 +156,37 @@ const DashTop = ({ allPassingData }: any) => {
                 placeholder="(Icon) Search"
                 className="w-32 rounded text-sm mr-4 shadow py-px pl-2"
                 value={inputValue}
-                onChange={event => setInputValue(event.target.value)}
+                onChange={(event) => setInputValue(event.target.value)}
               />
-              <button onClick={() => setPlayerName(inputValue)} className="border rounded-full shadow p-2 text-xs">Icon</button>
+              <button
+                onClick={() => setPlayerName(inputValue)}
+                className="border rounded-full shadow p-2 text-xs"
+              >
+                Icon
+              </button>
             </div>
             <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
               <button
                 className={`rounded-xl py-1 px-4 ${
-                  periodFilter === "week" ? "bg-black text-white " : ""
+                  periodFilter.view === "week" ? "bg-black text-white " : ""
                 }`}
-                onClick={() => setPeriodFilter("week")}
+                onClick={() => dispatch(getWeekView())}
               >
                 Week
               </button>
               <button
                 className={`rounded-xl py-1 px-4 ${
-                  periodFilter === "season" ? "bg-black text-white " : ""
+                  periodFilter.view === "season" ? "bg-black text-white " : ""
                 }`}
-                onClick={() => setPeriodFilter("season")}
+                onClick={() => dispatch(getSeasonView())}
               >
                 Season
               </button>
               <button
                 className={`rounded-xl py-1 px-4 ${
-                  periodFilter === "all" ? "bg-black text-white " : ""
+                  periodFilter.view === "all" ? "bg-black text-white " : ""
                 }`}
-                onClick={() => setPeriodFilter("all")}
+                onClick={() => dispatch(getAllView())}
               >
                 All
               </button>
