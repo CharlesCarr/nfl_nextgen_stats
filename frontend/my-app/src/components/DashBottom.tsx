@@ -1,16 +1,41 @@
 import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import Leaders from "./Leaders";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const DashBottom = ({ allPassingData }: any) => {
-  // const leadersData = [1, 2, 3];
+  // Redux State:
+  const playerName = useSelector((state: RootState) => state.playerView.player);
+  console.log(playerName);
+  // Local State:
   const [leadersData, setLeadersData] = useState<any>(null);
+  const [chartData, setChartData] = useState<any>(null);
 
   useEffect(() => {
     if (allPassingData) {
       setLeadersData(getPassYardLeaders());
+      setChartData(getChartData());
     }
   }, [allPassingData]);
+
+  // start by hard coding for this season week by week
+  const getChartData = () => {
+    let weekData = allPassingData.filter((d: any) => {
+      if (
+        d["player_display_name"] === playerName &&
+        d.week !== 0 &&
+        d.season === 2022
+      ) {
+        return d;
+      }
+    });
+
+    let chartData = weekData.map((week: any) => {
+      return { week: week.week, passYards: week["pass_yards"] };
+    });
+    return chartData;
+  };
 
   const getPassYardLeaders = () => {
     let allQBs = allPassingData.filter((d: any) => {
@@ -18,13 +43,10 @@ const DashBottom = ({ allPassingData }: any) => {
         return d;
       }
     });
-    // console.log("allQBs", allQBs);
     allQBs.sort((a: any, b: any) => {
       return b["pass_yards"] - a["pass_yards"];
     });
-
     let topThree = allQBs.slice(0, 3);
-    // console.log('top 3', topThree);
     return topThree;
   };
 
@@ -46,7 +68,7 @@ const DashBottom = ({ allPassingData }: any) => {
         </div>
         <div className="w-full h-4/5 flex justify-center items-center">
           {/* border border-black */}
-          <Chart />
+          <Chart chartData={chartData} />
         </div>
       </div>
 

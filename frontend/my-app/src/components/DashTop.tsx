@@ -3,22 +3,21 @@ import StatsCard from "./StatsCard";
 // import NFLNextGen from "../images/nextgen1.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeekView, getSeasonView, getAllView } from "../redux/slices/periodFilterViewSlice";
+import { setPlayerView } from "../redux/slices/playerViewSlice";
 import { RootState } from "../redux/store";
 
 const DashTop = ({ allPassingData }: any) => {
-  // Redux State
+  // Redux State:
   const periodFilter = useSelector((state: RootState) => state.periodFilterView);
+  const playerName = useSelector((state: RootState) => state.playerView.player);
   const dispatch = useDispatch();
-  // console.log('Redux', periodFilter);
 
-
+  // Local State:
   // state for input field (player name)
   const [inputValue, setInputValue] = useState<string>("");
-  const [playerName, setPlayerName] = useState<string>("Josh Allen");
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
   const [playerData, setPlayerData] = useState<any>(null);
-  // console.log(playerData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<any>([
     {
@@ -40,8 +39,6 @@ const DashTop = ({ allPassingData }: any) => {
       statChange: "Loading",
     },
   ]);
-  // const [periodFilter, setPeriodFilter] = useState<string>("week");
-  // console.log(allPassingData);
 
   useEffect(() => {
     if (allPassingData) {
@@ -159,7 +156,7 @@ const DashTop = ({ allPassingData }: any) => {
                 onChange={(event) => setInputValue(event.target.value)}
               />
               <button
-                onClick={() => setPlayerName(inputValue)}
+                onClick={() => dispatch(setPlayerView(inputValue))}
                 className="border rounded-full shadow p-2 text-xs"
               >
                 Icon
