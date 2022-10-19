@@ -20,7 +20,7 @@ const DashBottom = ({ allPassingData }: any) => {
       setLeadersData(getPassYardLeaders());
       setChartData(getChartData());
     }
-  }, [allPassingData]);
+  }, [allPassingData, playerName]);
 
   // start by hard coding for this season week by week
   const getChartData = () => {

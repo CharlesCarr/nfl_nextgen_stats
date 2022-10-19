@@ -17,6 +17,8 @@ const Chart = ({ chartData }) => {
   console.log(playerName);
   // actual data for the chart in the format that need for recharts lib
   const [data, setData] = useState([]);
+  console.log(data);
+  console.log(chartData);
 
   useEffect(() => {
     if (chartData) {
@@ -90,7 +92,7 @@ const Chart = ({ chartData }) => {
             tickCount={5}
             tickFormatter={(yards) => `${yards} yds`}
             yAxisId="left-axis"
-            domain={[0, 600]}
+            domain={[0, 500]}
           />
           <Tooltip />
           <Legend />
