@@ -3,6 +3,9 @@ import Chart from "./Chart";
 import Leaders from "./Leaders";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { BsFilterRight } from "react-icons/bs";
+import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
+import { BiStats } from "react-icons/bi";
 
 const DashBottom = ({ allPassingData }: any) => {
   // Redux State:
@@ -60,10 +63,23 @@ const DashBottom = ({ allPassingData }: any) => {
               Passing Yards
             </p>
           </div>
-          <div className="w-1/3 h-full flex justify-between items-center text-xs">
-            <p>Icon</p>
-            <p>Icon</p>
-            <p>Filter Icon</p>
+          <div className="w-1/2 h-full flex justify-between items-center text-xs">
+            <div className="flex items-center justify-center">
+              <BiStats className="w-4 h-4 mr-3" />
+              {/* calculate later */}
+              <p>avg: 325</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <TfiStatsUp className="w-4 h-4 mr-3" />
+              {/* calculate later */}
+              <p>max: 424</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <TfiStatsDown className="w-4 h-4 mr-3" />
+              {/* calculate later */}
+              <p>min: 302</p>
+            </div>
+            <BsFilterRight className="w-7 h-7 cursor-pointer" />
           </div>
         </div>
         <div className="w-full h-4/5 flex justify-center items-center">
@@ -76,7 +92,7 @@ const DashBottom = ({ allPassingData }: any) => {
       <div className="flex flex-col justify-between items-center h-full w-1/4">
         <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium">
           <p className="font-semibold">Top QBs for Passing Yards</p>
-          <p className="font-extralight text-xs">(This Season)</p>
+          <p className="font-extralight text-xs">(2022 Season)</p>
         </div>
 
         <div className="w-full h-4/5 flex flex-col items-center justify-between">

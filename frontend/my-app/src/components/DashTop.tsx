@@ -10,6 +10,9 @@ import {
 } from "../redux/slices/periodFilterViewSlice";
 import { setPlayerView } from "../redux/slices/playerViewSlice";
 import { RootState } from "../redux/store";
+import { CiSearch } from "react-icons/ci";
+import { GiAmericanFootballBall, GiAmericanFootballHelmet, GiAmericanFootballPlayer } from "react-icons/gi";
+
 
 const DashTop = ({ allPassingData }: any) => {
   // Redux State:
@@ -72,19 +75,19 @@ const DashTop = ({ allPassingData }: any) => {
         {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
-          statIcon: "icon",
+          statIcon: <GiAmericanFootballBall className="w-14 h-14 mt-6 mr-4" />,
           statChange: "yards",
         },
         {
           statName: "Passing TDs",
           statNum: playerData["pass_touchdowns"],
-          statIcon: "icon",
+          statIcon: <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />,
           statChange: "TDs",
         },
         {
           statName: "Passer Rating",
           statNum: playerData["passer_rating"].toFixed(2),
-          statIcon: "icon",
+          statIcon: <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />,
           statChange: "RTG",
         },
       ]);
@@ -159,22 +162,24 @@ const DashTop = ({ allPassingData }: any) => {
               <div className="w-full h-1/2 flex justify-end items-center pr-4">
                 <input
                   type="text"
-                  placeholder="(Icon) Search"
-                  className="w-32 rounded text-sm mr-4 shadow py-px pl-2 pt-1 font-light"
+                  placeholder="Search"
+                  className="w-32 rounded text-md mr-4 shadow py-1 pl-3 font-light"
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
                 />
                 <button
                   onClick={() => dispatch(setPlayerView(inputValue))}
-                  className="border rounded-full shadow p-2 text-xs"
+                  className="border rounded-lg shadow p-2 bg-[#1f1f1f] text-white"
                 >
-                  Icon
+                  <CiSearch className="w-6 h-6"/>
                 </button>
               </div>
               <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
                 <button
                   className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "week" ? "bg-black text-white " : ""
+                    periodFilter.view === "week"
+                      ? "bg-[#0b6241]/60 text-white "
+                      : ""
                   }`}
                   onClick={() => dispatch(getWeekView())}
                 >
@@ -182,7 +187,9 @@ const DashTop = ({ allPassingData }: any) => {
                 </button>
                 <button
                   className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "season" ? "bg-black text-white " : ""
+                    periodFilter.view === "season"
+                      ? "bg-[#0b6241]/60 text-white "
+                      : ""
                   }`}
                   onClick={() => dispatch(getSeasonView())}
                 >
@@ -190,7 +197,9 @@ const DashTop = ({ allPassingData }: any) => {
                 </button>
                 <button
                   className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "all" ? "bg-black text-white " : ""
+                    periodFilter.view === "all"
+                      ? "bg-[#0b6241]/60 text-white "
+                      : ""
                   }`}
                   onClick={() => dispatch(getAllView())}
                 >
@@ -215,8 +224,12 @@ const DashTop = ({ allPassingData }: any) => {
         </div>
       )}
 
-      <div className="flex justify-center items-center h-full w-1/4">
-        <img src={Football} alt="football" className="object-cover h-full w-full rounded-2xl"/>
+      <div className="flex justify-center items-center h-full w-1/4 rounded-2xl shadow">
+        <img
+          src={Football}
+          alt="football"
+          className="object-cover h-full w-full rounded-2xl shadow brightness-90"
+        />
       </div>
     </div>
   );
