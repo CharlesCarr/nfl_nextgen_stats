@@ -37,28 +37,32 @@ const Chart = ({ chartData }) => {
   }, [chartData, playerName]);
 
   // logic for finding smallest / largest closes to use for domain for recharts y axis
-  // const findMinMax = () => {
-  //   if (chartData) {
-  //     const numData = chartData.map((week) => {
-  //       return week.passYards;
-  //     });
+  const findMinMax = () => {
+    if (chartData) {
+      const numData = chartData.map((week) => {
+        return week.passYards;
+      });
 
-  //     const minVal = numData.reduce((prev, curr) =>
-  //       prev < curr ? prev : curr
-  //     );
-  //     const maxVal = numData.reduce((prev, curr) =>
-  //       prev > curr ? prev : curr
-  //     );
+      const minVal = numData.reduce((prev, curr) =>
+        prev < curr ? prev : curr
+      );
+      const maxVal = numData.reduce((prev, curr) =>
+        prev > curr ? prev : curr
+      );
 
-  //     let minMaxObj = {
-  //       min: minVal,
-  //       max: maxVal,
-  //     };
+      let minMaxObj = {
+        min: minVal,
+        max: maxVal,
+      };
 
-  //     console.log(minMaxObj);
-  //     return minMaxObj;
-  //   }
-  // };
+      console.log(minMaxObj);
+      return minMaxObj;
+    }
+  };
+  // const testMinMax = findMinMax();
+  let max = findMinMax().max;
+  let min = findMinMax().min;
+  // console.log(testMinMax);
 
   return (
     <div className="flex justify-center items-center pt-2 h-full w-full md:mt-2 text-xs font-semibold tracking-wide">
@@ -90,9 +94,9 @@ const Chart = ({ chartData }) => {
             axisLine={false}
             tickLine={false}
             tickCount={5}
-            tickFormatter={(yards) => `${yards} yds`}
+            tickFormatter={(yards) => `${(Math.ceil(yards / 10) * 10).toFixed(0)} yds`}
             yAxisId="left-axis"
-            domain={[0, 500]}
+            domain={[min * .80, max * 1.20]}
           />
           <Tooltip />
           <Legend />
