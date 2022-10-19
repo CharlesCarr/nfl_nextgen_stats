@@ -5,7 +5,7 @@ import DashBottom from "./components/DashBottom";
 
 function App() {
   const [allPassingData, setAllPassingData] = useState<any>(null);
-  // console.log(allPassingData);
+  console.log(allPassingData);
 
   useEffect(() => {
     fetch("/passing")

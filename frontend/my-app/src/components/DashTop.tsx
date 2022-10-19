@@ -11,8 +11,11 @@ import {
 import { setPlayerView } from "../redux/slices/playerViewSlice";
 import { RootState } from "../redux/store";
 import { CiSearch } from "react-icons/ci";
-import { GiAmericanFootballBall, GiAmericanFootballHelmet, GiAmericanFootballPlayer } from "react-icons/gi";
-
+import {
+  GiAmericanFootballBall,
+  GiAmericanFootballHelmet,
+  GiAmericanFootballPlayer,
+} from "react-icons/gi";
 
 const DashTop = ({ allPassingData }: any) => {
   // Redux State:
@@ -28,7 +31,7 @@ const DashTop = ({ allPassingData }: any) => {
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
   const [playerData, setPlayerData] = useState<any>(null);
-  console.log(playerData);
+  // console.log(playerData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<any>([
     {
@@ -50,6 +53,8 @@ const DashTop = ({ allPassingData }: any) => {
       statChange: "Loading",
     },
   ]);
+  const [allPlayers, setAllPlayers] = useState<any>(null);
+  const [inputError, setInputError] = useState<boolean>(false);
 
   useEffect(() => {
     if (allPassingData) {
@@ -64,6 +69,9 @@ const DashTop = ({ allPassingData }: any) => {
         // add passing yards and tds and take the avg of passer rating
         setPlayerData(getAllData(playerName));
       }
+
+      // get all unique players (to use for search validation)
+      setAllPlayers(getAllPlayers());
 
       setIsLoading(false);
     }
@@ -81,13 +89,17 @@ const DashTop = ({ allPassingData }: any) => {
         {
           statName: "Passing TDs",
           statNum: playerData["pass_touchdowns"],
-          statIcon: <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />,
+          statIcon: (
+            <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />
+          ),
           statChange: "TDs",
         },
         {
           statName: "Passer Rating",
           statNum: playerData["passer_rating"].toFixed(2),
-          statIcon: <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />,
+          statIcon: (
+            <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />
+          ),
           statChange: "RTG",
         },
       ]);
@@ -144,6 +156,24 @@ const DashTop = ({ allPassingData }: any) => {
     };
   };
 
+  const getAllPlayers = () => {
+    const allPlayers = allPassingData.map((data: any) => {
+      return data["player_display_name"];
+    });
+    const uniquePlayers = new Set(allPlayers);
+    return uniquePlayers;
+  };
+
+  const handleInput = (input: string) => {
+    if (allPlayers.has(input)) {
+      dispatch(setPlayerView(inputValue));
+      setInputError(false);
+    } else {
+      setInputError(true);
+      // console.log("Error: Player Not Found");
+    }
+  };
+
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
       {isLoading ? (
@@ -163,17 +193,20 @@ const DashTop = ({ allPassingData }: any) => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className="w-32 rounded text-md mr-4 shadow py-1 pl-3 font-light"
+                  className={`w-32 rounded text-md mr-4 shadow py-1 pl-3 font-light ${
+                    inputError ? "border border-red-500" : ""
+                  }`}
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
                 />
                 <button
-                  onClick={() => dispatch(setPlayerView(inputValue))}
+                  onClick={() => handleInput(inputValue)}
                   className="border rounded-lg shadow p-2 bg-[#1f1f1f] text-white"
                 >
-                  <CiSearch className="w-6 h-6"/>
+                  <CiSearch className="w-6 h-6" />
                 </button>
               </div>
+              {inputError ? (<p className="text-red-500 text-xs">Player Not Found</p>) : (null)}
               <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
                 <button
                   className={`rounded-xl py-1 px-4 ${
