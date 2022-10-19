@@ -16,8 +16,9 @@ import {
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
+import type { PassingData, PassPlayer, StatCard, DashProps } from "../types/dataTypes";
 
-const DashTop = ({ allPassingData }: any) => {
+const DashTop = ({ allPassingData }: DashProps) => {
   // Redux State:
   const periodFilter = useSelector(
     (state: RootState) => state.periodFilterView
@@ -30,49 +31,27 @@ const DashTop = ({ allPassingData }: any) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [week, setWeek] = useState<number>(6);
   const [season, setSeason] = useState<number>(2022);
-  const [playerData, setPlayerData] = useState<any>(null);
-  // console.log(playerData);
+  const [playerData, setPlayerData] = useState<PassPlayer | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [statCardData, setStatCardData] = useState<any>([
-    {
-      statName: "Loading",
-      statNum: "Loading",
-      statIcon: "Loading",
-      statChange: "Loading",
-    },
-    {
-      statName: "Loading",
-      statNum: "Loading",
-      statIcon: "Loading",
-      statChange: "Loading",
-    },
-    {
-      statName: "Loading",
-      statNum: "Loading",
-      statIcon: "Loading",
-      statChange: "Loading",
-    },
-  ]);
-  const [allPlayers, setAllPlayers] = useState<any>(null);
+  const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
+  const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
   const [inputError, setInputError] = useState<boolean>(false);
 
   useEffect(() => {
     if (allPassingData) {
       if (periodFilter.view === "week") {
         // already have so how to get
-        setPlayerData(getWeekData(playerName, week));
+        getWeekData(playerName, week);
       } else if (periodFilter.view === "season") {
         // grab week 0 for the selected year/season
-        setPlayerData(getSeasonData(playerName, season));
+        getSeasonData(playerName, season);
       } else {
         // all in career - think easiest is to grab all week 0's
         // add passing yards and tds and take the avg of passer rating
-        setPlayerData(getAllData(playerName));
+        getAllData(playerName);
       }
-
       // get all unique players (to use for search validation)
-      setAllPlayers(getAllPlayers());
-
+      getAllPlayers();
       setIsLoading(false);
     }
   }, [allPassingData, playerName, week, periodFilter]);
@@ -84,7 +63,7 @@ const DashTop = ({ allPassingData }: any) => {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
           statIcon: <GiAmericanFootballBall className="w-14 h-14 mt-6 mr-4" />,
-          statChange: "yards",
+          statLabel: "yards",
         },
         {
           statName: "Passing TDs",
@@ -92,76 +71,103 @@ const DashTop = ({ allPassingData }: any) => {
           statIcon: (
             <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />
           ),
-          statChange: "TDs",
+          statLabel: "TDs",
         },
         {
           statName: "Passer Rating",
-          statNum: playerData["passer_rating"].toFixed(2),
+          statNum: Number(playerData["passer_rating"].toFixed(2)),
           statIcon: (
             <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />
           ),
-          statChange: "RTG",
+          statLabel: "RTG",
         },
       ]);
     }
   }, [playerData]);
 
   const getWeekData = (playerName: string, week: number) => {
-    let weekData = allPassingData.filter((d: any) => {
-      if (
-        d["player_display_name"] === playerName &&
-        d.week === week &&
-        d.season === 2022
-      ) {
-        return d;
-      }
-    });
-    return weekData[0];
+    if (allPassingData) {
+      let weekData = allPassingData.filter((d: PassingData) => {
+        if (
+          d["player_display_name"] === playerName &&
+          d.week === week &&
+          d.season === 2022
+        ) {
+          return d;
+        } else {
+          return null;
+        }
+      });
+      setPlayerData(weekData[0]);
+      return weekData[0];
+    }
   };
 
   const getSeasonData = (playerName: string, season: number) => {
-    let seasonData = allPassingData.filter((d: any) => {
-      if (
-        d["player_display_name"] === playerName &&
-        d.week === 0 &&
-        d.season === season
-      ) {
-        return d;
-      }
-    });
-    return seasonData[0];
+    if (allPassingData) {
+      let seasonData = allPassingData.filter((d: PassingData) => {
+        if (
+          d["player_display_name"] === playerName &&
+          d.week === 0 &&
+          d.season === season
+        ) {
+          return d;
+        } else {
+          return null;
+        }
+      });
+      setPlayerData(seasonData[0]);
+      return seasonData[0];
+    }
   };
 
   const getAllData = (playerName: string) => {
-    let allData = allPassingData.filter((d: any) => {
-      if (d["player_display_name"] === playerName && d.week === 0) {
-        return d;
-      }
-    });
-    let totalPassY = 0;
-    let totalPassTD = 0;
-    let totalPassRSum = 0;
+    if (allPassingData) {
+      let allData = allPassingData.filter((d: PassingData) => {
+        if (d["player_display_name"] === playerName && d.week === 0) {
+          return d;
+        } else {
+          return null;
+        }
+      });
+      let totalPassY = 0;
+      let totalPassTD = 0;
+      let totalPassRSum = 0;
+      let playerNum = 0;
+      let playerTeam = "";
 
-    for (let i = 0; i < allData.length; i++) {
-      let data = allData[i];
-      totalPassY += data["pass_yards"];
-      totalPassTD += data["pass_touchdowns"];
-      totalPassRSum += data["passer_rating"];
+      for (let i = 0; i < allData.length; i++) {
+        let data = allData[i];
+        totalPassY += data["pass_yards"];
+        totalPassTD += data["pass_touchdowns"];
+        totalPassRSum += data["passer_rating"];
+        playerNum = data["player_jersey_number"];
+        playerTeam = data["team_abbr"];
+      }
+
+      let playerData: PassPlayer = {
+        pass_yards: totalPassY,
+        pass_touchdowns: totalPassTD,
+        passer_rating: totalPassRSum / allData.length,
+        player_jersey_number: playerNum,
+        team_abbr: playerTeam,
+      };
+      // console.log(allData);
+      setPlayerData(playerData);
+
+      return playerData;
     }
-    // console.log(allData);
-    return {
-      pass_yards: totalPassY,
-      pass_touchdowns: totalPassTD,
-      passer_rating: totalPassRSum / allData.length,
-    };
   };
 
   const getAllPlayers = () => {
-    const allPlayers = allPassingData.map((data: any) => {
-      return data["player_display_name"];
-    });
-    const uniquePlayers = new Set(allPlayers);
-    return uniquePlayers;
+    if (allPassingData) {
+      const allPlayers = allPassingData.map((data: PassingData) => {
+        return data["player_display_name"];
+      });
+      const uniquePlayers = new Set(allPlayers);
+      setAllPlayers(uniquePlayers);
+      return uniquePlayers;
+    }
   };
 
   const handleInput = (input: string) => {
@@ -185,8 +191,12 @@ const DashTop = ({ allPassingData }: any) => {
               <p className="text-4xl font-bold tracking-widest mb-2">
                 QB SPOTLIGHT
               </p>
-              <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${playerData["player_jersey_number"]}`}</p>
-              <p className="font-light text-sm">{playerData["team_abbr"]}</p>
+              <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${
+                playerData ? playerData["player_jersey_number"] : "Loading..."
+              }`}</p>
+              <p className="font-light text-sm">
+                {playerData ? playerData["team_abbr"] : "Loading..."}
+              </p>
             </div>
             <div className="w-1/3 h-full flex flex-col justify-center items-center">
               <div className="w-full h-1/2 flex justify-end items-center pr-4">
@@ -206,7 +216,9 @@ const DashTop = ({ allPassingData }: any) => {
                   <CiSearch className="w-6 h-6" />
                 </button>
               </div>
-              {inputError ? (<p className="text-red-500 text-xs">Player Not Found</p>) : (null)}
+              {inputError ? (
+                <p className="text-red-500 text-xs">Player Not Found</p>
+              ) : null}
               <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
                 <button
                   className={`rounded-xl py-1 px-4 ${
@@ -241,19 +253,23 @@ const DashTop = ({ allPassingData }: any) => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
-            {statCardData.map((d: any, index: any) => {
-              return (
-                <StatsCard
-                  key={index}
-                  statName={d.statName}
-                  statNum={d.statNum}
-                  statIcon={d.statIcon}
-                  statChange={d.statChange}
-                />
-              );
-            })}
-          </div>
+          {statCardData ? (
+            <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
+              {statCardData.map((d: StatCard, index: number) => {
+                return (
+                  <StatsCard
+                    key={index}
+                    statName={d.statName}
+                    statNum={d.statNum}
+                    statIcon={d.statIcon}
+                    statLabel={d.statLabel}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       )}
 

@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import DashTop from "./components/DashTop";
 import DashBottom from "./components/DashBottom";
+import type { PassingData } from "./types/dataTypes";
 
 function App() {
-  const [allPassingData, setAllPassingData] = useState<any>(null);
+  const [allPassingData, setAllPassingData] = useState<PassingData[] | null>(
+    null
+  );
   console.log(allPassingData);
 
   useEffect(() => {
