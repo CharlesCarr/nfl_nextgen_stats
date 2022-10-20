@@ -1,4 +1,4 @@
-import useFetchData from "./utilities/hooks/useFetchData";
+import useFetchData from "./hooks/useFetchData";
 import NavBar from "./components/NavBar";
 import DashTop from "./components/DashTop";
 import DashBottom from "./components/DashBottom";

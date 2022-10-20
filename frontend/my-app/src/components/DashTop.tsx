@@ -16,7 +16,12 @@ import {
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
-import type { PassingData, PassPlayer, StatCard, DashProps } from "../types/dataTypes";
+import type {
+  PassingData,
+  PassPlayer,
+  StatCard,
+  DashProps,
+} from "../types/dataTypes";
 
 const DashTop = ({ allPassingData }: DashProps) => {
   // Redux State:
@@ -63,7 +68,8 @@ const DashTop = ({ allPassingData }: DashProps) => {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
           statIcon: <GiAmericanFootballBall className="w-14 h-14 mt-6 mr-4" />,
-          statLabel: "yards",
+          statLabel: "yds",
+          statKey: "pass_yards",
         },
         {
           statName: "Passing TDs",
@@ -72,6 +78,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
             <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />
           ),
           statLabel: "TDs",
+          statKey: "pass_touchdowns",
         },
         {
           statName: "Passer Rating",
@@ -80,6 +87,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
             <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />
           ),
           statLabel: "RTG",
+          statKey: "passer_rating",
         },
       ]);
     }
@@ -263,6 +271,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
                     statNum={d.statNum}
                     statIcon={d.statIcon}
                     statLabel={d.statLabel}
+                    statKey={d.statKey}
                   />
                 );
               })}

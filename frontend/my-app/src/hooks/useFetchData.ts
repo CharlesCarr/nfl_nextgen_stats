@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { PassingData } from "../../types/dataTypes";
+import type { PassingData } from "../types/dataTypes";
 
 const useFetchData = () => {
   const [data, setData] = useState<PassingData[] | null>(null);

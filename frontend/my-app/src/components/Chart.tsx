@@ -21,6 +21,9 @@ interface ChartProps {
 const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
   // Redux State:
   const playerName = useSelector((state: RootState) => state.playerView.player);
+  const statFilter = useSelector(
+    (state: RootState) => state.statFilterView.view
+  );
   // actual data for the chart in the format that need for recharts lib
   const [data, setData] = useState<any>(null);
 
@@ -72,10 +75,10 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
               tickLine={false}
               tickCount={5}
               tickFormatter={(yards) =>
-                `${(Math.ceil(yards / 10) * 10).toFixed(0)} yds`
+                `${yards.toFixed(0)} ${statFilter.abbr}`
               }
               yAxisId="left-axis"
-              domain={[minMaxAvg.min * 0.8, minMaxAvg.max * 1.2]}
+              domain={[Number(minMaxAvg.min) * 0.8, Number(minMaxAvg.max) * 1.2]}
             />
             <Tooltip />
             <Legend />

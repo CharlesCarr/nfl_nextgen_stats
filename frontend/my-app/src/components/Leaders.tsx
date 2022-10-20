@@ -1,11 +1,16 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+
 interface LeadersProps {
   index: number;
   name: string;
   team: string;
-  passYards: number;
+  stat: number;
 }
 
-const Leaders = ({ index, name, team, passYards }: LeadersProps) => {
+const Leaders = ({ index, name, team, stat}: LeadersProps) => {
+  const statFilter = useSelector((state: RootState) => state.statFilterView.view);
+
   return (
     <div className="w-full h-1/3 flex justify-between items-center px-4 py-2 rounded-3xl shadow mb-3">
       {/* first:bg-[#1f1f1f] first:text-white */}
@@ -17,8 +22,8 @@ const Leaders = ({ index, name, team, passYards }: LeadersProps) => {
         <span className="font-normal"> {`(${team})`}</span>
       </p>
       <p className="text-xs font-semibold">
-        {passYards}
-        <span className="font-normal"> yards</span>
+        {stat.toFixed(1)}
+        <span className="font-normal">{" "}{statFilter.abbr}</span>
       </p>
     </div>
   );

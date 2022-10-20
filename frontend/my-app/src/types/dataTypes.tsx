@@ -47,6 +47,7 @@ export interface StatCard {
   statNum: number;
   statIcon: JSX.Element;
   statLabel: string;
+  statKey: string;
 }
 
 export interface ChartData {
@@ -55,7 +56,7 @@ export interface ChartData {
 }
 
 export interface MinMaxAvg {
-  min: number;
-  max: number;
+  min: string;
+  max: string;
   avg: string;
 }
