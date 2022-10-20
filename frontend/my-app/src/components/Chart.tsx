@@ -44,7 +44,7 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
   }, [chartData, playerName, minMaxAvg]);
 
   return (
-    <div className="flex justify-center items-center pt-2 h-full w-full md:mt-2 text-xs font-semibold tracking-wide">
+    <div className="flex justify-center items-center pt-2 h-full min-h-[200px] w-full md:mt-2 text-xs font-semibold tracking-wide">
       {chartData && minMaxAvg ? (
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>

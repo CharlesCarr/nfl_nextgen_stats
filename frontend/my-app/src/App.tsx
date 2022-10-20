@@ -16,7 +16,7 @@ const App = () => {
     );
   } else if (!loading && !error) {
     conditionalContent = (
-      <div className="w-full h-full bg-white p-12">
+      <div className="w-full h-full bg-white p-10">
           <DashTop allPassingData={data} />
           <DashBottom allPassingData={data} />
         </div>
@@ -30,7 +30,7 @@ const App = () => {
   }
 
   return (
-    <div className="flex h-screen w-full font-montserrat text-[#1f1f1f]">
+    <div className="flex flex-col lg:flex-row h-full lg:h-screen w-full font-montserrat text-[#1f1f1f]">
       <NavBar />
       {conditionalContent}
     </div>

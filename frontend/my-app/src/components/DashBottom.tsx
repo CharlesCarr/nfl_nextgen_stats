@@ -3,7 +3,7 @@ import Chart from "./Chart";
 import Leaders from "./Leaders";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { BsFilterRight } from "react-icons/bs";
+// import { BsFilterRight } from "react-icons/bs";
 import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
 import { BiStats } from "react-icons/bi";
 import type {
@@ -105,9 +105,9 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   };
 
   return (
-    <div className="w-full h-1/2 flex justify-between items-center mt-2">
+    <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
       {/* Bottom Left */}
-      <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
+      <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0">
         <div className="w-full h-1/5 flex justify-between items-center">
           <div className="w-1/2 h-full flex justify-start items-center">
             <p className="text-2xl font-semibold tracking-wider">
@@ -129,22 +129,23 @@ const DashBottom = ({ allPassingData }: DashProps) => {
                 <p>{`min: ${minMaxAvg.min}`}</p>
               </div>
 
-              <BsFilterRight className="w-7 h-7 cursor-pointer" />
+              {/* Adding additional filter functionality later */}
+              {/* <BsFilterRight className="w-7 h-7 cursor-pointer" /> */}
             </div>
           ) : (
             <p>Loading...</p>
           )}
         </div>
-        <div className="w-full h-4/5 flex justify-center items-center">
+        <div className="w-full h-full lg:h-4/5 flex justify-center items-center">
           {/* border border-black */}
           <Chart chartData={chartData} minMaxAvg={minMaxAvg} />
         </div>
       </div>
 
       {/* Bottom Right */}
-      <div className="flex flex-col justify-between items-center h-full w-1/4">
-        <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium">
-          <p className="font-semibold">{`Top QBs for ${statFilter.name}`}</p>
+      <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">
+        <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium mb-4 sm:mb-0">
+          <p className="font-semibold mb-2 sm:mb-0">{`Top QBs for ${statFilter.name}`}</p>
           <p className="font-extralight text-xs">(2022 Season)</p>
         </div>
 

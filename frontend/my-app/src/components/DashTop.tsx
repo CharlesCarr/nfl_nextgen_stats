@@ -67,7 +67,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
         {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
-          statIcon: <GiAmericanFootballBall className="w-14 h-14 mt-6 mr-4" />,
+          statIcon: <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />,
           statLabel: "yds",
           statKey: "pass_yards",
         },
@@ -75,7 +75,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
           statName: "Passing TDs",
           statNum: playerData["pass_touchdowns"],
           statIcon: (
-            <GiAmericanFootballHelmet className="w-14 h-14 mt-6 mr-4" />
+            <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
           ),
           statLabel: "TDs",
           statKey: "pass_touchdowns",
@@ -84,7 +84,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
           statName: "Passer Rating",
           statNum: Number(playerData["passer_rating"].toFixed(2)),
           statIcon: (
-            <GiAmericanFootballPlayer className="w-14 h-14 mt-6 mr-4" />
+            <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
           ),
           statLabel: "RTG",
           statKey: "passer_rating",
@@ -193,25 +193,25 @@ const DashTop = ({ allPassingData }: DashProps) => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex flex-col justify-between items-center h-full w-3/4 mr-4 pr-3">
-          <div className="flex justify-between items-center h-1/2 w-full">
+        <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-0 lg:mr-4 pr-0 lg:pr-3 mb-10 lg:mb-10">
+          <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
             <div className="w-1/2 h-full flex flex-col justify-start items-start">
-              <p className="text-4xl font-bold tracking-widest mb-2">
+              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-widest mb-2">
                 QB SPOTLIGHT
               </p>
-              <p className="font-semibold tracking-wide mb-1">{`${playerName} - #${
+              <p className="text-sm lg:text-base font-semibold tracking-wide mb-1">{`${playerName} - #${
                 playerData ? playerData["player_jersey_number"] : "Loading..."
               }`}</p>
-              <p className="font-light text-sm">
+              <p className="font-light text-xs lg:text-sm">
                 {playerData ? playerData["team_abbr"] : "Loading..."}
               </p>
             </div>
-            <div className="w-1/3 h-full flex flex-col justify-center items-center">
-              <div className="w-full h-1/2 flex justify-end items-center pr-4">
+            <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
+              <div className="w-full h-1/2 flex justify-end items-center sm:pr-4 mb-10 sm:mb-6 lg:mb-0">
                 <input
                   type="text"
                   placeholder="Search"
-                  className={`w-32 rounded text-md mr-4 shadow py-1 pl-3 font-light ${
+                  className={`w-28 sm:w-32 rounded text-sm sm:text-base mr-4 shadow py-1 pl-3 font-light ${
                     inputError ? "border border-red-500" : ""
                   }`}
                   value={inputValue}
@@ -221,13 +221,14 @@ const DashTop = ({ allPassingData }: DashProps) => {
                   onClick={() => handleInput(inputValue)}
                   className="border rounded-lg shadow p-2 bg-[#1f1f1f] text-white"
                 >
-                  <CiSearch className="w-6 h-6" />
+                  <CiSearch className="w-4 h-4 sm:w-6 sm:h-6" />
                 </button>
               </div>
               {inputError ? (
                 <p className="text-red-500 text-xs">Player Not Found</p>
               ) : null}
-              <div className="w-full h-1/2 flex justify-between items-center pr-10 pl-24 text-xs">
+              <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
+                {/* pr-10 pl-24 */}
                 <button
                   className={`rounded-xl py-1 px-4 ${
                     periodFilter.view === "week"
@@ -262,7 +263,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
             </div>
           </div>
           {statCardData ? (
-            <div className="grid grid-cols-3 gap-x-3 h-2/3 w-full">
+            <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full">
               {statCardData.map((d: StatCard, index: number) => {
                 return (
                   <StatsCard
@@ -282,7 +283,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
         </div>
       )}
 
-      <div className="flex justify-center items-center h-full w-1/4 rounded-2xl shadow">
+      <div className="lg:flex justify-center items-center h-full w-1/4 rounded-2xl shadow hidden">
         <img
           src={Football}
           alt="football"

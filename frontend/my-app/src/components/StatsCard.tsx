@@ -11,7 +11,7 @@ const StatsCard = ({ statName, statNum, statIcon, statLabel, statKey }: StatCard
 
   return (
     <div
-      className={`relative shadow rounded-2xl flex flex-col items-between justify-start px-8 text-xs  font-medium cursor-pointer ${
+      className={`relative shadow rounded-2xl flex flex-col items-between justify-start px-8 text-xs font-medium cursor-pointer ${
         statFilter.key === statKey ? "bg-[#0b6241]/80 text-white" : null
       }`}
       onClick={() => dispatch(setStatView({name: statName, abbr:statLabel, key: statKey}))}
@@ -24,7 +24,7 @@ const StatsCard = ({ statName, statNum, statIcon, statLabel, statKey }: StatCard
 
       <div className="flex justify-center items-end h-1/2 pb-8">
         <p className="mr-2 text-4xl font-bold">{statNum}</p>
-        <p className="text-xl">{statLabel}</p>
+        <p className="text-base lg:text-xl">{statLabel}</p>
       </div>
     </div>
   );

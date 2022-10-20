@@ -3,11 +3,11 @@ import { FaFootballBall } from "react-icons/fa";
 
 const NavBar = () => {
   return (
-    <div className="h-full w-20 flex flex-col bg-[#1f1f1f] justify-between items-center text-zinc-100 text-xs py-10">
+    <div className="h-10 lg:h-full w-full lg:w-20 flex lg:flex-col flex-row bg-[#1f1f1f] justify-between items-center text-zinc-100 text-xs py-10 px-10 lg:px-0">
       <div className="1/5 flex items-center justify-center">
         <FaFootballBall className="w-7 h-7" />
       </div>
-      <div className="flex flex-col justify-end items-center h-3/4">
+      <div className="flex flex-col justify-end items-center lg:h-3/4">
         {/* add other icons when build out running and receiving stats */}
         {/* <div>Icon1</div>
         <div>Icon2</div> */}
