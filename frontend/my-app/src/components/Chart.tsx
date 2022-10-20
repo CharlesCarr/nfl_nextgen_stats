@@ -80,7 +80,7 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
               yAxisId="left-axis"
               domain={[Number(minMaxAvg.min) * 0.8, Number(minMaxAvg.max) * 1.2]}
             />
-            <Tooltip />
+            <Tooltip labelFormatter={() => "Week Stat -"} />
             <Legend />
             <Area
               type="monotone"
