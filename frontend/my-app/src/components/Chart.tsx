@@ -20,6 +20,7 @@ interface ChartProps {
 
 const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
   // Redux State:
+  const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
   const playerName = useSelector((state: RootState) => state.playerView.player);
   const statFilter = useSelector(
     (state: RootState) => state.statFilterView.view
@@ -62,7 +63,7 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
             </defs>
             <CartesianGrid opacity={0.25} vertical={false} />
             <XAxis
-              stroke="#1f1f1f"
+              stroke={darkMode ? ("white") : ("#1f1f1f")}
               dataKey="week"
               // interval={xInterval}
               axisLine={false}
@@ -70,7 +71,7 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
               tickFormatter={(week) => `Week: ${week}`}
             />
             <YAxis
-              stroke="#1f1f1f"
+              stroke={darkMode ? ("white") : ("#1f1f1f")}
               axisLine={false}
               tickLine={false}
               tickCount={5}
