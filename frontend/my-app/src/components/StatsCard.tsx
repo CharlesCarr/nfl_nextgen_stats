@@ -22,7 +22,7 @@ const StatsCard = ({
     if (statFilter.key === statKey) {
       setItemStyles("bg-[#0b6241]/80 text-white");
     } else if (darkMode && statFilter.key !== statKey) {
-      setItemStyles("bg-black");
+      setItemStyles("bg-[#1f1f1f]");
     } else {
       setItemStyles("");
     }
@@ -35,12 +35,13 @@ const StatsCard = ({
         dispatch(setStatView({ name: statName, abbr: statLabel, key: statKey }))
       }
     >
-      <div className="absolute inset-2/4 -translate-y-2/4 -translate-x-2/4 w-52 h-36 bg-slate-50 rounded-full mix-blend-lighten filter blur-xl opacity-20"></div>
+      {darkMode && statFilter.key === statKey ? (
+        <div className="absolute inset-2/4 -translate-y-2/4 -translate-x-2/4 w-52 h-36 bg-slate-50 rounded-full mix-blend-lighten filter blur-xl opacity-20"></div>
+      ) : null}
       <div className="flex justify-between items-center h-1/2">
         <p className="text-lg font-semibold">{statName}</p>
         {statIcon}
       </div>
-
       <div className="flex justify-center items-end h-1/2 pb-8">
         <p className="mr-2 text-4xl font-bold">{statNum}</p>
         <p className="text-base lg:text-xl">{statLabel}</p>

@@ -22,6 +22,7 @@ import type {
   StatCard,
   DashProps,
 } from "../types/dataTypes";
+import Loading from "./Loading";
 
 const DashTop = ({ allPassingData }: DashProps) => {
   // Redux State:
@@ -67,7 +68,9 @@ const DashTop = ({ allPassingData }: DashProps) => {
         {
           statName: "Passing Yards",
           statNum: playerData["pass_yards"],
-          statIcon: <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />,
+          statIcon: (
+            <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+          ),
           statLabel: "yds",
           statKey: "pass_yards",
         },
@@ -191,7 +194,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
       {isLoading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : (
         <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-0 lg:mr-4 pr-0 lg:pr-3 mb-10 lg:mb-10">
           <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
@@ -211,7 +214,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
                 <input
                   type="text"
                   placeholder="Search"
-                  className={`w-28 sm:w-32 rounded text-sm sm:text-base mr-4 shadow py-1 pl-3 font-light ${
+                  className={`w-28 sm:w-32 rounded text-sm sm:text-base mr-4 shadow py-1 pl-3 font-light text-black ${
                     inputError ? "border border-red-500" : ""
                   }`}
                   value={inputValue}
@@ -263,7 +266,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
             </div>
           </div>
           {statCardData ? (
-            <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full">
+            <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full mt-px">
               {statCardData.map((d: StatCard, index: number) => {
                 return (
                   <StatsCard
@@ -278,7 +281,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
               })}
             </div>
           ) : (
-            <p>Loading...</p>
+            <Loading />
           )}
         </div>
       )}
