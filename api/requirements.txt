@@ -5,6 +5,7 @@ cramjam==2.5.0
 fastparquet==0.8.3
 Flask==2.2.2
 fsspec==2022.8.2
+gunicorn==20.1.0
 importlib-metadata==5.0.0
 itsdangerous==2.1.2
 Jinja2==3.1.2
