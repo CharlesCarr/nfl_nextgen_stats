@@ -5,11 +5,12 @@ const useFetchData = () => {
   const [data, setData] = useState<PassingData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const URL = 'https://flask-nfl-stats-api.onrender.com';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/passing");
+        const response = await fetch(`${URL}/passing`);
 
         if (!response.ok) {
           const message = `${response.status} ${response.statusText}`;
