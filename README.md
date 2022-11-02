@@ -8,9 +8,14 @@ NFL Stats dashboard web app using AWS's Next Gen NFL Stats. Built with React/Typ
 
 I designed and built this mobile friendly, responsive workout NFL stats dashboard with React.js and Flask. I used TailwindCSS to style the application after creating a design in Figma. I found a python package that connected to the AWS NFL Next Gen stats so I created a backend using Python's Flask framework.
 ## Screenshots
+
+### Dark Mode
 ![App Image (Dark Mode) 1](/frontend/src/images/app/appDark.png)
+### Light Mode
 ![App Image (Light Mode) 1](/frontend/src/images/app/appLight.png)
+### Mobile Light Mode (Top)
 ![App Image (Mobile) 1](/frontend/src/images/app/appMobile1.png)
+### Mobile Dark Mode (Bottom)
 ![App Image (Mobile) 2](/frontend/src/images/app/appMobile2.png)
 
 #### Areas of Focus
