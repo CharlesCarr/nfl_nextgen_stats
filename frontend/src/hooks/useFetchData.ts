@@ -5,7 +5,7 @@ const useFetchData = () => {
   const [data, setData] = useState<PassingData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const URL = 'https://flask-nfl-stats-api.onrender.com';
+  const URL = 'https://flask-nfl.onrender.com';
 
   useEffect(() => {
     const fetchData = async () => {

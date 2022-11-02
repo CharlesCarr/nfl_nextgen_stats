@@ -8,7 +8,6 @@ import Loading from "./components/Loading";
 
 const App = () => {
   const { data, loading, error } = useFetchData();
-  console.log(data);
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 
   let conditionalContent;

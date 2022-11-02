@@ -19,7 +19,6 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   const statFilter = useSelector((state: RootState) => state.statFilterView.view);
   // Local State:
   const [leadersData, setLeadersData] = useState<PassingData[] | null>(null);
-  console.log(leadersData);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
 

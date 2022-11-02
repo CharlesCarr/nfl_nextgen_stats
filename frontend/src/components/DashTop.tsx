@@ -163,7 +163,6 @@ const DashTop = ({ allPassingData }: DashProps) => {
         player_jersey_number: playerNum,
         team_abbr: playerTeam,
       };
-      // console.log(allData);
       setPlayerData(playerData);
 
       return playerData;
@@ -187,7 +186,6 @@ const DashTop = ({ allPassingData }: DashProps) => {
       setInputError(false);
     } else {
       setInputError(true);
-      // console.log("Error: Player Not Found");
     }
   };
 
