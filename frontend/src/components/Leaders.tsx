@@ -22,13 +22,13 @@ const Leaders = ({ index, name, team, stat }: LeadersProps) => {
     >
       {/* first:bg-[#1f1f1f] first:text-white */}
       <div className="border border-black rounded-lg h-6 w-6 text-xs flex justify-center items-center">
-        <p className="text-xs font-semibold">{index + 1}</p>
+        <p className="text-xs font-semibold" id="rank">{index + 1}</p>
       </div>
-      <p className="text-xs font-semibold">
+      <p className="text-xs font-semibold" data-testid="name">
         {name}
-        <span className="font-normal"> {`(${team})`}</span>
+        <span className="font-normal" id="team"> {`(${team})`}</span>
       </p>
-      <p className="text-xs font-semibold">
+      <p className="text-xs font-semibold" id="statNum">
         {stat.toFixed(1)}
         <span className="font-normal"> {statFilter.abbr}</span>
       </p>

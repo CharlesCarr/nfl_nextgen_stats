@@ -34,7 +34,7 @@ const App = () => {
   }
 
   return (
-    <div className={`flex flex-col lg:flex-row h-full lg:h-screen w-full font-montserrat ${darkMode ? ("text-white") : ("text-[#1f1f1f]")} `}>
+    <div className={`flex flex-col lg:flex-row h-full lg:h-screen w-full font-montserrat ${darkMode ? ("text-white") : ("text-[#1f1f1f]")} `} data-testId="full">
       <NavBar />
       {conditionalContent}
     </div>

@@ -10,7 +10,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="h-10 lg:h-full w-full lg:w-20 flex lg:flex-col flex-row bg-[#1f1f1f] justify-between items-center text-zinc-100 text-xs py-10 px-10 lg:px-0">
+    <div className="h-10 lg:h-full w-full lg:w-20 flex lg:flex-col flex-row bg-[#1f1f1f] justify-between items-center text-zinc-100 text-xs py-10 px-10 lg:px-0" data-testId="navbar">
       <div className="1/5 flex flex-col items-center justify-center">
         <FaFootballBall className="w-7 h-7 mb-7" />
         {darkMode ? (
