@@ -181,9 +181,26 @@ const DashTop = ({ allPassingData }: DashProps) => {
     }
   };
 
+  const formatInput = (input: string) => {
+    // 'charlie Carr' or 'CHARLIE carr'
+    const allLower = input.toLowerCase();
+    const nameArr = allLower.split(" ");
+    console.log(nameArr);
+    const test = nameArr.map((name) => {
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    });
+
+    const formattedInput = `${test[0]} ${test[1]}`;
+    console.log(formattedInput);
+    return formattedInput;
+  };
+
   const handleInput = (input: string) => {
-    if (allPlayers.has(input)) {
-      dispatch(setPlayerView(inputValue));
+    const formattedInput = formatInput(input);
+    setInputValue(formattedInput);
+
+    if (allPlayers.has(formattedInput)) {
+      dispatch(setPlayerView(formattedInput));
       setInputError(false);
     } else {
       setInputError(true);
@@ -217,7 +234,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
                     inputError ? "border border-red-500" : ""
                   }`}
                   value={inputValue}
-                  onChange={(event) => setInputValue(event.target.value)}
+                  onChange={(e) => setInputValue(e.target.value)}
                 />
                 <button
                   onClick={() => handleInput(inputValue)}
