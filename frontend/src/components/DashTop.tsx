@@ -35,7 +35,8 @@ const DashTop = ({ allPassingData }: DashProps) => {
   // Local State:
   // state for input field (player name)
   const [inputValue, setInputValue] = useState<string>("");
-  const [week, setWeek] = useState<number>(6);
+  // hardcoded
+  const [week, setWeek] = useState<number>(11);
   const [season, setSeason] = useState<number>(2022);
   const [playerData, setPlayerData] = useState<PassPlayer | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);

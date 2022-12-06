@@ -50,8 +50,13 @@ const DashBottom = ({ allPassingData }: DashProps) => {
 
       let chartData = weekData.map((week: any) => { //PassingData
         return { week: week.week, passYards: week[stat] };
+      }).sort((a, b) => {
+         // add sorting to make sure data is in order weeks
+        return a.week - b.week;
       });
+
       setChartData(chartData);
+      console.log(chartData);
       return chartData;
     }
   };
