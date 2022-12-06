@@ -28,3 +28,25 @@ def passing():
                 pass_item[key] = 'NaN'
                 
     return {"data": passingList}
+
+@app.route('/rushing')
+def rushing():
+    # create a variable to store output from a nfl method (testing data)
+    rushingDf = nfl.import_ngs_data(stat_type='rushing')
+    # convert from pandas df to list of dictionaries
+    rushingList = rushingDf.to_dict("records")
+    print(rushingDf)
+
+    def isNaN(num):
+        return num != num
+
+    # loop over all and if a key returns a val of NaN convert to string of NaN
+    for pass_item in rushingList:
+        for key in pass_item:
+            if (isNaN(pass_item[key])):
+                # passListTest.append(pass_item[key])
+                pass_item[key] = 'NaN'
+     
+    return {"data": rushingList}
+
+rushing()
