@@ -9,6 +9,9 @@ import Loading from "./Loading";
 
 const Main = () => {
   const { loading, error, data } = useQuery(GET_PASSERS);
+  console.log(loading);
+  console.log(error);
+  console.log(data);
   const [passers, setPassers] = useState(null);
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 

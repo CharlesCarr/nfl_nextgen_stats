@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://flask-nfl.onrender.com/",
+  "proxy": "https://express-nfl.onrender.com/",
   "dependencies": {
     "@apollo/client": "^3.7.1",
     "@reduxjs/toolkit": "^1.8.6",
