@@ -41,11 +41,11 @@ def rushing():
         return num != num
 
     # loop over all and if a key returns a val of NaN convert to string of NaN
-    for pass_item in rushingList:
-        for key in pass_item:
-            if (isNaN(pass_item[key])):
+    for rush_item in rushingList:
+        for key in rush_item:
+            if (isNaN(rush_item[key])):
                 # passListTest.append(pass_item[key])
-                pass_item[key] = 'NaN'
+                rush_item[key] = 'NaN'
      
     return {"data": rushingList}
 
