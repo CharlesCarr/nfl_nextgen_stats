@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
-// import NFLNextGen from "../images/nextgen1.jpeg";
 import Football from "../images/football-unsplash.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,9 +7,8 @@ import {
   getSeasonView,
   getAllView,
 } from "../redux/slices/periodFilterViewSlice";
-import { setPlayerView } from "../redux/slices/playerViewSlice";
+
 import { RootState } from "../redux/store";
-import { CiSearch } from "react-icons/ci";
 import {
   GiAmericanFootballBall,
   GiAmericanFootballHelmet,
@@ -23,6 +21,7 @@ import type {
   DashProps,
 } from "../types/dataTypes";
 import Loading from "./Loading";
+import Search from "./Search";
 
 const DashTop = ({ allPassingData }: DashProps) => {
   // Redux State:
@@ -33,8 +32,6 @@ const DashTop = ({ allPassingData }: DashProps) => {
   const dispatch = useDispatch();
 
   // Local State:
-  // state for input field (player name)
-  const [inputValue, setInputValue] = useState<string>("");
   // hardcoded
   const [week, setWeek] = useState<number>(11);
   const [season, setSeason] = useState<number>(2022);
@@ -42,7 +39,6 @@ const DashTop = ({ allPassingData }: DashProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
-  const [inputError, setInputError] = useState<boolean>(false);
 
   useEffect(() => {
     if (allPassingData) {
@@ -181,32 +177,6 @@ const DashTop = ({ allPassingData }: DashProps) => {
     }
   };
 
-  const formatInput = (input: string) => {
-    // 'charlie Carr' or 'CHARLIE carr'
-    const allLower = input.toLowerCase();
-    const nameArr = allLower.split(" ");
-    console.log(nameArr);
-    const test = nameArr.map((name) => {
-      return name.charAt(0).toUpperCase() + name.slice(1);
-    });
-
-    const formattedInput = `${test[0]} ${test[1]}`;
-    console.log(formattedInput);
-    return formattedInput;
-  };
-
-  const handleInput = (input: string) => {
-    const formattedInput = formatInput(input);
-    setInputValue(formattedInput);
-
-    if (allPlayers.has(formattedInput)) {
-      dispatch(setPlayerView(formattedInput));
-      setInputError(false);
-    } else {
-      setInputError(true);
-    }
-  };
-
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
       {isLoading ? (
@@ -226,26 +196,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
               </p>
             </div>
             <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
-              <div className="w-full h-1/2 flex justify-end items-center sm:pr-4 mb-10 sm:mb-6 lg:mb-0">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className={`w-28 sm:w-32 rounded text-sm sm:text-base mr-4 shadow py-1 pl-3 font-light text-black ${
-                    inputError ? "border border-red-500" : ""
-                  }`}
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                />
-                <button
-                  onClick={() => handleInput(inputValue)}
-                  className="border rounded-lg shadow p-2 bg-[#1f1f1f] text-white"
-                >
-                  <CiSearch className="w-4 h-4 sm:w-6 sm:h-6" />
-                </button>
-              </div>
-              {inputError ? (
-                <p className="text-red-500 text-xs">Player Not Found</p>
-              ) : null}
+              <Search allPlayers={allPlayers} />
               <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
                 {/* pr-10 pl-24 */}
                 <button
