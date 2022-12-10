@@ -16,11 +16,14 @@ import type {
 const DashBottom = ({ allPassingData }: DashProps) => {
   // Redux State:
   const playerName = useSelector((state: RootState) => state.playerView.player);
-  const statFilter = useSelector((state: RootState) => state.statFilterView.view);
+  const statFilter = useSelector(
+    (state: RootState) => state.statFilterView.view
+  );
   // Local State:
   const [leadersData, setLeadersData] = useState<PassingData[] | null>(null);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
+  const [noChart, setNoChart] = useState<boolean>(false);
 
   useEffect(() => {
     if (allPassingData) {
@@ -30,7 +33,11 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   }, [allPassingData, playerName, statFilter]);
 
   useEffect(() => {
-    findMinMaxAvg();
+    if (chartData && chartData.length > 1) {
+      findMinMaxAvg();
+    } else {
+      setNoChart(true);
+    }
   }, [chartData]);
 
   // start by hard coding for this season week by week
@@ -48,12 +55,15 @@ const DashBottom = ({ allPassingData }: DashProps) => {
         }
       });
 
-      let chartData = weekData.map((week: any) => { //PassingData
-        return { week: week.week, passYards: week[stat] };
-      }).sort((a, b) => {
-         // add sorting to make sure data is in order weeks
-        return a.week - b.week;
-      });
+      let chartData = weekData
+        .map((week: any) => {
+          //PassingData
+          return { week: week.week, passYards: week[stat] };
+        })
+        .sort((a, b) => {
+          // add sorting to make sure data is in order weeks
+          return a.week - b.week;
+        });
 
       setChartData(chartData);
       console.log(chartData);
@@ -70,7 +80,8 @@ const DashBottom = ({ allPassingData }: DashProps) => {
           return null;
         }
       });
-      allQBs.sort((a: any, b: any) => { // PassingData, PassingData
+      allQBs.sort((a: any, b: any) => {
+        // PassingData, PassingData
         return b[stat] - a[stat];
       });
       let topThree = allQBs.slice(0, 3);
@@ -81,7 +92,9 @@ const DashBottom = ({ allPassingData }: DashProps) => {
 
   // logic for finding smallest / largest closes to use for domain for recharts y axis
   const findMinMaxAvg = () => {
-    if (chartData) {
+    console.log(chartData);
+
+    if (chartData && chartData.length > 1) {
       const numData = chartData.map((week: ChartData) => {
         return week.passYards;
       });
@@ -111,40 +124,46 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   return (
     <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
       {/* Bottom Left */}
-      <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0">
-        <div className="w-full h-1/5 flex justify-between items-center">
-          <div className="w-1/2 h-full flex justify-start items-center">
-            <p className="text-2xl font-semibold tracking-wider">
-              {statFilter.name}
-            </p>
-          </div>
-          {minMaxAvg ? (
-            <div className="w-1/2 h-full flex justify-between items-center text-xs">
-              <div className="flex items-center justify-center">
-                <BiStats className="w-4 h-4 mr-3" />
-                <p>{`avg: ${minMaxAvg.avg}`}</p>
-              </div>
-              <div className="flex items-center justify-center">
-                <TfiStatsUp className="w-4 h-4 mr-3" />
-                <p>{`max: ${minMaxAvg.max}`}</p>
-              </div>
-              <div className="flex items-center justify-center">
-                <TfiStatsDown className="w-4 h-4 mr-3" />
-                <p>{`min: ${minMaxAvg.min}`}</p>
-              </div>
-
-              {/* Adding additional filter functionality later */}
-              {/* <BsFilterRight className="w-7 h-7 cursor-pointer" /> */}
+      {!noChart ? (
+        <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0">
+          <div className="w-full h-1/5 flex justify-between items-center">
+            <div className="w-1/2 h-full flex justify-start items-center">
+              <p className="text-2xl font-semibold tracking-wider">
+                {statFilter.name}
+              </p>
             </div>
-          ) : (
-            <p>Loading...</p>
-          )}
+            {minMaxAvg ? (
+              <div className="w-1/2 h-full flex justify-between items-center text-xs">
+                <div className="flex items-center justify-center">
+                  <BiStats className="w-4 h-4 mr-3" />
+                  <p>{`avg: ${minMaxAvg.avg}`}</p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <TfiStatsUp className="w-4 h-4 mr-3" />
+                  <p>{`max: ${minMaxAvg.max}`}</p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <TfiStatsDown className="w-4 h-4 mr-3" />
+                  <p>{`min: ${minMaxAvg.min}`}</p>
+                </div>
+
+                {/* Adding additional filter functionality later */}
+                {/* <BsFilterRight className="w-7 h-7 cursor-pointer" /> */}
+              </div>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+          <div className="w-full h-full lg:h-4/5 flex justify-center items-center">
+            {/* border border-black */}
+            <Chart chartData={chartData} minMaxAvg={minMaxAvg} />
+          </div>
         </div>
-        <div className="w-full h-full lg:h-4/5 flex justify-center items-center">
-          {/* border border-black */}
-          <Chart chartData={chartData} minMaxAvg={minMaxAvg} />
-        </div>
-      </div>
+      ) : (
+        <p className="flex justify-center items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0 font-bold">
+          Not enough data to display chart...
+        </p>
+      )}
 
       {/* Bottom Right */}
       <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">
@@ -155,7 +174,8 @@ const DashBottom = ({ allPassingData }: DashProps) => {
 
         <div className="w-full h-4/5 flex flex-col items-center justify-between">
           {leadersData &&
-            leadersData.map((d: any, index: number) => { // PassingData
+            leadersData.map((d: any, index: number) => {
+              // PassingData
               return (
                 <Leaders
                   key={index}
