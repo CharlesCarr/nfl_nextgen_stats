@@ -52,7 +52,7 @@ export interface StatCard {
 
 export interface ChartData {
   week: number;
-  passYards: number;
+  stat: number;
 }
 
 export interface MinMaxAvg {
