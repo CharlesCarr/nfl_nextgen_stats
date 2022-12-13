@@ -2,33 +2,42 @@ import * as d3 from "d3";
 import { motion } from "framer-motion";
 
 const ChartInner = ({ data, width, height }) => {
+
+  /*
+
+  shape of data = [{week: number, Jalen Hurts: number}];
+
+  feel like I need to change 'Jalen Hurts' to 'player'
+
+  */
+
   let margin = {
     top: 20,
-    right: 20,
+    right: 35,
     bottom: 22,
-    left: 22,
+    left: 30,
   };
 
   let xScale = d3
     .scaleLinear()
     // with arr of objs would just do (d) => d.prop instead here
-    .domain(d3.extent(data.map((d) => d[0]))) // how long the data stretches
+    .domain(d3.extent(data.map((d) => d.week))) // how long the data stretches
     .range([margin.left, width - margin.right]); // how long the actual chart stretches
 
   let yScale = d3
     .scaleLinear()
-    .domain(d3.extent(data.map((d) => d[1])))
+    .domain(d3.extent(data.map((d) => d.stat)))
     .range([height - margin.bottom, margin.top]);
 
   let line = d3
     .line()
-    .x((d) => xScale(d[0]))
-    .y((d) => yScale(d[1]));
+    .x((d) => xScale(d.week))
+    .y((d) => yScale(d.stat));
   let d = line(data);
 
   return (
     <>
-      <svg className="bg-gray-100" viewBox={`0 0 ${width} ${height}`}>
+      <svg  viewBox={`0 0 ${width} ${height}`}>
         {/* Y Axis */}
         {yScale.ticks(5).map((max) => (
           <g
@@ -52,14 +61,14 @@ const ChartInner = ({ data, width, height }) => {
         ))}
 
         {/* X Axis */}
-        {xScale.ticks(5).map((date) => (
+        {xScale.ticks().map((week) => (
           <g
-            key={date}
+            key={week}
             className="text-gray-400"
-            transform={`translate(${xScale(date)},${height - 10})`}
+            transform={`translate(${xScale(week)},${height})`}
           >
-            <text fill="currentColor" className="text-[10px]">
-              {date}
+            <text fill="currentColor" className="text-[10px]" textAnchor="end">
+              Wk: {week}
             </text>
           </g>
         ))}
@@ -71,7 +80,7 @@ const ChartInner = ({ data, width, height }) => {
           transition={{ duration: 1.5, delay: 0.5, type: "spring" }}
           d={d}
           fill="none"
-          stroke="currentColor"
+          stroke="#448167"
           strokeWidth="2"
         />
 
@@ -82,11 +91,11 @@ const ChartInner = ({ data, width, height }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", duration: 0.4, delay: 0.1 * i }}
             key={d}
-            fill="currentColor"
+            fill="#448167"
             r="5"
-            cx={xScale(d[0])}
-            cy={yScale(d[1])}
-            stroke="rgb(243 244 246)"
+            cx={xScale(d.week)}
+            cy={yScale(d.stat)}
+            stroke="white"
             strokeWidth={2}
           />
         ))}

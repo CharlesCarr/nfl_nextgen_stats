@@ -60,7 +60,7 @@ const DashBottom = ({ allPassingData }: DashProps) => {
       let chartData = weekData
         .map((week: any) => {
           //PassingData
-          return { week: week.week, passYards: week[stat] };
+          return { week: week.week, stat: week[stat] };
         })
         .sort((a, b) => {
           // add sorting to make sure data is in order weeks
@@ -98,7 +98,7 @@ const DashBottom = ({ allPassingData }: DashProps) => {
 
     if (chartData && chartData.length > 1) {
       const numData = chartData.map((week: ChartData) => {
-        return week.passYards;
+        return week.stat;
       });
 
       const minVal = numData.reduce((prev: number, curr: number) =>
