@@ -47,52 +47,7 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
   return (
     <div className="flex justify-center items-center pt-2 h-full min-h-[200px] w-full md:mt-2 text-xs font-semibold tracking-wide">
       {chartData && minMaxAvg ? (
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
-            <defs>
-              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#4b9d62" stopOpacity={0.4} />
-                {/* #7c72ff --> #72FF7C */}
-                <stop offset="75%" stopColor="#4b9d62" stopOpacity={0.05} />
-              </linearGradient>
-              <linearGradient id="colorTwo" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#549256" stopOpacity={0.4} />
-                {/* #2d324d --> #324D2D */}
-                <stop offset="75%" stopColor="#549256" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid opacity={0.25} vertical={false} />
-            <XAxis
-              stroke={darkMode ? ("white") : ("#1f1f1f")}
-              dataKey="week"
-              // interval={xInterval}
-              axisLine={false}
-              tickLine={false}
-              tickFormatter={(week) => `Week: ${week}`}
-            />
-            <YAxis
-              stroke={darkMode ? ("white") : ("#1f1f1f")}
-              axisLine={false}
-              tickLine={false}
-              tickCount={5}
-              tickFormatter={(yards) =>
-                `${yards.toFixed(0)} ${statFilter.abbr}`
-              }
-              yAxisId="left-axis"
-              domain={[Number(minMaxAvg.min) * 0.8, Number(minMaxAvg.max) * 1.2]}
-            />
-            <Tooltip labelFormatter={() => "Week Stat -"} />
-            <Legend />
-            <Area
-              type="monotone"
-              dataKey={playerName}
-              stroke="#0b6241"
-              fill="url(#color)"
-              key={playerName}
-              yAxisId="left-axis"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <div>New D3 Chart to go here</div>
       ) : (
         <p>Loading...</p>
       )}
