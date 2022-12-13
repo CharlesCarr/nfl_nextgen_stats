@@ -22,8 +22,10 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   // Local State:
   const [leadersData, setLeadersData] = useState<PassingData[] | null>(null);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
+  console.log(chartData);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
   const [noChart, setNoChart] = useState<boolean>(false);
+  console.log(noChart);
 
   useEffect(() => {
     if (allPassingData) {
@@ -124,7 +126,7 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   return (
     <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
       {/* Bottom Left */}
-      {!noChart ? (
+      {/* {!noChart ? ( */}
         <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0">
           <div className="w-full h-1/5 flex justify-between items-center">
             <div className="w-1/2 h-full flex justify-start items-center">
@@ -159,11 +161,11 @@ const DashBottom = ({ allPassingData }: DashProps) => {
             <Chart chartData={chartData} minMaxAvg={minMaxAvg} />
           </div>
         </div>
-      ) : (
+      {/* ) : (
         <p className="flex justify-center items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0 font-bold">
           Not enough data to display chart...
         </p>
-      )}
+      )} */}
 
       {/* Bottom Right */}
       <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">

@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import { useSelector } from "react-redux";
 import type { ChartData, MinMaxAvg } from "../types/dataTypes";
 import { RootState } from "../redux/store";
+import useMeasure from "react-use-measure";
+import ChartInner from "./ChartInner";
 
 interface ChartProps {
   chartData: ChartData[] | null;
@@ -27,6 +19,8 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
   );
   // actual data for the chart in the format that need for recharts lib
   const [data, setData] = useState<any>(null);
+  console.log(data);
+  let [ref, bounds] = useMeasure();
 
   useEffect(() => {
     if (chartData && minMaxAvg) {
@@ -44,10 +38,27 @@ const Chart = ({ chartData, minMaxAvg }: ChartProps) => {
     }
   }, [chartData, playerName, minMaxAvg]);
 
+  let dummyData = [
+    [0, 10],
+    [5, 50],
+    [15, 75],
+    [55, 100],
+    [75, 10],
+    [100, 5],
+  ];
+
   return (
     <div className="flex justify-center items-center pt-2 h-full min-h-[200px] w-full md:mt-2 text-xs font-semibold tracking-wide">
       {chartData && minMaxAvg ? (
-        <div>New D3 Chart to go here</div>
+        <div className="relative h-full w-full" ref={ref}>
+          {bounds.width > 0 && (
+            <ChartInner
+              data={dummyData}
+              width={bounds.width}
+              height={bounds.height}
+            />
+          )}
+        </div>
       ) : (
         <p>Loading...</p>
       )}
