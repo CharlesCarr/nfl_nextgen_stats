@@ -49,4 +49,4 @@ def rushing():
      
     return {"data": rushingList}
 
-rushing()
+# rushing()
