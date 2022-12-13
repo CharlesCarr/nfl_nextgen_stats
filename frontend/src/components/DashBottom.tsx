@@ -3,7 +3,6 @@ import Chart from "./Chart";
 import Leaders from "./Leaders";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-// import { BsFilterRight } from "react-icons/bs";
 import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
 import { BiStats } from "react-icons/bi";
 import type {
@@ -126,7 +125,7 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   return (
     <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
       {/* Bottom Left */}
-      {/* {!noChart ? ( */}
+      {chartData && chartData.length > 3 ? (
         <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0">
           <div className="w-full h-1/5 flex justify-between items-center">
             <div className="w-1/2 h-full flex justify-start items-center">
@@ -157,15 +156,14 @@ const DashBottom = ({ allPassingData }: DashProps) => {
             )}
           </div>
           <div className="w-full h-full lg:h-4/5 flex justify-center items-center">
-            {/* border border-black */}
-            <Chart chartData={chartData} minMaxAvg={minMaxAvg} />
+            <Chart chartData={chartData} />
           </div>
         </div>
-      {/* ) : (
+      ) : (
         <p className="flex justify-center items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0 font-bold">
-          Not enough data to display chart...
+          Not enough data to generate chart...
         </p>
-      )} */}
+      )}
 
       {/* Bottom Right */}
       <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">
@@ -177,7 +175,6 @@ const DashBottom = ({ allPassingData }: DashProps) => {
         <div className="w-full h-4/5 flex flex-col items-center justify-between">
           {leadersData &&
             leadersData.map((d: any, index: number) => {
-              // PassingData
               return (
                 <Leaders
                   key={index}

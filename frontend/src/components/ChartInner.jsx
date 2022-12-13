@@ -3,14 +3,6 @@ import { motion } from "framer-motion";
 
 const ChartInner = ({ data, width, height }) => {
 
-  /*
-
-  shape of data = [{week: number, Jalen Hurts: number}];
-
-  feel like I need to change 'Jalen Hurts' to 'player'
-
-  */
-
   let margin = {
     top: 20,
     right: 35,
@@ -20,7 +12,6 @@ const ChartInner = ({ data, width, height }) => {
 
   let xScale = d3
     .scaleLinear()
-    // with arr of objs would just do (d) => d.prop instead here
     .domain(d3.extent(data.map((d) => d.week))) // how long the data stretches
     .range([margin.left, width - margin.right]); // how long the actual chart stretches
 
