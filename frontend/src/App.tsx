@@ -31,8 +31,9 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  // uri: "https://express-nfl.onrender.com/graphql",
-  uri: "http://localhost:8000/graphql",
+  uri: "https://express-nfl.onrender.com/graphql",
+  // dev env
+  // uri: "http://localhost:8000/graphql",
   cache,
 });
 
