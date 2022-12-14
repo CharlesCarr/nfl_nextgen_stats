@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Chart from "./Chart";
 import Leaders from "./Leaders";
 import { useSelector } from "react-redux";
@@ -10,16 +10,27 @@ import type {
   DashProps,
   ChartData,
   MinMaxAvg,
+  RushingData,
 } from "../types/dataTypes";
+import { filter } from "lodash";
+import { playerViewState } from "../redux/slices/playerViewSlice";
 
-const DashBottom = ({ allPassingData }: DashProps) => {
+const DashBottom = ({ data, type }: DashProps) => {
   // Redux State:
-  const playerName = useSelector((state: RootState) => state.playerView.player);
+  const playerName = useSelector((state: RootState) => state.playerView[type]);
   const statFilter = useSelector(
-    (state: RootState) => state.statFilterView.view
+    (state: RootState) => state.statFilterView[type]
   );
+  const positionView = useSelector(
+    (state: RootState) => state.positionView.position
+  );
+
+  console.log("****", statFilter.key);
+
   // Local State:
-  const [leadersData, setLeadersData] = useState<PassingData[] | null>(null);
+  const [leadersData, setLeadersData] = useState<
+    PassingData[] | RushingData[] | null
+  >(null);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
   console.log(chartData);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
@@ -27,11 +38,11 @@ const DashBottom = ({ allPassingData }: DashProps) => {
   console.log(noChart);
 
   useEffect(() => {
-    if (allPassingData) {
-      getPassLeaders(statFilter.key);
+    if (data) {
+      getLeaders(statFilter.key);
       getChartData(statFilter.key);
     }
-  }, [allPassingData, playerName, statFilter]);
+  }, [data, playerName, statFilter, positionView]);
 
   useEffect(() => {
     if (chartData && chartData.length > 1) {
@@ -43,8 +54,9 @@ const DashBottom = ({ allPassingData }: DashProps) => {
 
   // start by hard coding for this season week by week
   const getChartData = (stat: string) => {
-    if (allPassingData) {
-      let weekData = allPassingData.filter((d: PassingData) => {
+    if (data) {
+      // let weekData = data.filter((d: PassingData) => {
+      let weekData = filter(data, (d: PassingData) => {
         if (
           d["player_display_name"] === playerName &&
           d.week !== 0 &&
@@ -72,20 +84,20 @@ const DashBottom = ({ allPassingData }: DashProps) => {
     }
   };
 
-  const getPassLeaders = (stat: string) => {
-    if (allPassingData) {
-      let allQBs = allPassingData.filter((d: PassingData) => {
+  const getLeaders = (stat: string) => {
+    if (data) {
+      let allPlayers: any = filter(data, (d: PassingData | RushingData) => {
         if (d.week === 0 && d.season === 2022) {
           return d;
         } else {
           return null;
         }
       });
-      allQBs.sort((a: any, b: any) => {
+      allPlayers.sort((a: any, b: any) => {
         // PassingData, PassingData
         return b[stat] - a[stat];
       });
-      let topThree = allQBs.slice(0, 3);
+      let topThree = allPlayers.slice(0, 3);
       setLeadersData(topThree);
       return topThree;
     }
@@ -121,6 +133,7 @@ const DashBottom = ({ allPassingData }: DashProps) => {
       return minMaxAvg;
     }
   };
+  console.log(leadersData);
 
   return (
     <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
@@ -168,12 +181,14 @@ const DashBottom = ({ allPassingData }: DashProps) => {
       {/* Bottom Right */}
       <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">
         <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium mb-4 sm:mb-0">
-          <p className="font-semibold mb-2 sm:mb-0">{`Top QBs for ${statFilter.name}`}</p>
+          <p className="font-semibold mb-2 sm:mb-0">{`Top ${
+            type === "passer" ? "QB" : "RB"
+          }s for ${statFilter.name}`}</p>
           <p className="font-extralight text-xs">(2022 Season)</p>
         </div>
 
         <div className="w-full h-4/5 flex flex-col items-center justify-between">
-          {leadersData &&
+          {leadersData ? (
             leadersData.map((d: any, index: number) => {
               return (
                 <Leaders
@@ -182,9 +197,13 @@ const DashBottom = ({ allPassingData }: DashProps) => {
                   name={d["player_display_name"]}
                   team={d["team_abbr"]}
                   stat={d[statFilter.key]}
+                  type={type}
                 />
               );
-            })}
+            })
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       </div>
     </div>

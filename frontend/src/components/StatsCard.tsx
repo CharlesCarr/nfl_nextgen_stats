@@ -1,7 +1,7 @@
 import type { StatCard } from "../types/dataTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setStatView } from "../redux/slices/statFilterViewSlice";
+import { setPasserView, setRusherView } from "../redux/slices/statFilterViewSlice";
 import { useEffect, useState } from "react";
 
 const StatsCard = ({
@@ -10,9 +10,10 @@ const StatsCard = ({
   statIcon,
   statLabel,
   statKey,
+  type
 }: StatCard) => {
   const statFilter = useSelector(
-    (state: RootState) => state.statFilterView.view
+    (state: RootState) => state.statFilterView[type]
   );
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const StatsCard = ({
     <div
       className={`relative shadow rounded-2xl flex flex-col items-between justify-start px-8 text-xs font-medium cursor-pointer ${itemStyles}`}
       onClick={() =>
-        dispatch(setStatView({ name: statName, abbr: statLabel, key: statKey }))
+        type === "passer" ? (dispatch(setPasserView({ name: statName, abbr: statLabel, key: statKey }))) : (dispatch(setRusherView({ name: statName, abbr: statLabel, key: statKey })))
       }
     >
       {darkMode && statFilter.key === statKey ? (

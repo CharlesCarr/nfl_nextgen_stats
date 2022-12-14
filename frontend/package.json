@@ -16,12 +16,14 @@
     "d3": "^7.7.0",
     "framer-motion": "^7.8.0",
     "graphql": "^16.6.0",
+    "lodash": "^4.17.21",
     "msw": "^0.47.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-loading": "^2.0.3",
     "react-redux": "^8.0.4",
+    "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "react-use-measure": "^2.1.1",
     "recharts": "^2.1.15",
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.0",
+    "@types/lodash": "^4.14.191",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.18",
     "tailwindcss": "^3.1.8"

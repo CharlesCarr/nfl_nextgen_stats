@@ -34,7 +34,8 @@ const ChartInner = ({ data, width, height }) => {
           <g
             transform={`translate(0,${yScale(max)})`}
             className="text-gray-400"
-            key={max}
+            // fix for same key err - did same for below - fix later
+            key={Math.random()}
           >
             <line
               x1={margin.left}
@@ -54,7 +55,7 @@ const ChartInner = ({ data, width, height }) => {
         {/* X Axis */}
         {xScale.ticks().map((week) => (
           <g
-            key={week}
+            key={Math.random()}
             className="text-gray-400"
             transform={`translate(${xScale(week)},${height})`}
           >
@@ -81,7 +82,7 @@ const ChartInner = ({ data, width, height }) => {
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", duration: 0.4, delay: 0.1 * i }}
-            key={d}
+            key={Math.random()}
             fill="#448167"
             r="5"
             cx={xScale(d.week)}

@@ -1,4 +1,5 @@
-const Passer = require('../models/Passer');
+const Passer = require("../models/Passer");
+const Rusher = require("../models/Rusher");
 
 const {
   GraphQLObjectType,
@@ -46,6 +47,36 @@ const PasserType = new GraphQLObjectType({
   }),
 });
 
+// Rusher Type
+const RusherType = new GraphQLObjectType({
+  name: "Rusher",
+  fields: () => ({
+    id: { type: GraphQLID },
+    avg_rush_yards: { type: GraphQLFloat },
+    avg_time_to_los: { type: GraphQLFloat },
+    efficiency: { type: GraphQLFloat },
+    expected_rush_yards: { type: GraphQLFloat },
+    percent_attempts_gte_eight_defenders: { type: GraphQLFloat },
+    player_display_name: { type: GraphQLString },
+    player_first_name: { type: GraphQLString },
+    player_gsis_id: { type: GraphQLString },
+    player_jersey_number: { type: GraphQLFloat },
+    player_last_name: { type: GraphQLString },
+    player_position: { type: GraphQLString },
+    player_short_name: { type: GraphQLString },
+    rush_attempts: { type: GraphQLFloat },
+    rush_pct_over_expected: { type: GraphQLFloat },
+    rush_touchdowns: { type: GraphQLFloat },
+    rush_yards: { type: GraphQLFloat },
+    rush_yards_over_expected: { type: GraphQLFloat },
+    rush_yards_over_expected_per_att: { type: GraphQLFloat },
+    season: { type: GraphQLFloat },
+    season_type: { type: GraphQLString },
+    team_abbr: { type: GraphQLString },
+    week: { type: GraphQLFloat },
+  }),
+});
+
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
@@ -55,11 +86,24 @@ const RootQuery = new GraphQLObjectType({
         return Passer.find();
       },
     },
+    rushers: {
+      type: new GraphQLList(RusherType),
+      resolve(parent, args) {
+        return Rusher.find();
+      },
+    },
     passer: {
       type: PasserType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Passer.findById(args.id);
+      },
+    },
+    rusher: {
+      type: RusherType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Rusher.findById(args.id);
       },
     },
   },

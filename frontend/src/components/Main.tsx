@@ -1,23 +1,27 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { GET_PASSERS } from "../queries/passerQueries";
 import { RootState } from "../redux/store";
 import DashBottom from "./DashBottom";
 import DashTop from "./DashTop";
 import Loading from "./Loading";
 
-const Main = () => {
-  const { loading, error, data } = useQuery(GET_PASSERS);
+const Main = ({ query, type }: any) => {
+  // GET_PASSERS
+  const { loading, error, data } = useQuery(query);
+  const [players, setPlayers] = useState(null);
+  const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
   console.log(loading);
   console.log(error);
   console.log(data);
-  const [passers, setPassers] = useState(null);
-  const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 
   useEffect(() => {
     if (data) {
-      setPassers(data.passers);
+      if (data.hasOwnProperty("passers")) {
+        setPlayers(data.passers);
+      } else {
+        setPlayers(data.rushers);
+      }
     }
   }, [data]);
 
@@ -50,8 +54,8 @@ const Main = () => {
     >
       {!loading && !error && (
         <>
-          <DashTop allPassingData={passers} />
-          <DashBottom allPassingData={passers} />
+          <DashTop data={players} type={type} />
+          <DashBottom data={players} type={type} />
         </>
       )}
     </div>

@@ -1,3 +1,6 @@
+import { playerViewState } from "../redux/slices/playerViewSlice";
+
+
 export interface PassingData {
   aggressiveness: number;
   attempts: number;
@@ -30,8 +33,34 @@ export interface PassingData {
   week: number;
 }
 
+export interface RushingData {
+    avg_rush_yards: number;
+    avg_time_to_los: number;
+    efficiency: number;
+    expected_rush_yards: number;
+    percent_attempts_gte_eight_defenders: number;
+    player_display_name: string;
+    player_first_name: string;
+    player_gsis_id: string;
+    player_jersey_number: number;
+    player_last_name: string;
+    player_position: string;
+    player_short_name: string;
+    rush_attempts: number;
+    rush_pct_over_expected: number;
+    rush_touchdowns: number;
+    rush_yards: number;
+    rush_yards_over_expected: number;
+    rush_yards_over_expected_per_att: number;
+    season: number;
+    season_type: string;
+    team_abbr: string;
+    week: number;
+}
+
 export interface DashProps {
-  allPassingData: PassingData[] | null;
+  data: PassingData[] | RushingData[] | null;
+  type: keyof playerViewState;
 }
 
 export interface PassPlayer {
@@ -42,12 +71,29 @@ export interface PassPlayer {
   team_abbr: string;
 }
 
+export interface RushPlayer {
+  rush_yards: number;
+  rush_touchdowns: number;
+  avg_rush_yards: number;
+  player_jersey_number: number;
+  team_abbr: string;
+}
+
 export interface StatCard {
   statName: string;
   statNum: number;
   statIcon: JSX.Element;
   statLabel: string;
   statKey: string;
+  type: keyof playerViewState;
+}
+
+export interface LeadersProps {
+  index: number;
+  name: string;
+  team: string;
+  stat: number;
+  type: keyof playerViewState;
 }
 
 export interface ChartData {

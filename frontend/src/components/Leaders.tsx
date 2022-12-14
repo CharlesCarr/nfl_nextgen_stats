@@ -1,18 +1,14 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { LeadersProps } from "../types/dataTypes";
 
-interface LeadersProps {
-  index: number;
-  name: string;
-  team: string;
-  stat: number;
-}
-
-const Leaders = ({ index, name, team, stat }: LeadersProps) => {
+const Leaders = ({ index, name, team, stat, type }: LeadersProps) => {
   const statFilter = useSelector(
-    (state: RootState) => state.statFilterView.view
+    (state: RootState) => state.statFilterView[type]
   );
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
+
+  console.log("stat", stat);
 
   return (
     <div
@@ -22,16 +18,25 @@ const Leaders = ({ index, name, team, stat }: LeadersProps) => {
     >
       {/* first:bg-[#1f1f1f] first:text-white */}
       <div className="border border-black rounded-lg h-6 w-6 text-xs flex justify-center items-center">
-        <p className="text-xs font-semibold" id="rank">{index + 1}</p>
+        <p className="text-xs font-semibold" id="rank">
+          {index + 1}
+        </p>
       </div>
       <p className="text-xs font-semibold" data-testid="name">
         {name}
-        <span className="font-normal" id="team"> {`(${team})`}</span>
+        <span className="font-normal" id="team">
+          {" "}
+          {`(${team})`}
+        </span>
       </p>
-      <p className="text-xs font-semibold" id="statNum">
-        {stat.toFixed(1)}
-        <span className="font-normal"> {statFilter.abbr}</span>
-      </p>
+      {stat ? (
+        <p className="text-xs font-semibold" id="statNum">
+          {stat.toFixed(1)}
+          <span className="font-normal"> {statFilter.abbr}</span>
+        </p>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

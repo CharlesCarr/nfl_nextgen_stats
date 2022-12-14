@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import { setPlayerView } from "../redux/slices/playerViewSlice";
+import { setPasserView, setRusherView } from "../redux/slices/playerViewSlice";
 
-const Search = ({ allPlayers }: any) => {
+const Search = ({ allPlayers, type }: any) => {
   // state for input field (player name)
   const [inputValue, setInputValue] = useState<string>("");
   const [inputError, setInputError] = useState<boolean>(false);
@@ -68,7 +68,11 @@ const Search = ({ allPlayers }: any) => {
     setInputValue(formattedInput);
 
     if (allPlayers.has(formattedInput)) {
-      dispatch(setPlayerView(formattedInput));
+      if (type === "passer") {
+        dispatch(setPasserView(formattedInput));
+      } else {
+        dispatch(setRusherView(formattedInput));
+      }
       setInputError(false);
     } else {
       setInputError(true);
@@ -76,7 +80,12 @@ const Search = ({ allPlayers }: any) => {
   };
 
   const handleMatchClick = (player: string) => {
-    dispatch(setPlayerView(player));
+    if (type === "passer") {
+      dispatch(setPasserView(player));
+    } else {
+      dispatch(setRusherView(player));
+    }
+
     clearInput();
   };
 
@@ -103,6 +112,7 @@ const Search = ({ allPlayers }: any) => {
           <div className="absolute bg-white text-black border rounded-lg border-black w-52 top-[60px] z-[100] flex-column justify-center items-center max-h-[150px] overflow-hidden overflow-y-auto">
             {searchMatches.map((match: string) => (
               <p
+                key={match}
                 className="border-b border-black h-10 pl-4 cursor-pointer flex items-center hover:bg-[#0b6241]/60 transition"
                 onClick={() => handleMatchClick(match)}
               >

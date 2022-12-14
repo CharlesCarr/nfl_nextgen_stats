@@ -3,6 +3,7 @@ import periodFilterViewReducer from "./slices/periodFilterViewSlice";
 import playerViewReducer from "./slices/playerViewSlice";
 import statFilterViewReducer from "./slices/statFilterViewSlice";
 import darkModeViewReducer from "./slices/darkModeViewSlice";
+import positionViewReducer from "./slices/positionViewSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     statFilterView: statFilterViewReducer,
     playerView: playerViewReducer,
     darkMode: darkModeViewReducer,
+    positionView: positionViewReducer,
   },
 });
 

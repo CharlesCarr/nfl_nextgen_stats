@@ -2,22 +2,27 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface playerViewState {
-    player: string,
+    passer: string,
+    rusher: string,
 }
 
 const initialState: playerViewState = {
-    player: "Josh Allen",
+    passer: "Josh Allen",
+    rusher: "Miles Sanders",
 };
 
 export const playerViewSlice = createSlice({
     name: "playerView",
     initialState,
     reducers: {
-        setPlayerView: (state, action: PayloadAction<string> ) => {
-            state.player = action.payload;
+        setPasserView: (state, action: PayloadAction<string> ) => {
+            state.passer = action.payload;
         },
+        setRusherView: (state, action: PayloadAction<string> ) => {
+            state.rusher = action.payload;
+        }
     },
 });
 
-export const { setPlayerView } = playerViewSlice.actions;
+export const { setPasserView, setRusherView } = playerViewSlice.actions;
 export default playerViewSlice.reducer;

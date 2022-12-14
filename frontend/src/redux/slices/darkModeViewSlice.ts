@@ -5,7 +5,7 @@ export interface DarkModeState {
 }
 
 const initialState: DarkModeState = {
-    darkMode: false, // 'week' | 'season' | 'all'
+    darkMode: true,
 };
 
 export const darkModeViewSlice = createSlice({

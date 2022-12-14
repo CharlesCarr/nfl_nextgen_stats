@@ -7,7 +7,6 @@ import {
   getSeasonView,
   getAllView,
 } from "../redux/slices/periodFilterViewSlice";
-
 import { RootState } from "../redux/store";
 import {
   GiAmericanFootballBall,
@@ -19,29 +18,33 @@ import type {
   PassPlayer,
   StatCard,
   DashProps,
+  RushingData,
+  RushPlayer,
 } from "../types/dataTypes";
 import Loading from "./Loading";
 import Search from "./Search";
+import { filter } from "lodash";
 
-const DashTop = ({ allPassingData }: DashProps) => {
+const DashTop = ({ data, type }: DashProps) => {
   // Redux State:
   const periodFilter = useSelector(
     (state: RootState) => state.periodFilterView
   );
-  const playerName = useSelector((state: RootState) => state.playerView.player);
+  const playerName = useSelector((state: RootState) => state.playerView[type]);
   const dispatch = useDispatch();
 
   // Local State:
   // hardcoded
-  const [week, setWeek] = useState<number>(11);
-  const [season, setSeason] = useState<number>(2022);
-  const [playerData, setPlayerData] = useState<PassPlayer | null>(null);
+  const [week] = useState<number>(14);
+  const [season] = useState<number>(2022);
+  // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
+  const [playerData, setPlayerData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
 
   useEffect(() => {
-    if (allPassingData) {
+    if (data) {
       if (periodFilter.view === "week") {
         // already have so how to get
         getWeekData(playerName, week);
@@ -57,45 +60,85 @@ const DashTop = ({ allPassingData }: DashProps) => {
       getAllPlayers();
       setIsLoading(false);
     }
-  }, [allPassingData, playerName, week, periodFilter]);
+  }, [data, playerName, week, season, periodFilter]);
 
   useEffect(() => {
     if (playerData) {
-      setStatCardData([
-        {
-          statName: "Passing Yards",
-          statNum: playerData["pass_yards"],
-          statIcon: (
-            <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-          ),
-          statLabel: "yds",
-          statKey: "pass_yards",
-        },
-        {
-          statName: "Passing TDs",
-          statNum: playerData["pass_touchdowns"],
-          statIcon: (
-            <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-          ),
-          statLabel: "TDs",
-          statKey: "pass_touchdowns",
-        },
-        {
-          statName: "Passer Rating",
-          statNum: Number(playerData["passer_rating"].toFixed(2)),
-          statIcon: (
-            <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-          ),
-          statLabel: "RTG",
-          statKey: "passer_rating",
-        },
-      ]);
+      if (type === "passer") {
+        setStatCardData([
+          {
+            statName: "Passing Yards",
+            statNum: playerData["pass_yards"],
+            statIcon: (
+              <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "yds",
+            statKey: "pass_yards",
+            type: "passer",
+          },
+          {
+            statName: "Passing TDs",
+            statNum: playerData["pass_touchdowns"],
+            statIcon: (
+              <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "TDs",
+            statKey: "pass_touchdowns",
+            type: "passer",
+          },
+          {
+            statName: "Passer Rating",
+            statNum: Number(playerData["passer_rating"].toFixed(2)),
+            statIcon: (
+              <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "RTG",
+            statKey: "passer_rating",
+            type: "passer",
+          },
+        ]);
+      } else {
+        setStatCardData([
+          {
+            statName: "Rushing Yards",
+            statNum: playerData["rush_yards"],
+            statIcon: (
+              <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "yds",
+            statKey: "rush_yards",
+            type: "rusher",
+          },
+          {
+            statName: "Rushing TDs",
+            statNum: playerData["rush_touchdowns"],
+            statIcon: (
+              <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "TDs",
+            statKey: "rush_touchdowns",
+            type: "rusher",
+          },
+          {
+            statName: "Avg Rush Yards",
+            statNum: Number(playerData["avg_rush_yards"].toFixed(2)),
+            statIcon: (
+              <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "yds",
+            statKey: "avg_rush_yards",
+            type: "rusher",
+          },
+        ]);
+      }
     }
   }, [playerData]);
 
   const getWeekData = (playerName: string, week: number) => {
-    if (allPassingData) {
-      let weekData = allPassingData.filter((d: PassingData) => {
+    if (data) {
+      // let weekData = data.filter((d: PassingData | RushingData ) => {
+      // checking with 'any' for now after adding lodash approach b/c of union typeScript bug
+      let weekData: any = filter(data, (d: PassingData | RushingData) => {
         if (
           d["player_display_name"] === playerName &&
           d.week === week &&
@@ -112,8 +155,9 @@ const DashTop = ({ allPassingData }: DashProps) => {
   };
 
   const getSeasonData = (playerName: string, season: number) => {
-    if (allPassingData) {
-      let seasonData = allPassingData.filter((d: PassingData) => {
+    if (data) {
+      // let seasonData = data.filter((d: PassingData | RushingData) => {
+      let seasonData: any = filter(data, (d: PassingData | RushingData) => {
         if (
           d["player_display_name"] === playerName &&
           d.week === 0 &&
@@ -130,8 +174,9 @@ const DashTop = ({ allPassingData }: DashProps) => {
   };
 
   const getAllData = (playerName: string) => {
-    if (allPassingData) {
-      let allData = allPassingData.filter((d: PassingData) => {
+    if (data) {
+      // let allData = data.filter((d: PassingData | RushingData) => {
+      let allData: any = filter(data, (d: PassingData | RushingData) => {
         if (d["player_display_name"] === playerName && d.week === 0) {
           return d;
         } else {
@@ -167,8 +212,8 @@ const DashTop = ({ allPassingData }: DashProps) => {
   };
 
   const getAllPlayers = () => {
-    if (allPassingData) {
-      const allPlayers = allPassingData.map((data: PassingData) => {
+    if (data) {
+      const allPlayers = data.map((data: PassingData | RushingData) => {
         return data["player_display_name"];
       });
       const uniquePlayers = new Set(allPlayers);
@@ -186,7 +231,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
           <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
             <div className="w-1/2 h-full flex flex-col justify-start items-start">
               <p className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-widest mb-2">
-                QB SPOTLIGHT
+                {type === "passer" ? "QB" : "RB"} SPOTLIGHT
               </p>
               <p className="text-sm lg:text-base font-semibold tracking-wide mb-1">{`${playerName} - #${
                 playerData ? playerData["player_jersey_number"] : "Loading..."
@@ -196,7 +241,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
               </p>
             </div>
             <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
-              <Search allPlayers={allPlayers} />
+              <Search allPlayers={allPlayers} type={type} />
               <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
                 {/* pr-10 pl-24 */}
                 <button
@@ -243,6 +288,7 @@ const DashTop = ({ allPassingData }: DashProps) => {
                     statIcon={d.statIcon}
                     statLabel={d.statLabel}
                     statKey={d.statKey}
+                    type={type}
                   />
                 );
               })}
