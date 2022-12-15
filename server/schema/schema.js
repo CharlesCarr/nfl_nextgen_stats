@@ -1,5 +1,6 @@
 const Passer = require("../models/Passer");
 const Rusher = require("../models/Rusher");
+const User = require("../models/User");
 
 const {
   GraphQLObjectType,
@@ -8,6 +9,7 @@ const {
   GraphQLString,
   GraphQLFloat,
   GraphQLList,
+  GraphQLNonNull,
 } = require("graphql");
 
 // Passer Type
@@ -77,9 +79,27 @@ const RusherType = new GraphQLObjectType({
   }),
 });
 
+// User Type
+const UserType = new GraphQLObjectType({
+  name: "User",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+    fav_players: { type: GraphQLList(GraphQLString) },
+  }),
+});
+
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parent, args) {
+        return User.find();
+      },
+    },
     passers: {
       type: new GraphQLList(PasserType),
       resolve(parent, args) {
@@ -90,6 +110,13 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(RusherType),
       resolve(parent, args) {
         return Rusher.find();
+      },
+    },
+    user: {
+      type: UserType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return User.findById(args.id);
       },
     },
     passer: {
@@ -109,6 +136,32 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+// Mutations
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+        fav_players: { type: GraphQLList(GraphQLString) },
+      },
+      resolve(parent, args) {
+        const user = new User({
+          name: args.name,
+          email: args.email,
+          password: args.password,
+          fav_players: args.fav_players,
+        });
+        return user.save();
+      },
+    },
+  },
+});
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation,
 });
