@@ -5,6 +5,7 @@ import { RootState } from "../redux/store";
 import DashBottom from "./DashBottom";
 import DashTop from "./DashTop";
 import Loading from "./Loading";
+import NavBar from "./NavBar";
 
 const Main = ({ query, type }: any) => {
   // GET_PASSERS
@@ -49,16 +50,21 @@ const Main = ({ query, type }: any) => {
     );
   }
   return (
-    <div
-      className={`w-full h-full p-10 ${darkMode ? "bg-stone-800" : "bg-white"}`}
-    >
-      {!loading && !error && (
-        <>
-          <DashTop data={players} type={type} />
-          <DashBottom data={players} type={type} />
-        </>
-      )}
-    </div>
+    <>
+      <NavBar />
+      <div
+        className={`w-full h-full p-10 ${
+          darkMode ? "bg-stone-800" : "bg-white"
+        }`}
+      >
+        {!loading && !error && (
+          <>
+            <DashTop data={players} type={type} />
+            <DashBottom data={players} type={type} />
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
