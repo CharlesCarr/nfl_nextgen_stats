@@ -41,8 +41,8 @@ const LandingPage = () => {
           </div>
 
           <p className="font-light mb-4">
-            NFL Next Gen Dash allows you to gain insights into each player <br />{" "}
-            by leveraging AWS's Next Gen stats data
+            NFL Next Gen Dash allows you to gain insights <br />{" "}
+            by leveraging AWS Next Gen Stats data
           </p>
 
           <button className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white" onClick={btnHandler}>
@@ -51,7 +51,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="h-[350px] w-[625px] p-3 rounded-2xl absolute bg-white border top-[210px] right-40">
+      <div className="h-[350px] w-[625px] p-3 rounded-2xl absolute bg-white border top-[145px] right-20">
         <img
           src={AppFullDark}
           alt="Dashboard Full Dark"
@@ -60,7 +60,7 @@ const LandingPage = () => {
       </div>
 
 {/* bg-stone-800 */}
-      <div className="h-[230px] w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute top-[415px] right-60">
+      <div className="h-[230px] w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute top-[355px] right-40">
         <img
           src={AppMobileLight}
           alt="Dashboard Mobile Light"
