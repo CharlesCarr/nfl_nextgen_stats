@@ -4,18 +4,21 @@ import AppMobileLight from "../images/app/appMobile1.png";
 // import { AiTwotoneTrophy } from "react-icons/ai";
 
 const LandingPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const btnHandler = () => {
-        navigate('/passing');
-    };
+  const btnHandler = () => {
+    navigate("/passing");
+  };
 
   return (
-    <div className="relative w-screen h-screen flex-col justify-between bg-white text-black">
+    <div className="relative w-screen h-screen flex-col justify-between bg-gray-50 text-black">
       {/* Horizontal (Landing Page) Nav Bar Component */}
       <div className="w-full h-1/6 flex justify-between items-center border px-20">
         <p className="ml-10 font-bold text-2xl">NFL NEXT GEN DASH</p>
-        <button className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white" onClick={btnHandler}>
+        <button
+          className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white"
+          onClick={btnHandler}
+        >
           View Dashboard
         </button>
       </div>
@@ -29,7 +32,7 @@ const LandingPage = () => {
 
         <div className="h-full w-1/2 pl-10">
           <p className="w-fit text-xs border rounded-lg font-light px-2 py-1">
-            #1 NFL DASH IN APP STORE
+            <span className="mr-[5px]">&#127944;</span>TOP NFL DASH WEB APP
           </p>
 
           <div className="text-4xl mt-2 mb-4">
@@ -41,11 +44,14 @@ const LandingPage = () => {
           </div>
 
           <p className="font-light mb-4">
-            NFL Next Gen Dash allows you to gain insights <br />{" "}
-            by leveraging AWS Next Gen Stats data
+            NFL Next Gen Dash allows you to gain insights <br /> by leveraging
+            AWS Next Gen Stats data
           </p>
 
-          <button className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white" onClick={btnHandler}>
+          <button
+            className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white"
+            onClick={btnHandler}
+          >
             View Dashboard
           </button>
         </div>
@@ -59,30 +65,30 @@ const LandingPage = () => {
         />
       </div>
 
-{/* bg-stone-800 */}
+      {/* bg-stone-800 */}
       <div className="h-[230px] w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute top-[355px] right-40">
         <img
           src={AppMobileLight}
           alt="Dashboard Mobile Light"
-        //   border-2 border-black
+          //   border-2 border-black
           className="w-full h-full rounded-2xl"
         />
       </div>
 
       <div className="w-full flex items-center h-1/6 pl-28 gap-24 font-semibold text-3xl text-black">
         <div className="flex items-center">
-          <p>4.9</p>
+          <p>30+</p>
           <p className="text-xs font-light ml-4">
-            Users rating
-            <br /> on App Store
+            Unique player
+            <br /> statistics
           </p>
         </div>
 
         <div className="flex items-center">
-          <p>1.8M</p>
+          <p>2016</p>
           <p className="text-xs font-light ml-4">
-            Downloads all
-            <br /> over the world
+            Active player
+            <br /> data since
           </p>
         </div>
       </div>
