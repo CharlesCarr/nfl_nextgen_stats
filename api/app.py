@@ -35,7 +35,7 @@ def rushing():
     rushingDf = nfl.import_ngs_data(stat_type='rushing')
     # convert from pandas df to list of dictionaries
     rushingList = rushingDf.to_dict("records")
-    print(rushingDf)
+    # print(rushingDf)
 
     def isNaN(num):
         return num != num
