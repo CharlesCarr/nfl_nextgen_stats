@@ -1,26 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import ViewDashBtn from "../components/ViewDashBtn";
 import AppFullDark from "../images/app/appDark.png";
 import AppMobileLight from "../images/app/appMobile1.png";
 // import { AiTwotoneTrophy } from "react-icons/ai";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
-  const btnHandler = () => {
-    navigate("/passing");
-  };
-
   return (
     <div className="relative w-screen h-screen flex-col justify-between bg-gray-50 text-black">
       {/* Horizontal (Landing Page) Nav Bar Component */}
       <div className="w-full h-1/6 flex justify-between items-center border px-5 lg:px-20">
         <p className="ml-10 font-bold text-lg lg:text-2xl">NFL NEXT GEN DASH</p>
-        <button
-          className="bg-[#0b6241] rounded-lg px-3 lg:px-6 py-2 lg:py-3 text-sm text-white"
-          onClick={btnHandler}
-        >
-          View Dashboard
-        </button>
+        <ViewDashBtn />
       </div>
 
       <div className="relative h-4/6 w-full flex px-5 lg:px-20 pt-14 overflow-hidden">
@@ -48,12 +37,7 @@ const LandingPage = () => {
             AWS Next Gen Stats data
           </p>
 
-          <button
-            className="bg-[#0b6241] rounded-lg px-6 py-3 text-sm text-white"
-            onClick={btnHandler}
-          >
-            View Dashboard
-          </button>
+          <ViewDashBtn />
         </div>
       </div>
 

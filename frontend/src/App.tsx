@@ -51,13 +51,18 @@ const App = () => {
           } `}
           data-testid="full"
         >
-
           <Routes>
             <Route path="*" element={<NotFound />} />
             {/* <Route path="/" element={<AuthPage />} /> */}
             <Route path="/" element={<LandingPage />} />
-            <Route path="/passing" element={<Main query={GET_PASSERS} type="passer" />} />
-            <Route path="/rushing" element={<Main query={GET_RUSHERS} type="rusher" />} />
+            <Route
+              path="/passing"
+              element={<Main query={GET_PASSERS} type="passer" />}
+            />
+            <Route
+              path="/rushing"
+              element={<Main query={GET_RUSHERS} type="rusher" />}
+            />
             {/* <Route path="/receiving" element={<Main query={GET_RECEIVERS} />} type="receiver" /> */}
           </Routes>
         </div>
