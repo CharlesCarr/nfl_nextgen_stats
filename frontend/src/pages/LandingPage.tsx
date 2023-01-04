@@ -41,7 +41,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="hidden lg:block h-[280px] w-[515px] xl:h-[350px] xl:w-[625px] p-3 rounded-2xl absolute bg-white border top-[145px] right-5 xl:top-[115px] xl:right-20">
+      <div className="hidden lg:block h-[280px] w-[515px] xl:h-[350px] xl:w-[625px] p-3 rounded-2xl absolute bg-white border top-[145px] right-10 xl:top-[115px] xl:right-20">
         <img
           src={AppFullDark}
           alt="Dashboard Full Dark"
@@ -49,8 +49,8 @@ const LandingPage = () => {
         />
       </div>
 
-      {/* bg-stone-800 */}
-      <div className="hidden md:block lg:hidden xl:block md:h-[300px] md:w-[220px] xl:h-[230px] xl:w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute md:top-[150px] md:right-40 xl:top-[325px] xl:right-40">
+
+      <div className="hidden md:block lg:hidden xl:block md:h-[300px] md:w-[220px] xl:h-[230px] xl:w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute md:top-[150px] md:right-48 xl:top-[325px] xl:right-40">
         <img
           src={AppMobileLight}
           alt="Dashboard Mobile Light"
