@@ -14,6 +14,7 @@ import type {
 } from "../types/dataTypes";
 import { filter } from "lodash";
 import { playerViewState } from "../redux/slices/playerViewSlice";
+import Loading from "./Loading";
 
 const DashBottom = ({ data, type }: DashProps) => {
   // Redux State:
@@ -173,9 +174,17 @@ const DashBottom = ({ data, type }: DashProps) => {
           </div>
         </div>
       ) : (
-        <p className="flex justify-center items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0 font-bold">
-          Not enough data to generate chart...
-        </p>
+        <>
+          {!chartData ? (
+            <div className="h-full w-full flex items-center justify-center">
+              <Loading />
+            </div>
+          ) : (
+            <p className="flex justify-center items-center h-full w-full lg:w-3/4 mr-4 pr-3 mb-10 lg:mb-0 font-bold">
+              Not enough data to generate chart...
+            </p>
+          )}
+        </>
       )}
 
       {/* Bottom Right */}
@@ -202,7 +211,9 @@ const DashBottom = ({ data, type }: DashProps) => {
               );
             })
           ) : (
-            <p>Loading...</p>
+            <div className="pt-10">
+              <Loading />
+            </div>
           )}
         </div>
       </div>

@@ -61,6 +61,7 @@ export interface RushingData {
 export interface DashProps {
   data: PassingData[] | RushingData[] | null;
   type: keyof playerViewState;
+  loading: boolean;
 }
 
 export interface PassPlayer {
@@ -81,7 +82,7 @@ export interface RushPlayer {
 
 export interface StatCard {
   statName: string;
-  statNum: number;
+  statNum: number | string;
   statIcon: JSX.Element;
   statLabel: string;
   statKey: string;

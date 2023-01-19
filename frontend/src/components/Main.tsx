@@ -26,15 +26,18 @@ const Main = ({ query, type }: any) => {
     }
   }, [data]);
 
-  if (loading) {
+  if (loading && type === "rusher") {
     return (
-      <div
-        className={`w-full h-full p-12 flex items-center justify-center ${
-          darkMode ? "bg-stone-800" : "bg-white"
-        }`}
-      >
-        <Loading />
-      </div>
+      <>
+      <NavBar />
+        <div
+          className={`w-full h-full p-12 flex items-center justify-center ${
+            darkMode ? "bg-stone-800" : "bg-white"
+          }`}
+        >
+          <Loading />
+        </div>
+      </>
     );
   }
 
@@ -57,10 +60,10 @@ const Main = ({ query, type }: any) => {
           darkMode ? "bg-stone-800" : "bg-white"
         }`}
       >
-        {!loading && !error && (
+        {!error && (
           <>
-            <DashTop data={players} type={type} />
-            <DashBottom data={players} type={type} />
+            <DashTop data={players} type={type} loading={loading} />
+            <DashBottom data={players} type={type} loading={loading} />
           </>
         )}
       </div>

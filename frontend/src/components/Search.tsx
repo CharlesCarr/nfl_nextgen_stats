@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import { setPasserView, setRusherView } from "../redux/slices/playerViewSlice";
 
-const Search = ({ allPlayers, type }: any) => {
+const Search = ({ allPlayers, type, loading }: any) => {
   // state for input field (player name)
   const [inputValue, setInputValue] = useState<string>("");
   const [inputError, setInputError] = useState<boolean>(false);
@@ -64,6 +64,10 @@ const Search = ({ allPlayers, type }: any) => {
   };
 
   const submitInput = (input: string) => {
+    if (loading) {
+      return;
+    }
+
     const formattedInput = formatInput(input);
     setInputValue(formattedInput);
 

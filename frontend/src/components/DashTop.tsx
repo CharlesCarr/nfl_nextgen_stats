@@ -25,7 +25,7 @@ import Loading from "./Loading";
 import Search from "./Search";
 import { filter } from "lodash";
 
-const DashTop = ({ data, type }: DashProps) => {
+const DashTop = ({ data, type, loading }: DashProps) => {
   // Redux State:
   const periodFilter = useSelector(
     (state: RootState) => state.periodFilterView
@@ -39,8 +39,39 @@ const DashTop = ({ data, type }: DashProps) => {
   const [season] = useState<number>(2022);
   // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
   const [playerData, setPlayerData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [statCardData, setStatCardData] = useState<StatCard[]>([
+    {
+      statName: "Passing Yards",
+      statNum: "Loading...",
+      statIcon: (
+        <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+      ),
+      statLabel: "yds",
+      statKey: "pass_yards",
+      type: "passer",
+    },
+    {
+      statName: "Passing TDs",
+      statNum: "Loading...",
+      statIcon: (
+        <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+      ),
+      statLabel: "TDs",
+      statKey: "pass_touchdowns",
+      type: "passer",
+    },
+    {
+      statName: "Passer Rating",
+      statNum: "Loading...",
+      statIcon: (
+        <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+      ),
+      statLabel: "RTG",
+      statKey: "passer_rating",
+      type: "passer",
+    },
+  ]);
   const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
 
   useEffect(() => {
@@ -58,7 +89,7 @@ const DashTop = ({ data, type }: DashProps) => {
       }
       // get all unique players (to use for search validation)
       getAllPlayers();
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }, [data, playerName, week, season, periodFilter]);
 
@@ -101,7 +132,7 @@ const DashTop = ({ data, type }: DashProps) => {
         setStatCardData([
           {
             statName: "Rushing Yards",
-            statNum: playerData["rush_yards"],
+            statNum: playerData ? playerData["rush_yards"] : "loading...",
             statIcon: (
               <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
             ),
@@ -224,80 +255,72 @@ const DashTop = ({ data, type }: DashProps) => {
 
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-0 lg:mr-4 pr-0 lg:pr-3 mb-10 lg:mb-10">
-          <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
-            <div className="w-1/2 h-full flex flex-col justify-start items-start">
-              <p className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-widest mb-2">
-                {type === "passer" ? "QB" : "RB"} SPOTLIGHT
-              </p>
-              <p className="text-sm lg:text-base font-semibold tracking-wide mb-1">{`${playerName} - #${
-                playerData ? playerData["player_jersey_number"] : "Loading..."
-              }`}</p>
-              <p className="font-light text-xs lg:text-sm">
-                {playerData ? playerData["team_abbr"] : "Loading..."}
-              </p>
-            </div>
-            <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
-              <Search allPlayers={allPlayers} type={type} />
-              <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
-                {/* pr-10 pl-24 */}
-                <button
-                  className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "week"
-                      ? "bg-[#0b6241]/60 text-white "
-                      : ""
-                  }`}
-                  onClick={() => dispatch(getWeekView())}
-                >
-                  Week
-                </button>
-                <button
-                  className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "season"
-                      ? "bg-[#0b6241]/60 text-white "
-                      : ""
-                  }`}
-                  onClick={() => dispatch(getSeasonView())}
-                >
-                  Season
-                </button>
-                <button
-                  className={`rounded-xl py-1 px-4 ${
-                    periodFilter.view === "all"
-                      ? "bg-[#0b6241]/60 text-white "
-                      : ""
-                  }`}
-                  onClick={() => dispatch(getAllView())}
-                >
-                  All
-                </button>
-              </div>
+      <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-0 lg:mr-4 pr-0 lg:pr-3 mb-10 lg:mb-10">
+        <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
+          <div className="w-1/2 h-full flex flex-col justify-start items-start">
+            <p className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-widest mb-2">
+              {type === "passer" ? "QB" : "RB"} SPOTLIGHT
+            </p>
+            <p className="text-sm lg:text-base font-semibold tracking-wide mb-1">{`${playerName} - #${
+              !loading && playerData ? playerData["player_jersey_number"] : ""
+            }`}</p>
+            <p className="font-light text-xs lg:text-sm">
+              {!loading && playerData ? playerData["team_abbr"] : ""}
+            </p>
+          </div>
+          <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
+            <Search allPlayers={allPlayers} type={type} loading={loading} />
+            <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
+              {/* pr-10 pl-24 */}
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter.view === "week"
+                    ? "bg-[#0b6241]/60 text-white "
+                    : ""
+                }`}
+                onClick={() => dispatch(getWeekView())}
+              >
+                Week
+              </button>
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter.view === "season"
+                    ? "bg-[#0b6241]/60 text-white "
+                    : ""
+                }`}
+                onClick={() => dispatch(getSeasonView())}
+              >
+                Season
+              </button>
+              <button
+                className={`rounded-xl py-1 px-4 ${
+                  periodFilter.view === "all"
+                    ? "bg-[#0b6241]/60 text-white "
+                    : ""
+                }`}
+                onClick={() => dispatch(getAllView())}
+              >
+                All
+              </button>
             </div>
           </div>
-          {statCardData ? (
-            <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full mt-px">
-              {statCardData.map((d: StatCard, index: number) => {
-                return (
-                  <StatsCard
-                    key={index}
-                    statName={d.statName}
-                    statNum={d.statNum}
-                    statIcon={d.statIcon}
-                    statLabel={d.statLabel}
-                    statKey={d.statKey}
-                    type={type}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <Loading />
-          )}
         </div>
-      )}
+        <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full mt-px">
+          {statCardData.map((d: StatCard, index: number) => {
+            return (
+              <StatsCard
+                key={index}
+                statName={d.statName}
+                statNum={d.statNum}
+                statIcon={d.statIcon}
+                statLabel={d.statLabel}
+                statKey={d.statKey}
+                type={type}
+              />
+            );
+          })}
+        </div>
+      </div>
 
       <div className="lg:flex justify-center items-center h-full w-1/4 rounded-2xl shadow hidden">
         <img

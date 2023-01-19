@@ -44,8 +44,8 @@ const StatsCard = ({
         {statIcon}
       </div>
       <div className="flex justify-center items-end h-1/2 pb-8">
-        <p className="mr-2 text-4xl font-bold">{statNum}</p>
-        <p className="text-base lg:text-xl">{statLabel}</p>
+        <p className={`${typeof statNum === 'string' ? "text-base" : "text-4xl font-bold"} mr-2`}>{statNum}</p>
+        <p className={`${typeof statNum === 'string' ? "hidden" : "block"} text-base lg:text-xl`}>{statLabel}</p>
       </div>
     </div>
   );
