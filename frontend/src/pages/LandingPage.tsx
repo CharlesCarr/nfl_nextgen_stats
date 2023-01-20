@@ -18,7 +18,7 @@ const LandingPage = () => {
         <div className="absolute inset-1/4 -translate-y-1/2 translate-x-full w-1/3 h-1/2 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
         <div className="absolute top-[200px] right-0 w-1/3 h-1/2 bg-slate-500 rounded-full mix-blend-multiply filter blur-3xl opacity-60"></div>
 
-        <div className="hidden lg:block h-[280px] w-[515px] xl:h-[350px] xl:w-[625px] p-3 rounded-2xl absolute bg-white border top-0 bottom-0 my-auto mx-0 right-10">
+        <div className="hidden lg:block h-[280px] w-[515px] xl:h-[350px] xl:w-[625px] p-3 rounded-2xl absolute bg-white border top-0 bottom-0 my-auto mx-0 right-20">
           <img
             src={AppFullDark}
             alt="Dashboard Full Dark"
@@ -26,7 +26,7 @@ const LandingPage = () => {
           />
         </div>
 
-        <div className="hidden md:block lg:hidden xl:block md:h-[300px] md:w-[220px] xl:h-[230px] xl:w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute top-0 xl:top-6 bottom-0 my-auto mx-0 right-32 xl:right-5">
+        <div className="hidden md:block lg:hidden xl:block md:h-[300px] md:w-[220px] xl:h-[230px] xl:w-[180px] p-2 rounded-2xl  bg-[#0b6241] absolute top-0 xl:top-6 bottom-0 my-auto mx-0 right-32 xl:right-16">
           <img
             src={AppMobileLight}
             alt="Dashboard Mobile Light"
