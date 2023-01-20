@@ -35,7 +35,7 @@ const DashTop = ({ data, type, loading }: DashProps) => {
 
   // Local State:
   // hardcoded
-  const [week] = useState<number>(14);
+  const [week] = useState<number>(16);
   const [season] = useState<number>(2022);
   // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
   const [playerData, setPlayerData] = useState<any>(null);

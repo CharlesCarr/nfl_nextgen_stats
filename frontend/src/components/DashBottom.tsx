@@ -33,6 +33,7 @@ const DashBottom = ({ data, type }: DashProps) => {
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
   const [noChart, setNoChart] = useState<boolean>(false);
+  const [dataSelection, setDataSelection] = useState<any>(null);
 
   useEffect(() => {
     if (data) {
@@ -139,6 +140,8 @@ const DashBottom = ({ data, type }: DashProps) => {
               <p className="text-2xl font-semibold tracking-wider">
                 {statFilter.name}
               </p>
+              {/* w-fit text-xs border rounded-lg font-light px-2 py-1 */}
+              {dataSelection && <p className="ml-6 w-fit text-xs border rounded-lg font-light px-2 py-1">{dataSelection}</p>}
             </div>
             {minMaxAvg ? (
               <div className="w-1/2 h-full flex justify-between items-center text-xs">
@@ -163,7 +166,7 @@ const DashBottom = ({ data, type }: DashProps) => {
             )}
           </div>
           <div className="w-full h-full lg:h-4/5 flex justify-center items-center">
-            <Chart chartData={chartData} />
+            <Chart chartData={chartData} dataSelection={dataSelection} setDataSelection={setDataSelection} />
           </div>
         </div>
       ) : (

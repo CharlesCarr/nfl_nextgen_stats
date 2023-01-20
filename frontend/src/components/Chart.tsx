@@ -4,10 +4,12 @@ import ChartInner from "./ChartInner";
 
 interface ChartProps {
   chartData: ChartData[] | null;
+  dataSelection: any;
+  setDataSelection: any;
   // minMaxAvg: MinMaxAvg | null;
 }
 
-const Chart = ({ chartData }: ChartProps) => {
+const Chart = ({ chartData, dataSelection, setDataSelection }: ChartProps) => {
   let [ref, bounds] = useMeasure();
 
   return (
@@ -18,6 +20,8 @@ const Chart = ({ chartData }: ChartProps) => {
             data={chartData}
             width={bounds.width}
             height={bounds.height}
+            dataSelection={dataSelection}
+            setDataSelection={setDataSelection}
           />
         )}
       </div>
