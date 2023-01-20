@@ -8,7 +8,6 @@ const Leaders = ({ index, name, team, stat, type }: LeadersProps) => {
   );
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 
-  console.log("stat", stat);
 
   return (
     <div

@@ -26,17 +26,13 @@ const DashBottom = ({ data, type }: DashProps) => {
     (state: RootState) => state.positionView.position
   );
 
-  console.log("****", statFilter.key);
-
   // Local State:
   const [leadersData, setLeadersData] = useState<
     PassingData[] | RushingData[] | null
   >(null);
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
-  console.log(chartData);
   const [minMaxAvg, setMinMaxAvg] = useState<MinMaxAvg | null>(null);
   const [noChart, setNoChart] = useState<boolean>(false);
-  console.log(noChart);
 
   useEffect(() => {
     if (data) {
@@ -80,7 +76,6 @@ const DashBottom = ({ data, type }: DashProps) => {
         });
 
       setChartData(chartData);
-      console.log(chartData);
       return chartData;
     }
   };
@@ -106,7 +101,6 @@ const DashBottom = ({ data, type }: DashProps) => {
 
   // logic for finding smallest / largest closes to use for domain for recharts y axis
   const findMinMaxAvg = () => {
-    console.log(chartData);
 
     if (chartData && chartData.length > 1) {
       const numData = chartData.map((week: ChartData) => {
@@ -134,7 +128,6 @@ const DashBottom = ({ data, type }: DashProps) => {
       return minMaxAvg;
     }
   };
-  console.log(leadersData);
 
   return (
     <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">

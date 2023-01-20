@@ -12,9 +12,6 @@ const Main = ({ query, type }: any) => {
   const { loading, error, data } = useQuery(query);
   const [players, setPlayers] = useState(null);
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
-  console.log(loading);
-  console.log(error);
-  console.log(data);
 
   useEffect(() => {
     if (data) {
