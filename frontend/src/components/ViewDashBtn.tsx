@@ -9,7 +9,7 @@ const ViewDashBtn = () => {
 
   return (
     <button
-      className="bg-[#0b6241] rounded-lg px-3 lg:px-6 py-2 lg:py-3 text-sm text-white"
+      className="bg-[#0b6241] rounded-lg px-3 lg:px-6 py-2 lg:py-3 text-sm text-white hover:opacity-80 transition-all"
       onClick={btnHandler}
     >
       View Dashboard
