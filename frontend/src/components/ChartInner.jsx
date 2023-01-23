@@ -32,7 +32,6 @@ const ChartInner = ({
   let d = line(data);
 
   const targetDataPoint = (week, stat) => {
-    console.log("test mouse enter", week, stat);
     setDataSelection(`Week: ${week} - Stat: ${stat.toFixed(1)}`);
   };
 

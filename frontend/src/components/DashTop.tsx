@@ -217,26 +217,49 @@ const DashTop = ({ data, type, loading }: DashProps) => {
       let totalPassY = 0;
       let totalPassTD = 0;
       let totalPassRSum = 0;
+      let totalRushY = 0;
+      let totalRushTD = 0;
+      let totalAvgRushY = 0;
       let playerNum = 0;
       let playerTeam = "";
 
-      for (let i = 0; i < allData.length; i++) {
-        let data = allData[i];
-        totalPassY += data["pass_yards"];
-        totalPassTD += data["pass_touchdowns"];
-        totalPassRSum += data["passer_rating"];
-        playerNum = data["player_jersey_number"];
-        playerTeam = data["team_abbr"];
-      }
+      if (type === "passer") {
+        for (let i = 0; i < allData.length; i++) {
+          let data = allData[i];
+          totalPassY += data["pass_yards"];
+          totalPassTD += data["pass_touchdowns"];
+          totalPassRSum += data["passer_rating"];
+          playerNum = data["player_jersey_number"];
+          playerTeam = data["team_abbr"];
+        }
 
-      let playerData: PassPlayer = {
-        pass_yards: totalPassY,
-        pass_touchdowns: totalPassTD,
-        passer_rating: totalPassRSum / allData.length,
-        player_jersey_number: playerNum,
-        team_abbr: playerTeam,
-      };
-      setPlayerData(playerData);
+        let playerData: PassPlayer = {
+          pass_yards: totalPassY,
+          pass_touchdowns: totalPassTD,
+          passer_rating: totalPassRSum / allData.length,
+          player_jersey_number: playerNum,
+          team_abbr: playerTeam,
+        };
+        setPlayerData(playerData);
+      } else {
+        for (let i = 0; i < allData.length; i++) {
+          let data = allData[i];
+          totalRushY += data["rush_yards"];
+          totalRushTD += data["rush_touchdowns"];
+          totalAvgRushY += data["avg_rush_yards"];
+          playerNum = data["player_jersey_number"];
+          playerTeam = data["team_abbr"];
+        }
+
+        let playerData: RushPlayer = {
+          rush_yards: totalRushY,
+          rush_touchdowns: totalRushTD,
+          avg_rush_yards: totalAvgRushY / allData.length,
+          player_jersey_number: playerNum,
+          team_abbr: playerTeam,
+        };
+        setPlayerData(playerData);
+      }
 
       return playerData;
     }
