@@ -1,7 +1,13 @@
 import * as d3 from "d3";
 import { motion } from "framer-motion";
 
-const ChartInner = ({ data, width, height, dataSelection, setDataSelection }) => {
+const ChartInner = ({
+  data,
+  width,
+  height,
+  dataSelection,
+  setDataSelection,
+}) => {
   let margin = {
     top: 20,
     right: 35,
@@ -27,7 +33,7 @@ const ChartInner = ({ data, width, height, dataSelection, setDataSelection }) =>
 
   const targetDataPoint = (week, stat) => {
     console.log("test mouse enter", week, stat);
-    setDataSelection(`Week: ${week} - Stat: ${stat}`);
+    setDataSelection(`Week: ${week} - Stat: ${stat.toFixed(1)}`);
   };
 
   return (
@@ -82,20 +88,20 @@ const ChartInner = ({ data, width, height, dataSelection, setDataSelection }) =>
 
         {/* Circles */}
         {data.map((d, i) => (
-            <motion.circle
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring", duration: 0.4, delay: 0.1 * i }}
-              key={Math.random()}
-              fill="#448167"
-              r="5"
-              cx={xScale(d.week)}
-              cy={yScale(d.stat)}
-              stroke="white"
-              strokeWidth={2}
-              onMouseEnter={() => targetDataPoint(d.week, d.stat)}
-              onMouseLeave={() => setDataSelection(null)}
-            />
+          <motion.circle
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", duration: 0.4, delay: 0.1 * i }}
+            key={Math.random()}
+            fill="#448167"
+            r="5"
+            cx={xScale(d.week)}
+            cy={yScale(d.stat)}
+            stroke="white"
+            strokeWidth={2}
+            onMouseEnter={() => targetDataPoint(d.week, d.stat)}
+            onMouseLeave={() => setDataSelection(null)}
+          />
         ))}
       </svg>
     </>
