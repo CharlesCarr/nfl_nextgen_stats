@@ -94,6 +94,7 @@ const ChartInner = ({ data, width, height, dataSelection, setDataSelection }) =>
               stroke="white"
               strokeWidth={2}
               onMouseEnter={() => targetDataPoint(d.week, d.stat)}
+              onMouseLeave={() => setDataSelection(null)}
             />
         ))}
       </svg>
