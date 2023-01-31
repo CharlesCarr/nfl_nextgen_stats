@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import DashBottom from "../components/DashBottom";
 import DashTop from "../components/DashTop";
 import DashLayout from "../components/layout/DashLayout";
+import Loading from "../components/Loading";
+import NavBar from "../components/NavBar";
 import { GET_RUSHERS } from "../queries/rusherQueries";
 import { RootState } from "../redux/store";
 
@@ -18,6 +20,21 @@ const RushPage = () => {
       setPlayers(data.rushers);
     }
   }, [data]);
+
+  if (loading) {
+    return (
+      <>
+        <NavBar />
+        <div
+          className={`w-full h-full p-12 flex items-center justify-center ${
+            darkMode ? "bg-stone-800" : "bg-white"
+          }`}
+        >
+          <Loading />
+        </div>
+      </>
+    );
+  }
 
   if (!loading && error) {
     return (
