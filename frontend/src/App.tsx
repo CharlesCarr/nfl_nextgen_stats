@@ -1,16 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-
-import Main from "./components/Main";
 import NotFound from "./pages/NotFound";
-// import HomePage from "./pages/HomePage";
-import { GET_PASSERS } from "./queries/passerQueries";
-import { GET_RUSHERS } from "./queries/rusherQueries";
-import AuthPage from "./pages/AuthPage";
 import LandingPage from "./pages/LandingPage";
+import PassPage from "./pages/PassPage";
+import RushPage from "./pages/RushPage";
 
 // for getting rid of warning in console
 const cache = new InMemoryCache({
@@ -53,17 +48,9 @@ const App = () => {
         >
           <Routes>
             <Route path="*" element={<NotFound />} />
-            {/* <Route path="/" element={<AuthPage />} /> */}
             <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/passing"
-              element={<Main query={GET_PASSERS} type="passer" />}
-            />
-            <Route
-              path="/rushing"
-              element={<Main query={GET_RUSHERS} type="rusher" />}
-            />
-            {/* <Route path="/receiving" element={<Main query={GET_RECEIVERS} />} type="receiver" /> */}
+            <Route path="/passing" element={<PassPage />} />
+            <Route path="/rushing" element={<RushPage />} />
           </Routes>
         </div>
       </ApolloProvider>

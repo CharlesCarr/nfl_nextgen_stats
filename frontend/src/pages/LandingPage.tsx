@@ -1,9 +1,13 @@
+import { useQuery } from "@apollo/client";
 import ViewDashBtn from "../components/ViewDashBtn";
 import AppFullDark from "../images/app/appDark.png";
 import AppMobileLight from "../images/app/appMobile1.png";
-// import { AiTwotoneTrophy } from "react-icons/ai";
+import { GET_PASSERS } from "../queries/passerQueries";
 
 const LandingPage = () => {
+  // Preloading passing data
+  useQuery(GET_PASSERS);
+
   return (
     <div className="relative w-screen h-screen flex-col justify-between bg-gray-50 text-black">
       {/* Horizontal (Landing Page) Nav Bar Component */}
