@@ -14,12 +14,12 @@ import {
 } from "react-icons/gi";
 import type { StatCard, DashProps } from "../../types/dataTypes";
 import Loading from "../ui/Loading";
-import Search from "../search/search";
 import DashTitle from "../ui/dash-title";
 import { PlayerInfo } from "./player-info";
 import { FilterButton } from "./filter-button";
 import { FieldImgContainer } from "../ui/field-img-container";
 import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
+import Search from "../search/search";
 
 const PlayerStats = ({ data, type, loading }: DashProps) => {
   const periodFilter = useSelector((state: RootState) => state.periodFilterView);

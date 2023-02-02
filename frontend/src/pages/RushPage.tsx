@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import DashTop from "../features/player-stats/player-stats";
 import DashLayout from "../layouts/dash-layout";
-import Loading from "../features/ui/Loading";
-import NavBar from "../layouts/nav-bar";
 import { GET_RUSHERS } from "../services/queries/rusherQueries";
 import { RootState } from "../stores/store";
+import { ErrorStatus } from "../features/ui/error-status";
+import { ChartContainer } from "../features/chart/chart-container";
+import Leaderboard from "../features/leaderboard/leaderboard";
 
 const RushPage = () => {
   // GET_RUSHERS
@@ -20,44 +21,26 @@ const RushPage = () => {
     }
   }, [data]);
 
-  if (loading) {
-    return (
-      <>
-        <NavBar />
-        <div
-          className={`w-full h-full p-12 flex items-center justify-center ${
-            darkMode ? "bg-stone-800" : "bg-white"
-          }`}
-        >
-          <Loading />
-        </div>
-      </>
-    );
-  }
-
-  if (!loading && error) {
-    return (
-      <div
-        className={`w-full h-full p-12 flex items-center justify-center ${
-          darkMode ? "bg-stone-800" : "bg-white"
-        }`}
-      >
-        <p className="text-2xl">An error has occurred...</p>
-      </div>
-    );
-  }
-
-  if (loading) return <p className="text-black">Loading..</p>;
-
+  // refactor later!
   const type = "rusher";
+
+  if (!loading && error) return <ErrorStatus />;
 
   return (
     <>
       <DashLayout darkMode={darkMode}>
         {!error && (
           <>
+            {/* Top Half of Dashboard */}
             <DashTop data={players} type={type} loading={loading} />
-            {/* <DashBottom data={players} type={type} loading={loading} /> */}
+
+            {/* Bottom Half of Dashboard */}
+            <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
+              {/* Bottom Left */}
+              <ChartContainer type={type} data={players} />
+              {/* Bottom Right */}
+              <Leaderboard type={type} data={players} />
+            </div>
           </>
         )}
       </DashLayout>
