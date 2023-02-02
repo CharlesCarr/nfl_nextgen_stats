@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import { setPasserView, setRusherView } from "../../stores/slices/playerViewSlice";
+import { formatInput } from "./utils";
 
 const Search = ({ allPlayers, type, loading }: any) => {
   // state for input field (player name)
@@ -47,18 +48,6 @@ const Search = ({ allPlayers, type, loading }: any) => {
     setInputValue("");
     setSearchMatches([]);
     setInputError(false);
-  };
-
-  const formatInput = (input: string) => {
-    // 'charlie Carr' or 'CHARLIE carr'
-    const allLower = input.toLowerCase();
-    const nameArr = allLower.split(" ");
-    const test = nameArr.map((name) => {
-      return name.charAt(0).toUpperCase() + name.slice(1);
-    });
-
-    const formattedInput = `${test[0]} ${test[1]}`;
-    return formattedInput;
   };
 
   const submitInput = (input: string) => {
