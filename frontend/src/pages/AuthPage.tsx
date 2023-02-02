@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import Form from "../components/Form";
-import { RootState } from "../redux/store";
+import Form from "../features/auth/Form";
+import { RootState } from "../stores/store";
 
 const AuthPage = () => {
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);

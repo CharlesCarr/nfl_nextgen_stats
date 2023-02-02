@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
-import ViewDashBtn from "../components/ViewDashBtn";
-import AppFullDark from "../images/app/appDark.png";
-import AppMobileLight from "../images/app/appMobile1.png";
-import { GET_PASSERS } from "../queries/passerQueries";
-import { GET_RUSHERS } from "../queries/rusherQueries";
+import ViewDashBtn from "../features/landing/ViewDashBtn";
+import { GET_PASSERS } from "../services/queries/passerQueries";
+import { GET_RUSHERS } from "../services/queries/rusherQueries";
+import AppFullDark from "../assets/images/app/appDark.png";
+import AppMobileLight from "../assets/images/app/appMobile1.png";
 
 const LandingPage = () => {
   // Preloading passing data

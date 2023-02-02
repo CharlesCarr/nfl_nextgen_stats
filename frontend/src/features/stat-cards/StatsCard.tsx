@@ -1,7 +1,7 @@
-import type { StatCard } from "../types/dataTypes";
+import type { StatCard } from "../../types/dataTypes";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { setPasserView, setRusherView } from "../redux/slices/statFilterViewSlice";
+import { RootState } from "../../stores/store";
+import { setPasserView, setRusherView } from "../../stores/slices/statFilterViewSlice";
 import { useEffect, useState } from "react";
 
 const StatsCard = ({

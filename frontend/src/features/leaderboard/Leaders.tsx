@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { LeadersProps } from "../types/dataTypes";
+import { RootState } from "../../stores/store";
+import { LeadersProps } from "../../types/dataTypes";
 
 const Leaders = ({ index, name, team, stat, type }: LeadersProps) => {
   const statFilter = useSelector(

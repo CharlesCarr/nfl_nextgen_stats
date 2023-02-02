@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface positionViewState {
-    position: string | null,
+    position: string | null;
 }
 
 const initialState: positionViewState = {
-    position: null, // 'QB' | 'RB' | 'WR/TE' | null
+    position: "QB", // 'QB' | 'RB' | 'WR/TE' | null
 };
 
 export const positionViewSlice = createSlice({

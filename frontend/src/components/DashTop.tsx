@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import StatsCard from "./StatsCard";
-import Football from "../images/football-unsplash.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import StatsCard from "../features/stat-cards/StatsCard";
+import { useSelector } from "react-redux";
 import {
   getWeekView,
   getSeasonView,
   getAllView,
-} from "../redux/slices/periodFilterViewSlice";
-import { RootState } from "../redux/store";
+} from "../stores/slices/periodFilterViewSlice";
+import { RootState } from "../stores/store";
 import {
   GiAmericanFootballBall,
   GiAmericanFootballHelmet,
@@ -21,9 +20,13 @@ import type {
   RushingData,
   RushPlayer,
 } from "../types/dataTypes";
-import Loading from "./Loading";
-import Search from "./Search";
+import Loading from "../features/ui/Loading";
+import Search from "../features/search/Search";
 import { filter } from "lodash";
+import DashTitle from "./dash-title";
+import { PlayerInfo } from "./player-info";
+import { FilterButton } from "./filter-button";
+import { FieldImgContainer } from "./field-img-container";
 
 const DashTop = ({ data, type, loading }: DashProps) => {
   // Redux State:
@@ -31,7 +34,6 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     (state: RootState) => state.periodFilterView
   );
   const playerName = useSelector((state: RootState) => state.playerView[type]);
-  const dispatch = useDispatch();
 
   // Local State:
   // hardcoded
@@ -276,55 +278,46 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     }
   };
 
+  const timelineFilters = [
+    {
+      timeline: "Week",
+      dataFn: getWeekView,
+    },
+    {
+      timeline: "Season",
+      dataFn: getSeasonView,
+    },
+    {
+      timeline: "All",
+      dataFn: getAllView,
+    },
+  ];
+
   return (
     <div className="h-1/2 w-full flex justify-between items-center">
       <div className="flex flex-col justify-between items-center h-full w-full lg:w-3/4 mr-0 lg:mr-4 pr-0 lg:pr-3 mb-10 lg:mb-10">
         <div className="flex justify-between items-center h-1/2 w-full mb-5 lg:mb-0">
           <div className="w-1/2 h-full flex flex-col justify-start items-start">
-            <p className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-widest mb-2">
-              {type === "passer" ? "QB" : "RB"} SPOTLIGHT
-            </p>
-            <p className="text-sm lg:text-base font-semibold tracking-wide mb-1">{`${playerName} - #${
-              !loading && playerData ? playerData["player_jersey_number"] : ""
-            }`}</p>
-            <p className="font-light text-xs lg:text-sm">
-              {!loading && playerData ? playerData["team_abbr"] : ""}
-            </p>
+            <DashTitle type={type} />
+            <PlayerInfo
+              playerData={playerData}
+              playerName={playerName}
+              loading={loading}
+            />
           </div>
           <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
             <Search allPlayers={allPlayers} type={type} loading={loading} />
             <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
               {/* pr-10 pl-24 */}
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "week"
-                    ? "bg-[#0b6241]/60 text-white "
-                    : ""
-                }`}
-                onClick={() => dispatch(getWeekView())}
-              >
-                Week
-              </button>
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "season"
-                    ? "bg-[#0b6241]/60 text-white "
-                    : ""
-                }`}
-                onClick={() => dispatch(getSeasonView())}
-              >
-                Season
-              </button>
-              <button
-                className={`rounded-xl py-1 px-4 ${
-                  periodFilter.view === "all"
-                    ? "bg-[#0b6241]/60 text-white "
-                    : ""
-                }`}
-                onClick={() => dispatch(getAllView())}
-              >
-                All
-              </button>
+              {timelineFilters.map((timeline: any) => {
+                return (
+                  <FilterButton
+                    key={timeline.timeline}
+                    timeline={timeline}
+                    periodFilter
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
@@ -345,13 +338,7 @@ const DashTop = ({ data, type, loading }: DashProps) => {
         </div>
       </div>
 
-      <div className="lg:flex justify-center items-center h-full w-1/4 rounded-2xl shadow hidden">
-        <img
-          src={Football}
-          alt="football"
-          className="object-cover h-full w-full rounded-2xl shadow brightness-90"
-        />
-      </div>
+      <FieldImgContainer />
     </div>
   );
 };

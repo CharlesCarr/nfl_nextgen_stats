@@ -1,11 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashBottom from "../components/DashBottom";
 import DashTop from "../components/DashTop";
-import DashLayout from "../components/layout/DashLayout";
-import { GET_PASSERS } from "../queries/passerQueries";
-import { RootState } from "../redux/store";
+import { ChartContainer } from "../features/chart/chart-container";
+import Leaderboard from "../features/leaderboard/leaderboard";
+import DashLayout from "../layouts/DashLayout";
+import { GET_PASSERS } from "../services/queries/passerQueries";
+import { RootState } from "../stores/store";
 
 const PassPage = () => {
   // GET_PASSERS
@@ -31,8 +32,6 @@ const PassPage = () => {
     );
   }
 
-  //   if (loading) return <p className="text-black">Loading..</p>
-
   const type = "passer";
 
   return (
@@ -40,8 +39,17 @@ const PassPage = () => {
       <DashLayout darkMode={darkMode}>
         {!error && (
           <>
+            {/* Top Half of Dashboard */}
             <DashTop data={players} type={type} loading={loading} />
-            <DashBottom data={players} type={type} loading={loading} />
+
+            {/* Bottom Half of Dashboard */}
+            {/* <DashBottom data={players} type={type} loading={loading} /> */}
+            <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
+              {/* Bottom Left */}
+              <ChartContainer type={type} data={players} />
+              {/* Bottom Right */}
+              <Leaderboard type={type} data={players} />
+            </div>
           </>
         )}
       </DashLayout>

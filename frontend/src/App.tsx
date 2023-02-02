@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "./redux/store";
+import { RootState } from "./stores/store";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";

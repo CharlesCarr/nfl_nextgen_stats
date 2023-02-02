@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import { setPasserView, setRusherView } from "../redux/slices/playerViewSlice";
+import { setPasserView, setRusherView } from "../../stores/slices/playerViewSlice";
 
 const Search = ({ allPlayers, type, loading }: any) => {
   // state for input field (player name)

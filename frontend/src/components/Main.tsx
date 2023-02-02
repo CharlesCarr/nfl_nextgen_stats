@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import DashBottom from "./DashBottom";
+import { RootState } from "../stores/store";
+// import DashBottom from "./DashBottom";
 import DashTop from "./DashTop";
-import Loading from "./Loading";
-import NavBar from "./NavBar";
+import Loading from "../features/ui/Loading";
+import NavBar from "../layouts/NavBar";
 
 const Main = ({ query, type }: any) => {
   // GET_PASSERS
@@ -60,7 +60,7 @@ const Main = ({ query, type }: any) => {
         {!error && (
           <>
             <DashTop data={players} type={type} loading={loading} />
-            <DashBottom data={players} type={type} loading={loading} />
+            {/* <DashBottom data={players} type={type} loading={loading} /> */}
           </>
         )}
       </div>

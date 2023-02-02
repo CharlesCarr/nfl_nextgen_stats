@@ -1,11 +1,11 @@
 import { CiSettings } from "react-icons/ci";
 import { FaFootballBall } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { setDarkMode } from "../redux/slices/darkModeViewSlice";
+import { RootState } from "../stores/store";
+import { setDarkMode } from "../stores/slices/darkModeViewSlice";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { getQBView, getRBView } from "../redux/slices/positionViewSlice";
+import { getQBView, getRBView } from "../stores/slices/positionViewSlice";
 
 const NavBar = () => {
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);

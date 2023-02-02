@@ -1,4 +1,4 @@
-import type { ChartData } from "../types/dataTypes";
+import type { ChartData } from "../../types/dataTypes";
 import useMeasure from "react-use-measure";
 import ChartInner from "./ChartInner";
 

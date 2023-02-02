@@ -1,4 +1,4 @@
-import { playerViewState } from "../redux/slices/playerViewSlice";
+import { playerViewState } from "../stores/slices/playerViewSlice";
 
 
 export interface PassingData {
@@ -62,6 +62,16 @@ export interface DashProps {
   data: PassingData[] | RushingData[] | null;
   type: keyof playerViewState;
   loading: boolean;
+}
+
+export interface ChartContainerProps {
+  type: keyof playerViewState;
+  data: PassingData[] | null;
+}
+
+export interface LeaderboardProps {
+  type: keyof playerViewState;
+  data: PassingData[] | null;
 }
 
 export interface PassPlayer {

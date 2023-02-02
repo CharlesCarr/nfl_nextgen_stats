@@ -1,13 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashBottom from "../components/DashBottom";
 import DashTop from "../components/DashTop";
-import DashLayout from "../components/layout/DashLayout";
-import Loading from "../components/Loading";
-import NavBar from "../components/NavBar";
-import { GET_RUSHERS } from "../queries/rusherQueries";
-import { RootState } from "../redux/store";
+import DashLayout from "../layouts/DashLayout";
+import Loading from "../features/ui/Loading";
+import NavBar from "../layouts/NavBar";
+import { GET_RUSHERS } from "../services/queries/rusherQueries";
+import { RootState } from "../stores/store";
 
 const RushPage = () => {
   // GET_RUSHERS
@@ -58,7 +57,7 @@ const RushPage = () => {
         {!error && (
           <>
             <DashTop data={players} type={type} loading={loading} />
-            <DashBottom data={players} type={type} loading={loading} />
+            {/* <DashBottom data={players} type={type} loading={loading} /> */}
           </>
         )}
       </DashLayout>
