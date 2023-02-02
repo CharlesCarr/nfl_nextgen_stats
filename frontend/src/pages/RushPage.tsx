@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashTop from "../components/DashTop";
+import DashTop from "../features/player-stats/player-stats";
 import DashLayout from "../layouts/DashLayout";
 import Loading from "../features/ui/Loading";
 import NavBar from "../layouts/NavBar";

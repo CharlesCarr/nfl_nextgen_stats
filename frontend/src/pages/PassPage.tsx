@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashTop from "../components/DashTop";
+import DashTop from "../features/player-stats/player-stats";
 import { ChartContainer } from "../features/chart/chart-container";
 import Leaderboard from "../features/leaderboard/leaderboard";
+import { ErrorStatus } from "../features/ui/error-status";
 import DashLayout from "../layouts/DashLayout";
 import { GET_PASSERS } from "../services/queries/passerQueries";
 import { RootState } from "../stores/store";
@@ -20,19 +21,10 @@ const PassPage = () => {
     }
   }, [data]);
 
-  if (!loading && error) {
-    return (
-      <div
-        className={`w-full h-full p-12 flex items-center justify-center ${
-          darkMode ? "bg-stone-800" : "bg-white"
-        }`}
-      >
-        <p className="text-2xl">An error has occurred...</p>
-      </div>
-    );
-  }
-
+  // refactor later!
   const type = "passer";
+
+  if (!loading && error) return <ErrorStatus />;
 
   return (
     <>
@@ -43,7 +35,6 @@ const PassPage = () => {
             <DashTop data={players} type={type} loading={loading} />
 
             {/* Bottom Half of Dashboard */}
-            {/* <DashBottom data={players} type={type} loading={loading} /> */}
             <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
               {/* Bottom Left */}
               <ChartContainer type={type} data={players} />

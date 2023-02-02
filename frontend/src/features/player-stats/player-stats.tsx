@@ -1,47 +1,34 @@
 import { useEffect, useState } from "react";
-import StatsCard from "../features/stat-cards/StatsCard";
+import StatsCard from "./StatsCard";
 import { useSelector } from "react-redux";
 import {
   getWeekView,
   getSeasonView,
   getAllView,
-} from "../stores/slices/periodFilterViewSlice";
-import { RootState } from "../stores/store";
+} from "../../stores/slices/periodFilterViewSlice";
+import { RootState } from "../../stores/store";
 import {
   GiAmericanFootballBall,
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
-import type {
-  PassingData,
-  PassPlayer,
-  StatCard,
-  DashProps,
-  RushingData,
-  RushPlayer,
-} from "../types/dataTypes";
-import Loading from "../features/ui/Loading";
-import Search from "../features/search/Search";
-import { filter } from "lodash";
-import DashTitle from "./dash-title";
+import type { StatCard, DashProps } from "../../types/dataTypes";
+import Loading from "../ui/Loading";
+import Search from "../search/Search";
+import DashTitle from "../ui/dash-title";
 import { PlayerInfo } from "./player-info";
 import { FilterButton } from "./filter-button";
-import { FieldImgContainer } from "./field-img-container";
+import { FieldImgContainer } from "../ui/field-img-container";
+import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
 
-const DashTop = ({ data, type, loading }: DashProps) => {
-  // Redux State:
-  const periodFilter = useSelector(
-    (state: RootState) => state.periodFilterView
-  );
+const PlayerStats = ({ data, type, loading }: DashProps) => {
+  const periodFilter = useSelector((state: RootState) => state.periodFilterView);
   const playerName = useSelector((state: RootState) => state.playerView[type]);
-
-  // Local State:
   // hardcoded
   const [week] = useState<number>(16);
   const [season] = useState<number>(2022);
   // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
   const [playerData, setPlayerData] = useState<any>(null);
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
   const [statCardData, setStatCardData] = useState<StatCard[]>([
     {
       statName: "Passing Yards",
@@ -80,18 +67,17 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     if (data) {
       if (periodFilter.view === "week") {
         // already have so how to get
-        getWeekData(playerName, week);
+        setPlayerData(getWeekData(data, playerName, week));
       } else if (periodFilter.view === "season") {
         // grab week 0 for the selected year/season
-        getSeasonData(playerName, season);
+        setPlayerData(getSeasonData(data, playerName, season));
       } else {
         // all in career - think easiest is to grab all week 0's
         // add passing yards and tds and take the avg of passer rating
-        getAllData(playerName);
+        setPlayerData(getAllData(data, playerName, type));
       }
       // get all unique players (to use for search validation)
-      getAllPlayers();
-      // setIsLoading(false);
+      setAllPlayers(getAllPlayers(data));
     }
   }, [data, playerName, week, season, periodFilter]);
 
@@ -167,117 +153,6 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     }
   }, [playerData]);
 
-  const getWeekData = (playerName: string, week: number) => {
-    if (data) {
-      // let weekData = data.filter((d: PassingData | RushingData ) => {
-      // checking with 'any' for now after adding lodash approach b/c of union typeScript bug
-      let weekData: any = filter(data, (d: PassingData | RushingData) => {
-        if (
-          d["player_display_name"] === playerName &&
-          d.week === week &&
-          d.season === 2022
-        ) {
-          return d;
-        } else {
-          return null;
-        }
-      });
-      setPlayerData(weekData[0]);
-      return weekData[0];
-    }
-  };
-
-  const getSeasonData = (playerName: string, season: number) => {
-    if (data) {
-      // let seasonData = data.filter((d: PassingData | RushingData) => {
-      let seasonData: any = filter(data, (d: PassingData | RushingData) => {
-        if (
-          d["player_display_name"] === playerName &&
-          d.week === 0 &&
-          d.season === season
-        ) {
-          return d;
-        } else {
-          return null;
-        }
-      });
-      setPlayerData(seasonData[0]);
-      return seasonData[0];
-    }
-  };
-
-  const getAllData = (playerName: string) => {
-    if (data) {
-      // let allData = data.filter((d: PassingData | RushingData) => {
-      let allData: any = filter(data, (d: PassingData | RushingData) => {
-        if (d["player_display_name"] === playerName && d.week === 0) {
-          return d;
-        } else {
-          return null;
-        }
-      });
-      let totalPassY = 0;
-      let totalPassTD = 0;
-      let totalPassRSum = 0;
-      let totalRushY = 0;
-      let totalRushTD = 0;
-      let totalAvgRushY = 0;
-      let playerNum = 0;
-      let playerTeam = "";
-
-      if (type === "passer") {
-        for (let i = 0; i < allData.length; i++) {
-          let data = allData[i];
-          totalPassY += data["pass_yards"];
-          totalPassTD += data["pass_touchdowns"];
-          totalPassRSum += data["passer_rating"];
-          playerNum = data["player_jersey_number"];
-          playerTeam = data["team_abbr"];
-        }
-
-        let playerData: PassPlayer = {
-          pass_yards: totalPassY,
-          pass_touchdowns: totalPassTD,
-          passer_rating: totalPassRSum / allData.length,
-          player_jersey_number: playerNum,
-          team_abbr: playerTeam,
-        };
-        setPlayerData(playerData);
-      } else {
-        for (let i = 0; i < allData.length; i++) {
-          let data = allData[i];
-          totalRushY += data["rush_yards"];
-          totalRushTD += data["rush_touchdowns"];
-          totalAvgRushY += data["avg_rush_yards"];
-          playerNum = data["player_jersey_number"];
-          playerTeam = data["team_abbr"];
-        }
-
-        let playerData: RushPlayer = {
-          rush_yards: totalRushY,
-          rush_touchdowns: totalRushTD,
-          avg_rush_yards: totalAvgRushY / allData.length,
-          player_jersey_number: playerNum,
-          team_abbr: playerTeam,
-        };
-        setPlayerData(playerData);
-      }
-
-      return playerData;
-    }
-  };
-
-  const getAllPlayers = () => {
-    if (data) {
-      const allPlayers = data.map((data: PassingData | RushingData) => {
-        return data["player_display_name"];
-      });
-      const uniquePlayers = new Set(allPlayers);
-      setAllPlayers(uniquePlayers);
-      return uniquePlayers;
-    }
-  };
-
   const timelineFilters = [
     {
       timeline: "Week",
@@ -343,4 +218,4 @@ const DashTop = ({ data, type, loading }: DashProps) => {
   );
 };
 
-export default DashTop;
+export default PlayerStats;

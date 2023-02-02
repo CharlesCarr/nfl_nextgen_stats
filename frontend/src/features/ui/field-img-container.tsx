@@ -1,4 +1,4 @@
-import Football from "../assets/images/football-unsplash.jpg";
+import Football from "../../assets/images/football-unsplash.jpg";
 
 export const FieldImgContainer = () => {
   return (

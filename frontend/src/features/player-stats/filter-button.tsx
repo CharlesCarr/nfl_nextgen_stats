@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../stores/store";
+import { RootState } from "../../stores/store";
 
 export const FilterButton = ({ timeline }: any) => {
   const dispatch = useDispatch();

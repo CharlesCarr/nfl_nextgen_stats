@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/store";
 // import DashBottom from "./DashBottom";
-import DashTop from "./DashTop";
+import DashTop from "../features/player-stats/player-stats";
 import Loading from "../features/ui/Loading";
 import NavBar from "../layouts/NavBar";
 
