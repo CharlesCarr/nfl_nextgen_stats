@@ -1,8 +1,11 @@
-import type { StatCard } from "../../types/dataTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../stores/store";
-import { setPasserView, setRusherView } from "../../stores/slices/statFilterViewSlice";
+import {
+  setPasserView,
+  setRusherView,
+} from "../../stores/slices/statFilterViewSlice";
 import { useEffect, useState } from "react";
+import { StatCard } from "./types";
 
 const StatsCard = ({
   statName,
@@ -10,7 +13,7 @@ const StatsCard = ({
   statIcon,
   statLabel,
   statKey,
-  type
+  type,
 }: StatCard) => {
   const statFilter = useSelector(
     (state: RootState) => state.statFilterView[type]
@@ -31,9 +34,16 @@ const StatsCard = ({
 
   return (
     <div
+      data-testid="stat-card"
       className={`relative shadow rounded-2xl flex flex-col items-between justify-start px-8 text-xs font-medium cursor-pointer ${itemStyles}`}
       onClick={() =>
-        type === "passer" ? (dispatch(setPasserView({ name: statName, abbr: statLabel, key: statKey }))) : (dispatch(setRusherView({ name: statName, abbr: statLabel, key: statKey })))
+        type === "passer"
+          ? dispatch(
+              setPasserView({ name: statName, abbr: statLabel, key: statKey })
+            )
+          : dispatch(
+              setRusherView({ name: statName, abbr: statLabel, key: statKey })
+            )
       }
     >
       {darkMode && statFilter.key === statKey ? (
@@ -44,8 +54,20 @@ const StatsCard = ({
         {statIcon}
       </div>
       <div className="flex justify-center items-end h-1/2 pb-8">
-        <p className={`${typeof statNum !== 'number' ? "text-base" : "text-4xl font-bold"} mr-2`}>{statNum}</p>
-        <p className={`${typeof statNum !== 'number' ? "hidden" : "block"} text-base lg:text-xl`}>{statLabel}</p>
+        <p
+          className={`${
+            typeof statNum !== "number" ? "text-base" : "text-4xl font-bold"
+          } mr-2`}
+        >
+          {statNum}
+        </p>
+        <p
+          className={`${
+            typeof statNum !== "number" ? "hidden" : "block"
+          } text-base lg:text-xl`}
+        >
+          {statLabel}
+        </p>
       </div>
     </div>
   );

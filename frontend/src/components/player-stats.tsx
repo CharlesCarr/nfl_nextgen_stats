@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react";
-import StatsCard from "./stats-card";
+import StatsCard from "../features/stats-card/stats-card";
 import { useSelector } from "react-redux";
 import {
   getWeekView,
   getSeasonView,
   getAllView,
-} from "../../stores/slices/periodFilterViewSlice";
-import { RootState } from "../../stores/store";
+} from "../stores/slices/periodFilterViewSlice";
+import { RootState } from "../stores/store";
 import {
   GiAmericanFootballBall,
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
-import type { StatCard, DashProps } from "../../types/dataTypes";
-import Loading from "../ui/Loading";
-import DashTitle from "../ui/dash-title";
-import { PlayerInfo } from "./player-info";
-import { FilterButton } from "./filter-button";
-import { FieldImgContainer } from "../ui/field-img-container";
+import type { StatCard, DashProps } from "../types/dataTypes";
+import Loading from "../features/ui/Loading";
+import DashTitle from "../features/ui/dash-title";
+import { PlayerInfo } from "../features/ui/player-info";
+import { FilterButton } from "../features/filter/filter-button";
+import { FieldImgContainer } from "../features/ui/field-img-container";
 import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
-import Search from "../search/search";
+import Search from "../features/search/search";
+import { FilterList } from "../features/filter/filter-list";
+import { TimelineFilter } from "../features/filter/types";
+import { StatsCardList } from "../features/stats-card/stats-card-list";
 
 const PlayerStats = ({ data, type, loading }: DashProps) => {
-  const periodFilter = useSelector((state: RootState) => state.periodFilterView);
+  const periodFilter = useSelector(
+    (state: RootState) => state.periodFilterView
+  );
   const playerName = useSelector((state: RootState) => state.playerView[type]);
   // hardcoded
   const [week] = useState<number>(16);
@@ -153,7 +158,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
     }
   }, [playerData]);
 
-  const timelineFilters = [
+  const timelineFilters: TimelineFilter[] = [
     {
       timeline: "Week",
       dataFn: getWeekView,
@@ -182,37 +187,11 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
           </div>
           <div className="w-full sm:w-1/3 h-full flex flex-col justify-center items-center">
             <Search allPlayers={allPlayers} type={type} loading={loading} />
-            <div className="w-full h-1/2 flex justify-between items-center text-xs pl-10 sm:pl-0 sm:pr-8 lg:pr-0">
-              {/* pr-10 pl-24 */}
-              {timelineFilters.map((timeline: any) => {
-                return (
-                  <FilterButton
-                    key={timeline.timeline}
-                    timeline={timeline}
-                    periodFilter
-                  />
-                );
-              })}
-            </div>
+            <FilterList timelineFilters={timelineFilters} />
           </div>
         </div>
-        <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full mt-px">
-          {statCardData.map((d: StatCard, index: number) => {
-            return (
-              <StatsCard
-                key={index}
-                statName={d.statName}
-                statNum={d.statNum}
-                statIcon={d.statIcon}
-                statLabel={d.statLabel}
-                statKey={d.statKey}
-                type={type}
-              />
-            );
-          })}
-        </div>
+        <StatsCardList statCardData={statCardData} type={type} />
       </div>
-
       <FieldImgContainer />
     </div>
   );

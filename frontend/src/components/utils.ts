@@ -3,9 +3,9 @@ import {
   PassPlayer,
   RushingData,
   RushPlayer,
-} from "./../../types/dataTypes";
+} from "../types/dataTypes";
 import { filter } from "lodash";
-import { playerViewState } from "../../stores/slices/playerViewSlice";
+import { playerViewState } from "../stores/slices/playerViewSlice";
 
 export const getWeekData = (
   data: PassingData[] | RushingData[],

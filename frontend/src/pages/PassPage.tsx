@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashTop from "../features/player-stats/player-stats";
+import DashTop from "../components/player-stats";
 import { ChartContainer } from "../features/chart/chart-container";
 import Leaderboard from "../features/leaderboard/leaderboard";
 import { ErrorStatus } from "../features/ui/error-status";
