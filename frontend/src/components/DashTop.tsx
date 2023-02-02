@@ -45,7 +45,7 @@ const DashTop = ({ data, type, loading }: DashProps) => {
   const [statCardData, setStatCardData] = useState<StatCard[]>([
     {
       statName: "Passing Yards",
-      statNum: "Loading...",
+      statNum: <Loading />,
       statIcon: (
         <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
       ),
@@ -55,7 +55,7 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     },
     {
       statName: "Passing TDs",
-      statNum: "Loading...",
+      statNum: <Loading />,
       statIcon: (
         <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
       ),
@@ -65,7 +65,7 @@ const DashTop = ({ data, type, loading }: DashProps) => {
     },
     {
       statName: "Passer Rating",
-      statNum: "Loading...",
+      statNum: <Loading />,
       statIcon: (
         <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
       ),

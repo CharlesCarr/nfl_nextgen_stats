@@ -92,7 +92,7 @@ export interface RushPlayer {
 
 export interface StatCard {
   statName: string;
-  statNum: number | string;
+  statNum: number | JSX.Element;
   statIcon: JSX.Element;
   statLabel: string;
   statKey: string;
