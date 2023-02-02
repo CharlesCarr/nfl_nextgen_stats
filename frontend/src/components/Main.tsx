@@ -5,7 +5,7 @@ import { RootState } from "../stores/store";
 // import DashBottom from "./DashBottom";
 import DashTop from "../features/player-stats/player-stats";
 import Loading from "../features/ui/Loading";
-import NavBar from "../layouts/NavBar";
+import NavBar from "../layouts/nav-bar";
 
 const Main = ({ query, type }: any) => {
   // GET_PASSERS

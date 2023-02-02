@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import StatsCard from "./StatsCard";
+import StatsCard from "./stats-card";
 import { useSelector } from "react-redux";
 import {
   getWeekView,
@@ -14,7 +14,7 @@ import {
 } from "react-icons/gi";
 import type { StatCard, DashProps } from "../../types/dataTypes";
 import Loading from "../ui/Loading";
-import Search from "../search/Search";
+import Search from "../search/search";
 import DashTitle from "../ui/dash-title";
 import { PlayerInfo } from "./player-info";
 import { FilterButton } from "./filter-button";

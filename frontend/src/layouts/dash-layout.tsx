@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
+import NavBar from "./nav-bar";
 
 export interface DashLayoutProps {
   darkMode: boolean;

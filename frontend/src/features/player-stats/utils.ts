@@ -12,7 +12,6 @@ export const getWeekData = (
   playerName: string,
   week: number
 ) => {
-  // let weekData = data.filter((d: PassingData | RushingData ) => {
   // checking with 'any' for now after adding lodash approach b/c of union typeScript bug
   let weekData: any = filter(data, (d: PassingData | RushingData) => {
     if (
@@ -33,7 +32,6 @@ export const getSeasonData = (
   playerName: string,
   season: number
 ) => {
-  // let seasonData = data.filter((d: PassingData | RushingData) => {
   let seasonData: any = filter(data, (d: PassingData | RushingData) => {
     if (
       d["player_display_name"] === playerName &&
@@ -45,7 +43,6 @@ export const getSeasonData = (
       return null;
     }
   });
-  // setPlayerData(seasonData[0]);
   return seasonData[0];
 };
 
@@ -54,7 +51,6 @@ export const getAllData = (
   playerName: string,
   type: keyof playerViewState
 ) => {
-  // let allData = data.filter((d: PassingData | RushingData) => {
   let allData: any = filter(data, (d: PassingData | RushingData) => {
     if (d["player_display_name"] === playerName && d.week === 0) {
       return d;
@@ -89,7 +85,6 @@ export const getAllData = (
       team_abbr: playerTeam,
     };
     return playerData;
-    // setPlayerData(playerData);
   } else {
     for (let i = 0; i < allData.length; i++) {
       let data = allData[i];
@@ -108,7 +103,6 @@ export const getAllData = (
       team_abbr: playerTeam,
     };
     return playerData;
-    // setPlayerData(playerData);
   }
 };
 
@@ -117,6 +111,5 @@ export const getAllPlayers = (data: PassingData[] | RushingData[]) => {
     return data["player_display_name"];
   });
   const uniquePlayers = new Set(allPlayers);
-  // setAllPlayers(uniquePlayers);
   return uniquePlayers;
 };

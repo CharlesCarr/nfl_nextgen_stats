@@ -1,6 +1,6 @@
 import type { ChartData } from "../../types/dataTypes";
 import useMeasure from "react-use-measure";
-import ChartInner from "./ChartInner";
+import ChartInner from "./chart-inner";
 
 interface ChartProps {
   chartData: ChartData[] | null;

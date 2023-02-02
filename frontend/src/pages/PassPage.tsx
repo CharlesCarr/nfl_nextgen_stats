@@ -5,7 +5,7 @@ import DashTop from "../features/player-stats/player-stats";
 import { ChartContainer } from "../features/chart/chart-container";
 import Leaderboard from "../features/leaderboard/leaderboard";
 import { ErrorStatus } from "../features/ui/error-status";
-import DashLayout from "../layouts/DashLayout";
+import DashLayout from "../layouts/dash-layout";
 import { GET_PASSERS } from "../services/queries/passerQueries";
 import { RootState } from "../stores/store";
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import ViewDashBtn from "../features/landing/ViewDashBtn";
+import ViewDashBtn from "../features/landing/view-dash-btn";
 import { GET_PASSERS } from "../services/queries/passerQueries";
 import { GET_RUSHERS } from "../services/queries/rusherQueries";
 import AppFullDark from "../assets/images/app/appDark.png";

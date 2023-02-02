@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Form from "../features/auth/Form";
+import Form from "../features/auth/auth-form";
 import { RootState } from "../stores/store";
 
 const AuthPage = () => {

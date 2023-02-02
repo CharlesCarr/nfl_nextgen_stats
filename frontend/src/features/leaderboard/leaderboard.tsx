@@ -7,7 +7,7 @@ import {
   RushingData,
 } from "../../types/dataTypes";
 import Loading from "../ui/Loading";
-import Leaders from "./Leaders";
+import Leaders from "./leaders";
 import { getLeaders } from "./utils";
 
 export default function Leaderboard({ type, data }: LeaderboardProps) {
