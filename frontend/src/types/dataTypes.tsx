@@ -1,3 +1,4 @@
+import { NumberLiteralType } from "typescript";
 import { playerViewState } from "../stores/slices/playerViewSlice";
 
 export interface PassingData {
@@ -57,6 +58,17 @@ export interface RushingData {
   week: number;
 }
 
+export interface ReceivingData {
+  rec_touchdowns: number;
+  yards: number;
+  receptions: number;
+  player_display_name: string;
+  player_jersey_number: number;
+  season: number;
+  team_abbr: string;
+  week: number;
+}
+
 export interface DashProps {
   data: PassingData[] | RushingData[] | null;
   type: keyof playerViewState;
@@ -85,6 +97,14 @@ export interface RushPlayer {
   rush_yards: number;
   rush_touchdowns: number;
   avg_rush_yards: number;
+  player_jersey_number: number;
+  team_abbr: string;
+}
+
+export interface RecPlayer {
+  rec_yards: number;
+  rec_touchdowns: number;
+  receptions: number;
   player_jersey_number: number;
   team_abbr: string;
 }

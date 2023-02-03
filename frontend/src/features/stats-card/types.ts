@@ -10,6 +10,6 @@ export interface StatCard {
 }
 
 export interface StatsCardListProps {
-  statCardData: StatCard[];
+  statCardData: StatCard[] | null;
   type: keyof playerViewState;
 }

@@ -3,6 +3,7 @@ import { RootState } from "../../stores/store";
 import {
   setPasserView,
   setRusherView,
+  setReceiverView
 } from "../../stores/slices/statFilterViewSlice";
 import { useEffect, useState } from "react";
 import { StatCard } from "./types";
@@ -32,19 +33,21 @@ const StatsCard = ({
     }
   }, [darkMode, statFilter, statKey]);
 
+  const handleCardClick = () => {
+    if (type === "passer") {
+      dispatch(setPasserView({ name: statName, abbr: statLabel, key: statKey }))
+    } else if (type === "rusher") {
+      dispatch(setRusherView({ name: statName, abbr: statLabel, key: statKey }))
+    } else {
+      dispatch(setReceiverView({ name: statName, abbr: statLabel, key: statKey }))
+    }
+  }
+
   return (
     <div
       data-testid="stat-card"
       className={`relative shadow rounded-2xl flex flex-col items-between justify-start px-8 text-xs font-medium cursor-pointer ${itemStyles}`}
-      onClick={() =>
-        type === "passer"
-          ? dispatch(
-              setPasserView({ name: statName, abbr: statLabel, key: statKey })
-            )
-          : dispatch(
-              setRusherView({ name: statName, abbr: statLabel, key: statKey })
-            )
-      }
+      onClick={() => handleCardClick()}
     >
       {darkMode && statFilter.key === statKey ? (
         <div className="absolute inset-2/4 -translate-y-2/4 -translate-x-2/4 w-52 h-36 bg-slate-50 rounded-full mix-blend-lighten filter blur-xl opacity-20"></div>

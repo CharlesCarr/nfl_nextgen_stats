@@ -2,9 +2,12 @@ import StatsCard from "./stats-card";
 import { StatCard, StatsCardListProps } from "./types";
 
 export const StatsCardList = ({ statCardData, type }: StatsCardListProps) => {
+  console.log(statCardData);
+  console.log(type);
+  
   return (
     <div className="grid grid-col-1 sm:grid-cols-3 gap-y-2 sm:gap-y-0 gap-x-3 h-2/3 w-full mt-px">
-      {statCardData.map((d: StatCard, index: number) => {
+      {statCardData?.map((d: StatCard, index: number) => {
         return (
           <StatsCard
             key={index}

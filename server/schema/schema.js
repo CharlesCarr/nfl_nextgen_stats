@@ -1,5 +1,6 @@
 const Passer = require("../models/Passer");
 const Rusher = require("../models/Rusher");
+const Receiver = require("../models/Receiver");
 const User = require("../models/User");
 
 const {
@@ -79,6 +80,37 @@ const RusherType = new GraphQLObjectType({
   }),
 });
 
+// Rusher Type
+const ReceiverType = new GraphQLObjectType({
+  name: "Receiver",
+  fields: () => ({
+    id: { type: GraphQLID },
+    avg_cushion: { type: GraphQLFloat },
+    avg_expected_yac: { type: GraphQLFloat },
+    avg_intended_air_yards: { type: GraphQLFloat },
+    avg_separation: { type: GraphQLFloat },
+    avg_yac: { type: GraphQLFloat },
+    avg_yac_above_expectation: { type: GraphQLFloat },
+    catch_percentage: { type: GraphQLFloat },
+    percent_share_of_intended_air_yards: { type: GraphQLFloat },
+    player_display_name: { type: GraphQLString },
+    player_first_name: { type: GraphQLString },
+    player_gsis_id: { type: GraphQLString },
+    player_jersey_number: { type: GraphQLFloat },
+    player_last_name: { type: GraphQLString },
+    player_position: { type: GraphQLString },
+    player_short_name: { type: GraphQLString },
+    rec_touchdowns: { type: GraphQLFloat },
+    receptions: { type: GraphQLFloat },
+    season: { type: GraphQLFloat },
+    season_type: { type: GraphQLString },
+    targets: { type: GraphQLFloat },
+    team_abbr: { type: GraphQLString },
+    week: { type: GraphQLFloat },
+    yards: { type: GraphQLFloat },
+  }),
+});
+
 // User Type
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -112,6 +144,12 @@ const RootQuery = new GraphQLObjectType({
         return Rusher.find();
       },
     },
+    receivers: {
+      type: new GraphQLList(ReceiverType),
+      resolve(parent, args) {
+        return Receiver.find();
+      },
+    },
     user: {
       type: UserType,
       args: { id: { type: GraphQLID } },
@@ -131,6 +169,13 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Rusher.findById(args.id);
+      },
+    },
+    receiver: {
+      type: ReceiverType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return Receiver.findById(args.id);
       },
     },
   },

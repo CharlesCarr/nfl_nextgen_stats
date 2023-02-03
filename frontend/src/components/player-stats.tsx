@@ -12,7 +12,7 @@ import {
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
-import type { StatCard, DashProps } from "../types/dataTypes";
+import type { DashProps } from "../types/dataTypes";
 import Loading from "../features/ui/Loading";
 import DashTitle from "../features/ui/dash-title";
 import { PlayerInfo } from "../features/ui/player-info";
@@ -23,18 +23,11 @@ import Search from "../features/search/search";
 import { FilterList } from "../features/filter/filter-list";
 import { TimelineFilter } from "../features/filter/types";
 import { StatsCardList } from "../features/stats-card/stats-card-list";
+import { StatCard } from "../features/stats-card/types";
 
-const PlayerStats = ({ data, type, loading }: DashProps) => {
-  const periodFilter = useSelector(
-    (state: RootState) => state.periodFilterView
-  );
-  const playerName = useSelector((state: RootState) => state.playerView[type]);
-  // hardcoded
-  const [week] = useState<number>(16);
-  const [season] = useState<number>(2022);
-  // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
-  const [playerData, setPlayerData] = useState<any>(null);
-  const [statCardData, setStatCardData] = useState<StatCard[]>([
+/*
+
+[
     {
       statName: "Passing Yards",
       statNum: <Loading />,
@@ -65,7 +58,23 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
       statKey: "passer_rating",
       type: "passer",
     },
-  ]);
+  ]
+*/
+
+const PlayerStats = ({ data, type, loading }: DashProps) => {
+  console.log("type", type);
+
+  const positionView = useSelector((state: RootState) => state.positionView);
+  const periodFilter = useSelector(
+    (state: RootState) => state.periodFilterView
+  );
+  const playerName = useSelector((state: RootState) => state.playerView[type]);
+  // hardcoded
+  const [week] = useState<number>(20);
+  const [season] = useState<number>(2022);
+  // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
+  const [playerData, setPlayerData] = useState<any>(null);
+  const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
   const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
 
   useEffect(() => {
@@ -84,44 +93,44 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
       // get all unique players (to use for search validation)
       setAllPlayers(getAllPlayers(data));
     }
-  }, [data, playerName, week, season, periodFilter]);
+  }, [data, playerName, week, season, periodFilter, type]);
 
   useEffect(() => {
     if (playerData) {
-      if (type === "passer") {
+      if (positionView.position === "WR/TE") {
         setStatCardData([
           {
-            statName: "Passing Yards",
-            statNum: playerData["pass_yards"],
+            statName: "Receiving Yards",
+            statNum: playerData["yards"],
             statIcon: (
               <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
             ),
             statLabel: "yds",
-            statKey: "pass_yards",
-            type: "passer",
+            statKey: "yards",
+            type: "receiver",
           },
           {
-            statName: "Passing TDs",
-            statNum: playerData["pass_touchdowns"],
+            statName: "Receiving TDs",
+            statNum: playerData["rec_touchdowns"],
             statIcon: (
               <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
             ),
             statLabel: "TDs",
-            statKey: "pass_touchdowns",
-            type: "passer",
+            statKey: "rec_touchdowns",
+            type: "receiver",
           },
           {
-            statName: "Passer Rating",
-            statNum: Number(playerData["passer_rating"].toFixed(2)),
+            statName: "Receptions",
+            statNum: playerData["receptions"],
             statIcon: (
               <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
             ),
-            statLabel: "RTG",
-            statKey: "passer_rating",
-            type: "passer",
+            statLabel: "rec",
+            statKey: "receptions",
+            type: "receiver",
           },
         ]);
-      } else {
+      } else if (positionView.position === "RB") {
         setStatCardData([
           {
             statName: "Rushing Yards",
@@ -154,9 +163,42 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             type: "rusher",
           },
         ]);
+      } else {
+        setStatCardData([
+          {
+            statName: "Passing Yards",
+            statNum: playerData["pass_yards"],
+            statIcon: (
+              <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "yds",
+            statKey: "pass_yards",
+            type: "passer",
+          },
+          {
+            statName: "Passing TDs",
+            statNum: playerData["pass_touchdowns"],
+            statIcon: (
+              <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "TDs",
+            statKey: "pass_touchdowns",
+            type: "passer",
+          },
+          {
+            statName: "Passer Rating",
+            statNum: Number(playerData["passer_rating"].toFixed(2)),
+            statIcon: (
+              <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
+            ),
+            statLabel: "RTG",
+            statKey: "passer_rating",
+            type: "passer",
+          },
+        ]);
       }
     }
-  }, [playerData]);
+  }, [playerData, type, positionView]);
 
   const timelineFilters: TimelineFilter[] = [
     {

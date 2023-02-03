@@ -2,10 +2,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "./stores/store";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-import NotFound from "./pages/NotFound";
-import LandingPage from "./pages/LandingPage";
-import PassPage from "./pages/PassPage";
-import RushPage from "./pages/RushPage";
+import NotFound from "./pages/not-found";
+import LandingPage from "./pages/landing";
+import PassPage from "./pages/passing";
+import RushPage from "./pages/rushing";
+import Receiving from "./pages/receiving";
 
 // for getting rid of warning in console
 const cache = new InMemoryCache({
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/passing" element={<PassPage />} />
             <Route path="/rushing" element={<RushPage />} />
+            <Route path="/receiving" element={<Receiving />} />
           </Routes>
         </div>
       </ApolloProvider>

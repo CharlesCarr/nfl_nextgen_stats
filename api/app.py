@@ -49,4 +49,25 @@ def rushing():
      
     return {"data": rushingList}
 
-# rushing()
+@app.route('/receiving')
+def receiving():
+    # create a variable to store output from a nfl method (testing data)
+    receivingDf = nfl.import_ngs_data(stat_type='receiving')
+    # convert from pandas df to list of dictionaries
+    receivingList = receivingDf.to_dict("records")
+    # print(rushingDf)
+
+    def isNaN(num):
+        return num != num
+
+    # loop over all and if a key returns a val of NaN convert to string of NaN
+    for rec_item in receivingList:
+        for key in rec_item:
+            if (isNaN(rec_item[key])):
+                # passListTest.append(pass_item[key])
+                rec_item[key] = 'NaN'
+     
+    return {"data": receivingList}
+
+
+receiving()

@@ -5,7 +5,7 @@ import { RootState } from "../stores/store";
 import { setDarkMode } from "../stores/slices/darkModeViewSlice";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { getQBView, getRBView } from "../stores/slices/positionViewSlice";
+import { getQBView, getRBView, getWRTEView } from "../stores/slices/positionViewSlice";
 
 const NavBar = () => {
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
@@ -36,14 +36,14 @@ const NavBar = () => {
         )}
       </div>
 
-      <div className="flex lg:flex-col items-center justify-between gap-10 mb-32 text-lg">
+      <div className="flex lg:flex-col items-center justify-between gap-10 mb-32 text-lg overflow-hidden">
         <Link to="/passing">
           <button
-            className={`rounded-full border ${
+            className={`rounded-lg border ${
               positionView === "QB"
-                ? "border-white text-white"
+                ? "border-white text-white font-bold"
                 : "border-gray-300 text-gray-300"
-            } p-3 cursor-pointer hover:border-white hover:text-white transition`}
+            } p-3 cursor-pointer hover:border-white hover:text-white transition text-sm w-40`}
             onClick={() => dispatch(getQBView())}
           >
             QB
@@ -51,14 +51,26 @@ const NavBar = () => {
         </Link>
         <Link to="/rushing">
           <button
-            className={`rounded-full border ${
+            className={`rounded-lg border ${
               positionView === "RB"
-                ? "border-white text-white"
+                ? "border-white text-white font-bold"
                 : "border-gray-300 text-gray-300"
-            } p-3 cursor-pointer hover:border-white hover:text-white transition`}
+            } p-3 cursor-pointer hover:border-white hover:text-white transition text-sm w-40`}
             onClick={() => dispatch(getRBView())}
           >
             RB
+          </button>
+        </Link>
+        <Link to="/receiving">
+          <button
+            className={`rounded-lg border ${
+              positionView === "WR/TE"
+                ? "border-white text-white font-bold"
+                : "border-gray-300 text-gray-300"
+            } p-3 cursor-pointer hover:border-white hover:text-white transition text-sm w-40`}
+            onClick={() => dispatch(getWRTEView())}
+          >
+            WR/TE
           </button>
         </Link>
       </div>

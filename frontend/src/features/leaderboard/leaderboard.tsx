@@ -26,9 +26,7 @@ export default function Leaderboard({ type, data }: LeaderboardProps) {
   return (
     <div className="flex flex-col justify-between items-center h-full w-full sm:w-1/2 lg:w-1/4">
       <div className="w-full h-1/5 flex flex-col items-start justify-center pl-4 font-medium mb-4 sm:mb-0">
-        <p className="font-semibold mb-2 sm:mb-0">{`Top ${
-          type === "passer" ? "QB" : "RB"
-        }s for ${statFilter.name}`}</p>
+        <p className="font-semibold mb-2 sm:mb-0">{`Top ${positionView}s for ${statFilter.name}`}</p>
         <p className="font-extralight text-xs">(2022 Season)</p>
       </div>
 

@@ -1,9 +1,9 @@
+import { ReceivingData, RushingData } from "./../../types/dataTypes";
 import { filter } from "lodash";
 import type { ChartData, PassingData } from "../../types/dataTypes";
 
 // logic for finding smallest / largest closes to use for domain for recharts y axis
 export const findMinMaxAvg = (chartData: ChartData[]) => {
-  // if (chartData && chartData.length > 1) {
   const numData = chartData.map((week: ChartData) => {
     return week.stat;
   });
@@ -25,28 +25,29 @@ export const findMinMaxAvg = (chartData: ChartData[]) => {
     avg: avgVal.toFixed(0),
   };
 
-  // setMinMaxAvg(minMaxAvg);
   return minMaxAvg;
-  // }
 };
 
 // start by hard coding for this season week by week
 export const getChartData = (
-  data: PassingData[],
+  data: PassingData[] | RushingData[] | ReceivingData[],
   stat: string,
   playerName: string
 ) => {
-  let weekData = filter(data, (d: PassingData) => {
-    if (
-      d["player_display_name"] === playerName &&
-      d.week !== 0 &&
-      d.season === 2022
-    ) {
-      return d;
-    } else {
-      return null;
+  let weekData = filter(
+    data,
+    (d: PassingData | RushingData | ReceivingData) => {
+      if (
+        d["player_display_name"] === playerName &&
+        d.week !== 0 &&
+        d.season === 2022
+      ) {
+        return d;
+      } else {
+        return null;
+      }
     }
-  });
+  );
 
   let chartData = weekData
     .map((week: any) => {

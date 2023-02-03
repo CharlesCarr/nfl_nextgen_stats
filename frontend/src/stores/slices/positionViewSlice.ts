@@ -18,8 +18,11 @@ export const positionViewSlice = createSlice({
         getRBView: (state) => {
             state.position = "RB";
         },
+        getWRTEView: (state) => {
+            state.position = "WR/TE";
+        }
     },
 });
 
-export const { getQBView, getRBView } = positionViewSlice.actions;
+export const { getQBView, getRBView, getWRTEView } = positionViewSlice.actions;
 export default positionViewSlice.reducer;

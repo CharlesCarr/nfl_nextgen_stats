@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import { setPasserView, setRusherView } from "../../stores/slices/playerViewSlice";
+import {
+  setPasserView,
+  setReceiverView,
+  setRusherView,
+} from "../../stores/slices/playerViewSlice";
 import { formatInput } from "./utils";
 
 const Search = ({ allPlayers, type, loading }: any) => {
@@ -61,8 +65,10 @@ const Search = ({ allPlayers, type, loading }: any) => {
     if (allPlayers.has(formattedInput)) {
       if (type === "passer") {
         dispatch(setPasserView(formattedInput));
-      } else {
+      } else if (type === "rusher") {
         dispatch(setRusherView(formattedInput));
+      } else {
+        dispatch(setReceiverView(formattedInput));
       }
       setInputError(false);
     } else {
@@ -73,8 +79,10 @@ const Search = ({ allPlayers, type, loading }: any) => {
   const handleMatchClick = (player: string) => {
     if (type === "passer") {
       dispatch(setPasserView(player));
-    } else {
+    } else if (type === "rusher") {
       dispatch(setRusherView(player));
+    } else {
+      dispatch(setReceiverView(player));
     }
 
     clearInput();
