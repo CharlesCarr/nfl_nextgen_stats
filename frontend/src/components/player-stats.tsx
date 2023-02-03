@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import StatsCard from "../features/stats-card/stats-card";
 import { useSelector } from "react-redux";
 import {
   getWeekView,
@@ -13,10 +12,8 @@ import {
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
 import type { DashProps } from "../types/dataTypes";
-import Loading from "../features/ui/Loading";
 import DashTitle from "../features/ui/dash-title";
 import { PlayerInfo } from "../features/ui/player-info";
-import { FilterButton } from "../features/filter/filter-button";
 import { FieldImgContainer } from "../features/ui/field-img-container";
 import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
 import Search from "../features/search/search";
@@ -25,44 +22,7 @@ import { TimelineFilter } from "../features/filter/types";
 import { StatsCardList } from "../features/stats-card/stats-card-list";
 import { StatCard } from "../features/stats-card/types";
 
-/*
-
-[
-    {
-      statName: "Passing Yards",
-      statNum: <Loading />,
-      statIcon: (
-        <GiAmericanFootballBall className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-      ),
-      statLabel: "yds",
-      statKey: "pass_yards",
-      type: "passer",
-    },
-    {
-      statName: "Passing TDs",
-      statNum: <Loading />,
-      statIcon: (
-        <GiAmericanFootballHelmet className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-      ),
-      statLabel: "TDs",
-      statKey: "pass_touchdowns",
-      type: "passer",
-    },
-    {
-      statName: "Passer Rating",
-      statNum: <Loading />,
-      statIcon: (
-        <GiAmericanFootballPlayer className="w-11 lg:w-14 h-11 lg:h-14 mt-6 mr-4" />
-      ),
-      statLabel: "RTG",
-      statKey: "passer_rating",
-      type: "passer",
-    },
-  ]
-*/
-
 const PlayerStats = ({ data, type, loading }: DashProps) => {
-
   const positionView = useSelector((state: RootState) => state.positionView);
   const periodFilter = useSelector(
     (state: RootState) => state.periodFilterView
@@ -73,7 +33,35 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
   const [season] = useState<number>(2022);
   // PassPlayer | RushPlayer | null - this is what it should be but have errs, figure out later
   const [playerData, setPlayerData] = useState<any>(null);
-  const [statCardData, setStatCardData] = useState<StatCard[] | null>(null);
+  const [statCardData, setStatCardData] = useState<StatCard[]>([
+    {
+      statName: null,
+      statNum: null,
+      statIcon: null,
+      statLabel: null,
+      statKey: null,
+      type: "passer",
+      loading: true,
+    },
+    {
+      statName: null,
+      statNum: null,
+      statIcon: null,
+      statLabel: null,
+      statKey: null,
+      type: "passer",
+      loading: true,
+    },
+    {
+      statName: null,
+      statNum: null,
+      statIcon: null,
+      statLabel: null,
+      statKey: null,
+      type: "passer",
+      loading: true,
+    },
+  ]);
   const [allPlayers, setAllPlayers] = useState<any>(null); // this will be a Set
 
   useEffect(() => {
@@ -107,6 +95,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "yds",
             statKey: "yards",
             type: "receiver",
+            loading: false,
           },
           {
             statName: "Receiving TDs",
@@ -117,6 +106,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "TDs",
             statKey: "rec_touchdowns",
             type: "receiver",
+            loading: false,
           },
           {
             statName: "Receptions",
@@ -127,6 +117,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "rec",
             statKey: "receptions",
             type: "receiver",
+            loading: false,
           },
         ]);
       } else if (positionView.position === "RB") {
@@ -140,6 +131,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "yds",
             statKey: "rush_yards",
             type: "rusher",
+            loading: false,
           },
           {
             statName: "Rushing TDs",
@@ -150,6 +142,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "TDs",
             statKey: "rush_touchdowns",
             type: "rusher",
+            loading: false,
           },
           {
             statName: "Avg Rush Yards",
@@ -160,6 +153,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "yds",
             statKey: "avg_rush_yards",
             type: "rusher",
+            loading: false,
           },
         ]);
       } else {
@@ -173,6 +167,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "yds",
             statKey: "pass_yards",
             type: "passer",
+            loading: false,
           },
           {
             statName: "Passing TDs",
@@ -183,6 +178,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "TDs",
             statKey: "pass_touchdowns",
             type: "passer",
+            loading: false,
           },
           {
             statName: "Passer Rating",
@@ -193,6 +189,7 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             statLabel: "RTG",
             statKey: "passer_rating",
             type: "passer",
+            loading: false,
           },
         ]);
       }
@@ -231,7 +228,11 @@ const PlayerStats = ({ data, type, loading }: DashProps) => {
             <FilterList timelineFilters={timelineFilters} />
           </div>
         </div>
-        <StatsCardList statCardData={statCardData} type={type} />
+        <StatsCardList
+          statCardData={statCardData}
+          type={type}
+          loading={loading}
+        />
       </div>
       <FieldImgContainer />
     </div>

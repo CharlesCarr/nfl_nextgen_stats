@@ -13,6 +13,7 @@ test("renders three stat cards", () => {
       statLabel: "stat",
       statKey: "st",
       type: "passer",
+      loading: false,
     },
     {
       statName: "Stat Name",
@@ -21,6 +22,7 @@ test("renders three stat cards", () => {
       statLabel: "stat",
       statKey: "st",
       type: "passer",
+      loading: false,
     },
     {
       statName: "Stat Name",
@@ -29,9 +31,12 @@ test("renders three stat cards", () => {
       statLabel: "stat",
       statKey: "st",
       type: "passer",
+      loading: false,
     },
   ];
-  render(<StatsCardList statCardData={testCardData} type="passer" />);
+  render(
+    <StatsCardList statCardData={testCardData} type="passer" loading={false} />
+  );
 
   // Find all the stat cards
   // screen.logTestingPlaygroundURL();

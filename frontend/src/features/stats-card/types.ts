@@ -1,15 +1,17 @@
 import { playerViewState } from "../../stores/slices/playerViewSlice";
 
 export interface StatCard {
-  statName: string;
-  statNum: number | JSX.Element;
-  statIcon: JSX.Element;
-  statLabel: string;
-  statKey: string;
+  statName: string | null;
+  statNum: number | JSX.Element | null;
+  statIcon: JSX.Element | null;
+  statLabel: string | null;
+  statKey: string | null;
   type: keyof playerViewState;
+  loading: boolean;
 }
 
 export interface StatsCardListProps {
-  statCardData: StatCard[] | null;
+  statCardData: StatCard[];
   type: keyof playerViewState;
+  loading: boolean;
 }
