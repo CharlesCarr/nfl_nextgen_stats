@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PlayerStats from "../components/player-stats";
 import { ChartContainer } from "../features/chart/chart-container";
 import Leaderboard from "../features/leaderboard/leaderboard";
 import { ErrorStatus } from "../features/ui/error-status";
 import DashLayout from "../layouts/dash-layout";
 import { GET_RECEIVERS } from "../services/queries/receiver-queries";
 import { RootState } from "../stores/store";
-import DashTop from "../components/player-stats";
 
 const Receiving = () => {
   // GET_RECEIVERS
@@ -32,7 +32,7 @@ const Receiving = () => {
         {!error && (
           <>
             {/* Top Half of Dashboard */}
-            <DashTop data={players} type={type} loading={loading} />
+            <PlayerStats data={players} type={type} loading={loading} />
 
             {/* Bottom Half of Dashboard */}
             <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">

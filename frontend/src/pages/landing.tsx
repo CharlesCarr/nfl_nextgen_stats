@@ -1,14 +1,16 @@
 import { useQuery } from "@apollo/client";
 import ViewDashBtn from "../features/landing/view-dash-btn";
 import { GET_PASSERS } from "../services/queries/passer-queries";
+import { GET_RECEIVERS } from "../services/queries/receiver-queries";
 import { GET_RUSHERS } from "../services/queries/rusher-queries";
 import AppFullDark from "../assets/images/app/appDark.png";
 import AppMobileLight from "../assets/images/app/appMobile1.png";
 
-const LandingPage = () => {
+const Landing = () => {
   // Preloading passing data
   useQuery(GET_PASSERS);
   useQuery(GET_RUSHERS);
+  useQuery(GET_RECEIVERS);
 
   return (
     <div className="relative w-screen h-screen flex-col justify-between bg-gray-50 text-black">
@@ -84,4 +86,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Landing;

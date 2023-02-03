@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "./stores/store";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { RootState } from "./stores/store";
 import NotFound from "./pages/not-found";
-import LandingPage from "./pages/landing";
-import PassPage from "./pages/passing";
-import RushPage from "./pages/rushing";
+import Landing from "./pages/landing";
+import Passing from "./pages/passing";
+import Rushing from "./pages/rushing";
 import Receiving from "./pages/receiving";
 
 // for getting rid of warning in console
@@ -45,13 +45,12 @@ const App = () => {
           className={`flex flex-col lg:flex-row h-full lg:h-screen w-full font-montserrat ${
             darkMode ? "text-white" : "text-[#1f1f1f]"
           } `}
-          data-testid="full"
         >
           <Routes>
             <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/passing" element={<PassPage />} />
-            <Route path="/rushing" element={<RushPage />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/passing" element={<Passing />} />
+            <Route path="/rushing" element={<Rushing />} />
             <Route path="/receiving" element={<Receiving />} />
           </Routes>
         </div>

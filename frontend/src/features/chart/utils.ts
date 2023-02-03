@@ -1,6 +1,5 @@
-import { ReceivingData, RushingData } from "./../../types/dataTypes";
 import { filter } from "lodash";
-import type { ChartData, PassingData } from "../../types/dataTypes";
+import { ChartData, PassingData, ReceivingData, RushingData } from "../../types/types";
 
 // logic for finding smallest / largest closes to use for domain for recharts y axis
 export const findMinMaxAvg = (chartData: ChartData[]) => {

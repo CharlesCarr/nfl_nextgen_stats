@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { FilterList } from "../features/filter/filter-list";
+import { TimelineFilter } from "../features/filter/types";
+import Search from "../features/search/search";
+import { StatsCardList } from "../features/stats-card/stats-card-list";
+import { StatCard } from "../features/stats-card/types";
+import DashTitle from "../features/ui/dash-title";
+import { FieldImgContainer } from "../features/ui/field-img-container";
+import { PlayerInfo } from "../features/ui/player-info";
 import {
-  getWeekView,
-  getSeasonView,
   getAllView,
+  getSeasonView,
+  getWeekView,
 } from "../stores/slices/periodFilterViewSlice";
 import { RootState } from "../stores/store";
+import { DashProps } from "../types/types";
+import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
 import {
   GiAmericanFootballBall,
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
-import type { DashProps } from "../types/dataTypes";
-import DashTitle from "../features/ui/dash-title";
-import { PlayerInfo } from "../features/ui/player-info";
-import { FieldImgContainer } from "../features/ui/field-img-container";
-import { getAllData, getAllPlayers, getSeasonData, getWeekData } from "./utils";
-import Search from "../features/search/search";
-import { FilterList } from "../features/filter/filter-list";
-import { TimelineFilter } from "../features/filter/types";
-import { StatsCardList } from "../features/stats-card/stats-card-list";
-import { StatCard } from "../features/stats-card/types";
 
 const PlayerStats = ({ data, type, loading }: DashProps) => {
   const positionView = useSelector((state: RootState) => state.positionView);

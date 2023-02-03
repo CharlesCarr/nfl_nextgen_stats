@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import {
-  setPasserView,
-  setReceiverView,
-  setRusherView,
-} from "../../stores/slices/playerViewSlice";
+import { setPasserView, setReceiverView, setRusherView } from "../../stores/slices/playerViewSlice";
 import { formatInput } from "./utils";
 
 const Search = ({ allPlayers, type, loading }: any) => {

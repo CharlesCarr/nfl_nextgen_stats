@@ -1,5 +1,4 @@
 import { playerViewState } from "../../stores/slices/playerViewSlice";
-
 export interface StatCard {
   statName: string | null;
   statNum: number | JSX.Element | null;

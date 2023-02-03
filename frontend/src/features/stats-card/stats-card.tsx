@@ -1,13 +1,13 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../stores/store";
 import {
   setPasserView,
-  setRusherView,
   setReceiverView,
+  setRusherView,
 } from "../../stores/slices/statFilterViewSlice";
-import { useEffect, useState } from "react";
-import { StatCard } from "./types";
+import { RootState } from "../../stores/store";
 import Loading from "../ui/Loading";
+import { StatCard } from "./types";
 
 const StatsCard = ({
   statName,
@@ -54,7 +54,9 @@ const StatsCard = ({
   return (
     <div
       data-testid="stat-card"
-      className={`relative shadow rounded-2xl flex flex-col ${loading ? "items-center justify-center" : "items-between justify-start"} px-8 text-xs font-medium cursor-pointer ${itemStyles}`}
+      className={`relative shadow rounded-2xl flex flex-col ${
+        loading ? "items-center justify-center" : "items-between justify-start"
+      } px-8 text-xs font-medium cursor-pointer ${itemStyles}`}
       onClick={() => handleCardClick()}
     >
       {loading ? (

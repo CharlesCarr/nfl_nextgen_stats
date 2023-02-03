@@ -1,4 +1,3 @@
-import { NumberLiteralType } from "typescript";
 import { playerViewState } from "../stores/slices/playerViewSlice";
 
 export interface PassingData {

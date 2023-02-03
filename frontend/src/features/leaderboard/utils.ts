@@ -1,4 +1,4 @@
-import { PassingData, RushingData } from "./../../types/dataTypes";
+import { PassingData, RushingData } from "../../types/types";
 import { filter } from "lodash";
 
 export const getLeaders = (stat: string, data: PassingData[] | RushingData[]) => {

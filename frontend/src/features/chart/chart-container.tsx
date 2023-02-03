@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
-import { BiStats } from "react-icons/bi";
-import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/store";
-import {
-  ChartContainerProps,
-  ChartData,
-  MinMaxAvg,
-} from "../../types/dataTypes";
+import { ChartContainerProps, ChartData, MinMaxAvg } from "../../types/types";
 import Loading from "../ui/Loading";
 import Chart from "./chart";
 import ChartStat from "./chart-stat";
 import { ChartTitle } from "./chart-title";
 import { findMinMaxAvg, getChartData } from "./utils";
+import { BiStats } from "react-icons/bi";
+import { TfiStatsDown, TfiStatsUp } from "react-icons/tfi";
 
 export const ChartContainer = ({ type, data }: ChartContainerProps) => {
   const playerName = useSelector((state: RootState) => state.playerView[type]);

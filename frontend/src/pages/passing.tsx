@@ -1,15 +1,15 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import DashTop from "../components/player-stats";
 import { ChartContainer } from "../features/chart/chart-container";
 import Leaderboard from "../features/leaderboard/leaderboard";
 import { ErrorStatus } from "../features/ui/error-status";
 import DashLayout from "../layouts/dash-layout";
 import { GET_PASSERS } from "../services/queries/passer-queries";
 import { RootState } from "../stores/store";
+import PlayerStats from "../components/player-stats";
 
-const PassPage = () => {
+const Passing = () => {
   // GET_PASSERS
   const { loading, error, data } = useQuery(GET_PASSERS);
   const [players, setPlayers] = useState(null);
@@ -32,7 +32,7 @@ const PassPage = () => {
         {!error && (
           <>
             {/* Top Half of Dashboard */}
-            <DashTop data={players} type={type} loading={loading} />
+            <PlayerStats data={players} type={type} loading={loading} />
 
             {/* Bottom Half of Dashboard */}
             <div className="w-full h-1/2 flex flex-col lg:flex-row justify-between items-center mt-2">
@@ -48,4 +48,4 @@ const PassPage = () => {
   );
 };
 
-export default PassPage;
+export default Passing;

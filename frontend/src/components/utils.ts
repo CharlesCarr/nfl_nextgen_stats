@@ -1,13 +1,6 @@
-import {
-  PassingData,
-  PassPlayer,
-  ReceivingData,
-  RecPlayer,
-  RushingData,
-  RushPlayer,
-} from "../types/dataTypes";
 import { filter } from "lodash";
 import { playerViewState } from "../stores/slices/playerViewSlice";
+import { PassingData, PassPlayer, ReceivingData, RecPlayer, RushingData, RushPlayer } from "../types/types";
 
 export const getWeekData = (
   data: PassingData[] | RushingData[] | ReceivingData[],

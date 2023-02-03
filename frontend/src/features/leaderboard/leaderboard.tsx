@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/store";
-import {
-  LeaderboardProps,
-  PassingData,
-  RushingData,
-} from "../../types/dataTypes";
+import { LeaderboardProps, PassingData, RushingData } from "../../types/types";
 import Loading from "../ui/Loading";
 import Leaders from "./leaders";
 import { getLeaders } from "./utils";
