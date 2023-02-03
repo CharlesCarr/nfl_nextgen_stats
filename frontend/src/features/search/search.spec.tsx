@@ -1,6 +1,5 @@
 import { render } from "../../utils/test-utils";
-
-import Search from "./search";
+import { Search } from "./search";
 
 describe("Search", () => {
   it("should render successfully", () => {
