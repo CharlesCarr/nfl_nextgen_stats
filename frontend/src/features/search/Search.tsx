@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setPasserView, setReceiverView, setRusherView } from "../../stores/slices/playerViewSlice";
 import { formatInput } from "./utils";
 
-const Search = ({ allPlayers, type, loading }: any) => {
+export const Search = ({ allPlayers, type, loading }: any) => {
   // state for input field (player name)
   const [inputValue, setInputValue] = useState<string>("");
   const [inputError, setInputError] = useState<boolean>(false);
@@ -124,5 +124,3 @@ const Search = ({ allPlayers, type, loading }: any) => {
     </div>
   );
 };
-
-export default Search;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FilterList } from "../features/filter/filter-list";
 import { TimelineFilter } from "../features/filter/types";
-import Search from "../features/search/search";
 import { StatsCardList } from "../features/stats-card/stats-card-list";
 import { StatCard } from "../features/stats-card/types";
 import DashTitle from "../features/ui/dash-title";
@@ -21,6 +20,7 @@ import {
   GiAmericanFootballHelmet,
   GiAmericanFootballPlayer,
 } from "react-icons/gi";
+import { Search } from "../features/search/search";
 
 const PlayerStats = ({ data, type, loading }: DashProps) => {
   const positionView = useSelector((state: RootState) => state.positionView);
