@@ -12,9 +12,6 @@ import DashTop from "../components/player-stats";
 const Receiving = () => {
   // GET_RECEIVERS
   const { loading, error, data } = useQuery(GET_RECEIVERS);
-  console.log(loading);
-  console.log(error);
-  console.log(data);
   const [players, setPlayers] = useState(null);
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 

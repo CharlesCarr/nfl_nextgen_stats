@@ -62,7 +62,6 @@ import { StatCard } from "../features/stats-card/types";
 */
 
 const PlayerStats = ({ data, type, loading }: DashProps) => {
-  console.log("type", type);
 
   const positionView = useSelector((state: RootState) => state.positionView);
   const periodFilter = useSelector(

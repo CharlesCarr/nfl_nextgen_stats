@@ -12,9 +12,7 @@ import { RootState } from "../stores/store";
 const PassPage = () => {
   // GET_PASSERS
   const { loading, error, data } = useQuery(GET_PASSERS);
-  console.log(data);
   const [players, setPlayers] = useState(null);
-  console.log(players);
   const darkMode = useSelector((state: RootState) => state.darkMode.darkMode);
 
   useEffect(() => {
